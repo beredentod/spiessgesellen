@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/graph.h
+bits/stdc++.h
+-
+
+/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/solver.cpp
+solver.h
+/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/solver.h
+
+/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/solver.h
+bits/stdc++.h
+-
+graph.h
+/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/graph.h
+
