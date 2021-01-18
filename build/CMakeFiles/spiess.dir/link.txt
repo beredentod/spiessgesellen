@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/spiess.dir/main.cpp.o CMakeFiles/spiess.dir/solver.cpp.o CMakeFiles/spiess.dir/graph.cpp.o  -o spiess  -std=c++14 

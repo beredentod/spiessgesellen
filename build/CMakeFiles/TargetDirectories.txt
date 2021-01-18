@@ -1,7 +1,0 @@
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/install/strip.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/install/local.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/install.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/list_install_components.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/rebuild_cache.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/edit_cache.dir
-/home/michalboron/C++/BWINF/39_BWINF/BWINF39_2/spiessgesellen/build/CMakeFiles/spiess.dir

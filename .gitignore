@@ -1,5 +1,6 @@
 .gitingore
 other
+build
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
