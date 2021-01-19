@@ -20,6 +20,7 @@ class Solver {
 	vector< pair< set<int>, set<int> > > infos;
 	map<string, int> fruit2ID;
 	map<int, string> ID2Fruit;
+	Graph G;
 
 	void readFile(string path);
 	void analyzeInfo(pair<set<int>, set<int>> info);
@@ -27,6 +28,7 @@ class Solver {
 public:
 	Solver(int num) {
 		readFile("../beispiele/spiesse" + to_string(num) + ".txt");
+		G = Graph(n, n);
 	}
 	~Solver(void){}
 

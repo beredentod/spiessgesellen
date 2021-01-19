@@ -10,16 +10,24 @@
 using namespace std;
 
 class Graph {
-	int n;
+	int n1, n2;
 	vector<vector<int>> gr;
+	vector<int> vis, fin; //for cycle detection
 
 public:	
-	Graph(int num) : n(num) {
-		for (int i = 0; i < 2*n; i++) gr.pb(vector<int>());
+	Graph(){};
+	Graph(int num1, int num2) : n1(num1), n2(num2) {
+		gr = vector<vector<int>> (n1 + n2, vector<int>());
+		vis = vector<int> (n1 + n2);
+		fin = vector<int> (n1 + n2);
 	}
 	~Graph(void){};
 
 	void addEdge(int a, int b);
+	void printNeighbors (int v);
+	void printGraph();
+	bool checkCycle(int v);
+	bool checkComponent(int v, set<int>& desired);
 };
 
 #endif

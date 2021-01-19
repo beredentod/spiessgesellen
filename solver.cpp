@@ -75,7 +75,7 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 
 	bitset<MAXN> mask_nums = 0, mask_full = 0, mask_rev = 0;
 
-	//eine Bitmaske mit 1-en auf n Stellen
+	//eine Bitmaske mit 1-en auf allen n Stellen
 	for (int i = 0; i < n; i++) mask_full ^= (1 << i);
 
 	//die Bitmaske fuer die Obst aus der Menge
@@ -86,15 +86,17 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 
 	auto it = fruits.begin();
 
+	//cout << mask_nums << " \n" << mask_rev << " \n\n";
+
 	for (int i = 0; i < n; i++) {
-		if (*it == i) {
+		if (*it == i && it != fruits.end()) {
 			matrix[i] &= mask_nums;
-			//cout << 1 << matrix[i] << "\n";
+			//cout << 1 << " " << ID2Fruit.find(i)->second << " " << matrix[i] << "\n";
 			it++;
 		}
 		else {
 			matrix[i] &= mask_rev;
-			//cout << 2 << matrix[i] << "\n";
+			//cout << 2 << " " << ID2Fruit.find(i)->second << " " << matrix[i] << "\n";
 		}
 	}
 	//cout << "\n";
@@ -127,18 +129,22 @@ void Solver::printInfos() {
 void Solver::analyzeAllInfos(){
 	for (auto x: infos)
 		analyzeInfo(x);
-//		analyzeInfo(infos[1]);
 
 	for (int i = 0; i < n; i++) {
 		cout << matrix[i] << "\n";
 	}
 
 	for (auto x: ID2Fruit) {
-		cout << matrix[x.first].count()/*-MAXN+n*/ << " "<< x.second << "\t";
-		for (int i = 0; i < n; i++)
-			if (matrix[x.first][i]) cout << i+1 << " ";
+		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
+			G.addEdge(x.first, i);
+
+		cout << " "<< x.second << "\t";
+		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
+			cout << i + 1 << " ";
 		cout << "\n"; 
 	}
+
+	G.printGraph();
 
 	/*for (int i = 0; i < n; i++) {
 		cout << ID2Fruit.find(i)->second << "\t" << matrix[i].count()-MAXN+n << "\n";
@@ -174,8 +180,6 @@ bool Solver::checkResult(){
 		for (int i = matrix[x]._Find_next(-1); i < MAXN; i = matrix[x]._Find_next(i))
 			ver.insert(count + i+1);
 	}
-
-	Graph G(2*n);
 
 	for (auto x: ver)
 		cout << x << " ";
