@@ -145,24 +145,24 @@ void Solver::analyzeAllInfos(){
 	}
 
 	G.printGraph();
-
-	/*for (int i = 0; i < n; i++) {
-		cout << ID2Fruit.find(i)->second << "\t" << matrix[i].count()-MAXN+n << "\n";
-	}*/
 }
 
 bool Solver::checkResult(){
 	int count = 0;
 	set<int> multip;
-	for(auto x: wishes) {
-		if (matrix[x].count() == 1) {
-			for (int i = 0; i < n; i++)
-				if (matrix[x].test(i))
-					result.insert(i+1);
-		} 
+	vector<int> ready(n);
+	vector<int> todo(n);
+	set<int> temp;
+
+	for (auto x: wishes) {
+		if (G.deg(x) == 1) {
+			vector<int> neigh = G.getNeighbors(x);
+			result.insert(neigh[0] - n);
+		}
 		else {
 			count++;
 			multip.insert(x);
+			todo[x] = 1;
 		}
 	} 
 
@@ -173,19 +173,26 @@ bool Solver::checkResult(){
 	for (auto x: multip) cout << ID2Fruit.find(x)->second << " ";
 	cout << "\n";
 
-	set<int> ver;
-
 	for (auto x: multip) {
-		ver.insert(x);
-		for (int i = matrix[x]._Find_next(-1); i < MAXN; i = matrix[x]._Find_next(i))
-			ver.insert(count + i+1);
+		if (!ready[x]) {
+			G.DFS(x);
+			for (auto x: G.comp) {
+				if (x < n) {
+					if (!todo[x])
+						return false;
+					else
+						ready[x] = 1;
+				}
+				else {
+					temp.insert(x - n + 1);
+				}
+			}
+		}
 	}
 
-	for (auto x: ver)
-		cout << x << " ";
-	cout << "\n";
-
-	return false;
+	for (auto x: temp) 
+		result.insert(x);
+	
 	return true;
 }
 

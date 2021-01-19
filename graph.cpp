@@ -32,6 +32,23 @@ bool Graph::checkCycle(int v){
 	return false;
 }
 
-bool ckeckComponent(int v, set<int> &desired) {
+void Graph::DFS(int v) {
+	comp.insert(v);
+	vis[v] = true;
+	for (auto u: gr[v])
+		if (!vis[u])
+			DFS(u);
+}
+
+int Graph::deg(int v) {
+	return gr[v].size();
+}
+
+vector<int> Graph::getNeighbors(int v) {
+	return gr[v];
+}
+
+
+bool Graph::checkComponent(int v) {
 	
 }

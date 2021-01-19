@@ -14,6 +14,7 @@ class Graph {
 	vector<vector<int>> gr;
 	vector<int> vis, fin; //for cycle detection
 
+
 public:	
 	Graph(){};
 	Graph(int num1, int num2) : n1(num1), n2(num2) {
@@ -23,11 +24,20 @@ public:
 	}
 	~Graph(void){};
 
+	set<int> comp; 
+
 	void addEdge(int a, int b);
 	void printNeighbors (int v);
 	void printGraph();
 	bool checkCycle(int v);
-	bool checkComponent(int v, set<int>& desired);
+	bool checkComponent(int v);
+	int deg(int v);
+	vector<int> getNeighbors(int v);
+	void DFS(int v);
+	void clearVis() {
+		for (auto &x: vis)
+			x = 0;
+	}
 };
 
 #endif
