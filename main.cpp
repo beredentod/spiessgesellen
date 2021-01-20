@@ -13,11 +13,11 @@ int main() {
 	S.analyzeAllInfos();
 	bool solv = S.checkResult();
 
-	cout << "Solvable: " << boolalpha << solv << "\n";
+	cout << "Lösbar: " << boolalpha << solv << "\n";
 	if (solv) {
 		set<int> result = S.getResult();
 
-		cout << "Result:\n";
+		cout << "Ergebnis:\n";
 		for (auto x: result)
 			cout << x << " ";
 		cout << "\n";		

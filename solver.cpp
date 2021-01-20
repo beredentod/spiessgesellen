@@ -157,7 +157,7 @@ bool Solver::checkResult(){
 	for (auto x: wishes) {
 		if (G.deg(x) == 1) {
 			vector<int> neigh = G.getNeighbors(x);
-			result.insert(neigh[0] - n);
+			result.insert(neigh[0] - n + 1);
 		}
 		else {
 			count++;
@@ -173,13 +173,19 @@ bool Solver::checkResult(){
 	for (auto x: multip) cout << ID2Fruit.find(x)->second << " ";
 	cout << "\n";
 
+	bool solv = true;
+	vector<set<int>> problems;
+
 	for (auto x: multip) {
+		bool prob = false;
 		if (!ready[x]) {
 			G.DFS(x);
 			for (auto x: G.comp) {
 				if (x < n) {
-					if (!todo[x])
-						return false;
+					if (!todo[x]) {
+						solv = false;
+						prob = true;
+					}
 					else
 						ready[x] = 1;
 				}
@@ -187,13 +193,39 @@ bool Solver::checkResult(){
 					temp.insert(x - n + 1);
 				}
 			}
+
+			if (prob) {
+				set<int> curr_prob;
+				for (auto x: G.comp) {
+					if (x < n)
+						curr_prob.insert(x);
+				}
+				problems.pb(curr_prob);
+			}
+
+			G.comp.clear();
 		}
 	}
 
 	for (auto x: temp) 
 		result.insert(x);
 	
-	return true;
+	if (solv)
+		return true;
+	else {
+		cout << "Für die folgenden Obsorten konnte keine eideutige Zuweisung gefunden werden.\n";
+		for (auto x: problems) {
+			cout << "Komponente: ";
+			for (auto y: x)
+				cout << ID2Fruit.find(y)->second << " ";
+			cout << "\n\t--> Nicht auf der Wunschliste: ";
+			for (auto y: x) 
+				if (!todo[y])
+					cout << ID2Fruit.find(y)->second << " ";
+			cout << "\n";
+		}
+		return false;
+	}
 }
 
 

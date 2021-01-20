@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+    \node[vertex] (A) {$A$};
+    \node[vertex] (B) [below = 0.4cm of A] {$B$};
+    \node[vertex] (Br) [below = 0.4cm of B] {$Br$};
+    \node[vertex] (E) [below = 0.4cm of Br] {$E$};
+    \node[vertex] (P) [below = 0.4cm of E] {$P$};
+    \node[vertex] (W) [below = 0.4cm of P] {$W$};
+    \node[vertex] (1) [right = 1.5cm of A] {$1$};
+    \node[vertex] (2) [right = 1.5cm of B] {$2$};
+    \node[vertex] (3) [right = 1.5cm of Br] {$3$};
+    \node[vertex] (4) [right = 1.5cm of E] {$4$};
+    \node[vertex] (5) [right = 1.5cm of P] {$5$};
+    \node[vertex] (6) [right = 1.5cm of W] {$6$};
+    \begin{scope}[on background layer]
+        \node[draw=blue!20,fill=blue,fill opacity=0.2,fit=(A) (B) (Br) (E) (P) (W)] [label=left:A] {};
+        \node[draw=red!20,fill=red,fill opacity=0.2,fit=(1) (2) (3) (4) (5) (6)] [label=right:B] {};
+    \end{scope}
+\end{tikzpicture}

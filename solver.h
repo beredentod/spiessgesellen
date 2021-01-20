@@ -39,6 +39,7 @@ public:
 	void printWishes();
 	set<int> getResult();
 	bool checkResult();
+	bool checkCoherence();
 };
 
 

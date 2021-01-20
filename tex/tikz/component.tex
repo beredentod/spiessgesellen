@@ -1,0 +1,12 @@
+\begin{tikzpicture}
+    \node[vertex] (A) {$A$};
+    \node[vertex] (Br) [below = 0.4cm of A] {$Br$};
+    \node[vertex] (1) [right = 1.5cm of A] {$1$};
+    \node[vertex] (4) [right = 1.5cm of Br] {$4$};
+
+    \path[draw,thick]
+    (A) edge node {} (1)
+    (A) edge node {} (4)
+    (Br) edge node {} (1)
+    (Br) edge node {} (4);
+\end{tikzpicture}
