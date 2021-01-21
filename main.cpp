@@ -11,6 +11,10 @@ int main() {
 
 	Solver S(n);
 	S.analyzeAllInfos();
+	//bool coherent = S.checkCoherence();
+
+	//cout << "Kohärent: " << boolalpha << coherent << "\n";
+
 	bool solv = S.checkResult();
 
 	cout << "Lösbar: " << boolalpha << solv << "\n";

@@ -17,7 +17,9 @@ void Graph::printGraph(){
 		printNeighbors(i);
 }
 
-bool Graph::checkCycle(int v){
+
+
+/*bool Graph::checkCycle2(int v){
 	if (vis[v])
 		return false;
 	if (fin[v])
@@ -25,15 +27,21 @@ bool Graph::checkCycle(int v){
 
 	fin[v] = true;
 	for (auto u: gr[v])
-		if (checkCycle(u))
+		if (checkCycle2(u))
 			return true;
 
 	vis[v] = true;
 	return false;
-}
+}*/
 
 void Graph::DFS(int v) {
 	comp.insert(v);
+
+	if (v < n1)
+		compA.insert(v);
+	else
+		compB.insert(v);
+
 	vis[v] = true;
 	for (auto u: gr[v])
 		if (!vis[u])
@@ -46,9 +54,4 @@ int Graph::deg(int v) {
 
 vector<int> Graph::getNeighbors(int v) {
 	return gr[v];
-}
-
-
-bool Graph::checkComponent(int v) {
-	
 }

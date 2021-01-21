@@ -79,6 +79,8 @@
 %\newtheorem{lemma}{Lemma}
 %\newenvironment{proof}{\paragraph{Beweis:}}{\hfill$\square$}
 \newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{satz}{Satz}
 %\renewcommand*{\proofname}{Solution}
 
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
@@ -104,7 +106,8 @@
 \vspace{0.5cm}
 
 \section{Lösungsidee}
-\subsection{Aufgabenstellung}
+\subsection{Formulierung des Problems}
+\TODO{use definitions}
 Gegeben sind eine Menge von $n$ \textit{Obstsorten} $A$ und eine Menge von $n$ ganzen Zahlen $B = \{1, 2, ..., n\}$,
 die für die Indizes der Obstsorten stehen.
 Gegeben sind auch $m$ \textit{Spießkombinationen}, wobei jede $i$--te Spießkombination
@@ -117,10 +120,10 @@ Die Aufgabe ist, zu entscheiden,
 ob die Menge der Indizes der in $W$ gegebenen Obstsorten $W' \subseteq B$ anhand der $m$ 
 Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegebn werden.
 
-\subsection{Graph}
-\TODO{\\Name ändern\\Bild}
-
-Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B, E)$ umwandeln.
+\subsection{Bipartiter Graph}
+\TODO{use definitions\\
+Annahmen beschreiben}
+Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B = V, E)$ umwandeln.
 Die Menge der Kanten $E$ wird im Folgenden festgelegt.
 Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
 Als $M_i$ bezeichne ich die Liste der Länge $n$, die die Beziehungen des Knotens $i \in A$ zu jedem Knoten 
@@ -135,8 +138,8 @@ wir diese Liste als Bitmasken darstellen (mehr dazu in der \nameref{sec:umsetzun
 
 \begin{figure}[H]
 \centering
-\caption{Beide Abbildungen stellen den Graphen für das Beispiel aus der Aufgabenstellung dar\\ 
-  (s. auch \ref{example:0}).}
+\caption{Beide Abbildungen stellen den Graphen für das Beispiel aus der Aufgabenstellung dar.\\
+Die Buchstaben stehen für die entsprechenden Obstsorten aus diesem Beispiel (s. auch \ref{example:0}).}
 \begin{subfigure}[c]{.49\textwidth}
 \centering
 \input{./tex/tikz/graph-a-b.tex}
@@ -174,9 +177,8 @@ weil ich für die Operation des Entfernens Logikgatter verwende.
 \subsection{Logik}
 \TODO{Veranschauung}
 
-Betrachten wir eine Spießkombination $s$, die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht.\\
-Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$. Die Bitmaske $bf$ besteht aus $n$ 1--en.
-In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
+Betrachten wir, bzw. \textit{analysieren} wir, eine Spießkombination $s$, die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
+Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$. Die Bitmaske $bf$ besteht aus $n$ 1--en.In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
 Die Bitmaske $br$ wird auf folgende Weise definiert:
 \[
 br := \neg(bn) \land bf.
@@ -204,16 +206,76 @@ Was die beschriebenen Operationen verursachen, erläutere ich anhand der folgend
   \end{enumerate}
   \item Falls es sich um einen Knoten $x \in A \setminus F_s$ handelt.
   \begin{enumerate}
-    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 0 steht, ergibt sich 
+    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 0 steht, ergibt sich 
       laut Lemma \ref {lem:spiess-numbers} ein Widerspruch.
-    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 1 steht, wird die Stelle 
+    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 1 steht, bleibt es auch 1.
+    \item Falls ein Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 1, wird die Stelle 
       $y$ in $M_x$ zu 0.
-    \item Falls ein Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 1
-    \item Falls ein Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 0
+    \item Falls ein Knoten $y$ zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 0 steht, bleibt es auch 0.
   \end{enumerate}
 \end{enumerate}
 
 \subsection{Komponenten}
+Nach der Analyse der allen $m$ Spießkombinationen verfügen wir über einen Graphen $G$,
+in dem viele Kanten in $E$ entfernet wurden.
+Auf diese Weise können wir schon anfangen, die Indizes der Obstsorten aus $W$ festzulegen.
+
+\begin{definition}[Matching]\label{def:matching}
+Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Als ein \textbf{Matching} bezeichnen wir eine
+Teilmenge $S \subseteq E$, sodass für alle $v \in V$ gilt, dass höchstens eine Kante 
+aus $S$ inzident zu $v$ ist.\\
+Wir bezeichnen einen Knoten $v \in V$ als in $S$ \textbf{gematcht}, wenn eine Kante aus $S$ inzident
+zu $v$ sit.
+\end{definition}
+
+\begin{definition}[Perfektes Matching]\label{def:perfect-matching}
+Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Ein \textbf{perfektes Matching} $\mathcal{M} \subseteq E$
+ist so ein Matching, in dem alle Knoten aus $V$ gematcht sind.
+\end{definition}
+
+\begin{definition}[Nachbarschaft]\label{def:nachbarschaft}
+Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Für alle $X \subseteq V$ definieren wir die 
+\textbf{Nachbarschaft} von $X$ als $\mathcal{N}(X) = \{y \in V: (x, y) \in E$ für einige $x \in X\}$.
+\end{definition}
+
+\begin{satz}[Satz von Hall]
+Sei $\mathcal{G} = (L \cup R, E)$ ein bipartites, ungerichtetes Graph. Es existiert ein perfektes Matching genau dann, wenn es für alle Teilmengen $K \subseteq L$ gilt: $|K| \leqslant |N(K)|$.
+\end{satz}
+
+\begin{proof}
+Auf den Beweis verzichte ich. Ein Beweis ist beispielsweise
+\href{https://homes.cs.washington.edu/~anuprao/pubs/CSE599sExtremal/lecture6.pdf}{hier}
+\footnote{Anup Rao. Lecture 6 Hall’s Theorem. October 17, 2011. University of Washington. [Zugang 21.01.2021]\\
+\url{https://homes.cs.washington.edu/~anuprao/pubs/CSE599sExtremal/lecture6.pdf}} zu finden.
+\end{proof}
+
+\begin{lemma}
+Seien $x \in A$ ein Knoten in $G$, seine Kardinalität $\Delta(x) = 1$,
+und der einzelne Nachbar von $x$ sei $y \in B$.
+Dann gehört der Index $y$ der Obstsorte $x$.
+\end{lemma} 
+
+\begin{proof}
+Nach dem Satz von Hall ist für $x \in A$ die Bedingung $|x| = \Delta(x) = 1 \leqslant |N(x)| = 1$ erfüllt.
+Deshalb existiert ein perfektes Matching für $x \in A$ und das ist auch das einzelne mögliche Matching.
+Nach der Aufgabenstellung hat jede Obstsorte genau einen Index, also ist der Index der Obstsorte
+$x$ somit gefunden.
+\end{proof}
+
+\TODO{Lemma: 2. Fall $\rightarrow \Delta(x) > 1$\\
++ Beweis}
+\begin{lemma}
+Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
+Dann gehört $x$ zu einer Zusammenhangskomponente $C$, die aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
+und $y_1, ..., y_k \in B$ und $k^2$ Kanten, die das jeweilige Paar von Knoten $(x_i, y_j) \in E$
+für alle $1 \leqslant i, j \leqslant k$ verbinden, besteht. 
+\end{lemma}
+\begin{proof}
+Der Beweis erfolgt durch Widerspruch. 
+\end{proof}
+
+\TODO{DFS beschreiben}
+
 
 \begin{figure}[h]
 \centering
@@ -231,8 +293,8 @@ Was die beschriebenen Operationen verursachen, erläutere ich anhand der folgend
 \end{subfigure}
 \end{figure}
 
-\subsection{Laufzeit}
 \subsection{Prüfung auf Korrektheit der Eingabe}
+\subsection{Laufzeit}
 
 \section{Umsetzung}\label{sec:umsetzung}
 

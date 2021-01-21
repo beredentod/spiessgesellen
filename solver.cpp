@@ -155,7 +155,11 @@ bool Solver::checkResult(){
 	set<int> temp;
 
 	for (auto x: wishes) {
-		if (G.deg(x) == 1) {
+		if (G.deg(x) == 0) {
+			cout << "Der Obstsorte \"" << ID2Fruit.find(x)->second << "\" kann kein Index zugewiesen werden.\n";
+			return false;
+		}
+		else if (G.deg(x) == 1) {
 			vector<int> neigh = G.getNeighbors(x);
 			result.insert(neigh[0] - n + 1);
 		}
@@ -180,7 +184,9 @@ bool Solver::checkResult(){
 		bool prob = false;
 		if (!ready[x]) {
 			G.DFS(x);
+			cout << "Cycle of " << x << ": " << boolalpha <<  G.checkCycle(x) << "\n";
 			for (auto x: G.comp) {
+				//cout << x << " ";
 				if (x < n) {
 					if (!todo[x]) {
 						solv = false;
@@ -193,6 +199,7 @@ bool Solver::checkResult(){
 					temp.insert(x - n + 1);
 				}
 			}
+			//cout << "\n";
 
 			if (prob) {
 				set<int> curr_prob;
@@ -213,7 +220,7 @@ bool Solver::checkResult(){
 	if (solv)
 		return true;
 	else {
-		cout << "Für die folgenden Obsorten konnte keine eideutige Zuweisung gefunden werden.\n";
+		cout << "Für die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
 		for (auto x: problems) {
 			cout << "Komponente: ";
 			for (auto y: x)
@@ -228,6 +235,40 @@ bool Solver::checkResult(){
 	}
 }
 
+bool Solver::checkCoherence(){
+	vector<int> vis(n + n);
+
+	for (int i = 0; i < n; i++) {
+		if (!vis[i]) {
+			G.DFS(i);
+			for (auto x: G.comp) {
+				cout << x << " ";
+				vis[x] = true;
+			}
+			/*set<int>::iterator it1 = G.compA.begin(), it2 = G.compB.begin();
+			int vA = *it1;
+			cout << *it1 << " ";
+			vis[vA] = true;
+			int vB = *it2;
+			bitset<MAXN> bA = matrix[vA];
+
+			it1++;
+			for (; it1 != G.compA.end(); it1++) {
+				vis[*it1] = true;
+				cout << *it1 << " ";
+				if (bA != matrix[*it1])
+					return false;
+			}*/
+
+			G.comp.clear();
+			G.compA.clear();
+			G.compB.clear();
+
+			cout << "\n";
+		}
+	}
+	return true;
+}
 
 set<int> Solver::getResult(){
 	return result; 
