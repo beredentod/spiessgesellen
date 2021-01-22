@@ -10,51 +10,37 @@
 using namespace std;
 
 class Graph {
+	//die Anzahl der Knoten in der jeweiligen Partition
 	int n1, n2;
+
+	//der Graph als Adjazenliste
 	vector<vector<int>> gr;
-	//vector<int> vis, viscyc, fin; //for cycle detection
 
 public:	
 	Graph(){};
 	Graph(int num1, int num2) : n1(num1), n2(num2) {
+		//die Erstellung der Adjazenzliste
 		gr = vector<vector<int>> (n1 + n2, vector<int>());
-		/*vis = vector<int> (n1 + n2);
-		viscyc = vector<int> (n1 + n2);
-		fin = vector<int> (n1 + n2);*/
 	}
 	~Graph(void){};
 
-	//set<int> comp, compA, compB; 
-
+	//diese Methode fügt eine Kante zwischen den Knoten a und b hinzu
 	void addEdge(int a, int b);
+
+	//diese Methode gibt den Grad des Knotens zurück
 	int deg(int v);
+
+	//diese Methode gibt die Nachbarliste eines Knotens zurück
 	vector<int> getNeighbors(int v);
+
+//			=== DEBUG ===
+//die folgenden Methoden werden als Debugging-Tools verwendet
+
+	//diese Methode zeigt alle Nachbarknoten des Knotens v an
 	void printNeighbors (int v);
+
+	//diese Methode zeigt alle Nachbarknoten der allen Knoten im Graphen an
 	void printGraph();
-
-	/*bool checkCycle(int v, int par = -1){
-		//cout << "here " << v << " " << par << "\n";
-		viscyc[v] = true;
-		for (auto u: gr[v]){
-			if (!viscyc[u]){
-				//cout << u << " <- \n";
-				if (checkCycle(u, v))
-					return true; 
-			}
-			else if (u != par) {
-				//cout << u << " " << par << " hhh\n";
-				return true; 
-			}
-		} 
-		return false; 
-	}*/
-	//bool checkCycle2(int v);
-
-	//void DFS(int v);
-	/*void clearVis() {
-		for (auto &x: vis)
-			x = 0;
-	}*/
 };
 
 #endif
