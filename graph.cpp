@@ -6,17 +6,26 @@ void Graph::addEdge(int a, int b){
 }
 
 void Graph::printNeighbors(int v){
-	cout << v << ": ";
+	cout << "DEBUG: Neighbors of " << v << ": ";
 	for (auto x: gr[v])
 		cout << x << " ";
 	cout << "\n";
 }
 
 void Graph::printGraph(){
+	cout << "DEBUG: Whole graph\n";
 	for (int i = 0; i < n1 + n2; i++) 
 		printNeighbors(i);
+	cout << "\n";
 }
 
+int Graph::deg(int v) {
+	return gr[v].size();
+}
+
+vector<int> Graph::getNeighbors(int v) {
+	return gr[v];
+}
 
 
 /*bool Graph::checkCycle2(int v){
@@ -32,7 +41,7 @@ void Graph::printGraph(){
 
 	vis[v] = true;
 	return false;
-}*/
+}
 
 void Graph::DFS(int v) {
 	comp.insert(v);
@@ -46,12 +55,5 @@ void Graph::DFS(int v) {
 	for (auto u: gr[v])
 		if (!vis[u])
 			DFS(u);
-}
+}*/
 
-int Graph::deg(int v) {
-	return gr[v].size();
-}
-
-vector<int> Graph::getNeighbors(int v) {
-	return gr[v];
-}

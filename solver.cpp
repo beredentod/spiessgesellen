@@ -22,6 +22,8 @@ void Solver::readFile(string path) {
 		vector<string> wishes_words{istream_iterator<string>{iss}, istream_iterator<string>{}};
 		set<string> all_fruits(wishes_words.begin(), wishes_words.end());
 
+		used = vector<int>(n + n);
+
 		//Anzahl der Informationen / TODO: change name <Informationen>
 		file >> m;
 		getline(file, data);
@@ -33,7 +35,10 @@ void Solver::readFile(string path) {
 			istringstream isss(data);
 			vector<string> words{istream_iterator<string>{isss}, istream_iterator<string>{}};
 			set<int> currNum;
-			for (auto x: words) currNum.insert(stoi(x));
+			for (auto x: words) {
+				currNum.insert(stoi(x));
+				used[stoi(x)+n-1] = true;
+			}
 
 			getline(file, data);
 			istringstream issss(data);
@@ -48,6 +53,7 @@ void Solver::readFile(string path) {
 		for (auto x: all_fruits) {
 			ID2Fruit[it] = x;
 			fruit2ID[x] = it;
+			used[it] = true;
 			it++;
 		}
 
@@ -61,9 +67,8 @@ void Solver::readFile(string path) {
 			infos.pb({x.first, currFruits});
 		}
 
-		printFruits();
-		printInfos();
-		printWishes();
+		//printFruits();
+		//printInfos();
 	} 
 	else {
 		cerr << "Error: File could not be opened. Abort.\n";
@@ -102,49 +107,35 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 	//cout << "\n";
 }
 
-void Solver::printFruits() {
-	for (auto x: fruit2ID)
-		cout << x.first << "   " << x.second << "\n";	
-}
-
-void Solver::printInfo(int num) {
-	auto x = infos[num];
-	for (auto y: x.first) cout << y << " ";
-	cout << "\n";
-	for (auto y: x.second) cout << ID2Fruit.find(y)->second << " ";
-	cout << "\n";	
-} 
-
-void Solver::printWishes() {
-	//for (auto x: wishes) cout << x << " ";
-	cout << "Wishes: ";
-	for (auto x: wishes) cout << ID2Fruit.find(x)->second << ", ";
-	cout << "\n";
-}
-
-void Solver::printInfos() {
-	for (int i = 0; i < int(infos.size()); i++) printInfo(i);
-}
-
 void Solver::analyzeAllInfos(){
 	for (auto x: infos)
 		analyzeInfo(x);
 
-	for (int i = 0; i < n; i++) {
-		cout << matrix[i] << "\n";
-	}
-
 	for (auto x: ID2Fruit) {
 		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
 			G.addEdge(x.first, i);
-
-		cout << " "<< x.second << "\t";
-		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
-			cout << i + 1 << " ";
-		cout << "\n"; 
 	}
 
-	G.printGraph();
+	//printMatrix();
+	//printPossibleAssignments();
+	//G.printGraph();
+}
+
+bool Solver::checkCoherence(){ 
+	int notusedA = 0, notusedB = 0;
+	for (int i = 0; i < n; i++)
+		if (!used[i]) notusedA++;
+	for (int i = 0; i < n; i++)
+		if (!used[i]) notusedB++;
+
+	if (notusedA != notusedB)
+		return false;
+
+	for (int i = 0; i < int(used.size()); i++)
+		if (used[i] && G.deg(i) == 0)
+			return false;
+
+	return true;
 }
 
 bool Solver::checkResult(){
@@ -156,7 +147,8 @@ bool Solver::checkResult(){
 
 	for (auto x: wishes) {
 		if (G.deg(x) == 0) {
-			cout << "Der Obstsorte \"" << ID2Fruit.find(x)->second << "\" kann kein Index zugewiesen werden.\n";
+			cout << "Der Obstsorte \"" << ID2Fruit.find(x)->second
+				<< "\" kann kein Index zugewiesen werden.\n";
 			return false;
 		}
 		else if (G.deg(x) == 1) {
@@ -173,9 +165,10 @@ bool Solver::checkResult(){
 	if (count == 0)
 		return true;
 
-	cout << "Multiple possible: " << count << "\n";
-	for (auto x: multip) cout << ID2Fruit.find(x)->second << " ";
-	cout << "\n";
+	/*cout << "DEBUG: Multiple possible assignments: " << count << "\n";
+	for (auto x: multip)
+		cout << "\t--> " << ID2Fruit.find(x)->second << "\n";
+	cout << "\n";*/
 
 	bool solv = true;
 	vector<set<int>> problems;
@@ -183,42 +176,35 @@ bool Solver::checkResult(){
 	for (auto x: multip) {
 		bool prob = false;
 		if (!ready[x]) {
-			G.DFS(x);
-			cout << "Cycle of " << x << ": " << boolalpha <<  G.checkCycle(x) << "\n";
-			for (auto x: G.comp) {
-				//cout << x << " ";
-				if (x < n) {
-					if (!todo[x]) {
-						solv = false;
-						prob = true;
-					}
-					else
-						ready[x] = 1;
+			vector<int> setB = G.getNeighbors(x);
+			vector<int> setA = G.getNeighbors(setB[0]);
+
+			for (auto x: setA) {
+				if (!todo[x]) {
+					solv = false;
+					prob = true;
 				}
-				else {
-					temp.insert(x - n + 1);
-				}
+				else
+					ready[x] = 1;
 			}
-			//cout << "\n";
 
 			if (prob) {
 				set<int> curr_prob;
-				for (auto x: G.comp) {
-					if (x < n)
+				for (auto x: setA)
 						curr_prob.insert(x);
-				}
 				problems.pb(curr_prob);
 			}
-
-			G.comp.clear();
+			else
+				for (auto x: setB)
+					temp.insert(x - n + 1);
 		}
 	}
-
-	for (auto x: temp) 
-		result.insert(x);
 	
-	if (solv)
+	if (solv) {
+		for (auto x: temp) 
+			result.insert(x);
 		return true;
+	}
 	else {
 		cout << "Für die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
 		for (auto x: problems) {
@@ -235,41 +221,53 @@ bool Solver::checkResult(){
 	}
 }
 
-bool Solver::checkCoherence(){
-	vector<int> vis(n + n);
-
-	for (int i = 0; i < n; i++) {
-		if (!vis[i]) {
-			G.DFS(i);
-			for (auto x: G.comp) {
-				cout << x << " ";
-				vis[x] = true;
-			}
-			/*set<int>::iterator it1 = G.compA.begin(), it2 = G.compB.begin();
-			int vA = *it1;
-			cout << *it1 << " ";
-			vis[vA] = true;
-			int vB = *it2;
-			bitset<MAXN> bA = matrix[vA];
-
-			it1++;
-			for (; it1 != G.compA.end(); it1++) {
-				vis[*it1] = true;
-				cout << *it1 << " ";
-				if (bA != matrix[*it1])
-					return false;
-			}*/
-
-			G.comp.clear();
-			G.compA.clear();
-			G.compB.clear();
-
-			cout << "\n";
-		}
-	}
-	return true;
-}
-
 set<int> Solver::getResult(){
 	return result; 
 }
+
+void Solver::printWishes() {
+	cout << "Wünsche: ";
+	for (auto x: wishes)
+		cout << ID2Fruit.find(x)->second << " ";
+	cout << "\n";
+}
+
+void Solver::printInfos() {
+	cout << "DEBUG: All infos about the sets\n";
+	for (int i = 0; i < int(infos.size()); i++)
+		printInfo(i);
+	cout << "\n";
+}
+
+void Solver::printMatrix() {
+	cout << "DEBUG: Matrix\n";
+	for (int i = 0; i < n; i++)
+		cout << "DEBUG: " << matrix[i] << "\n";
+	cout << "\n";
+}
+
+void Solver::printPossibleAssignments() {
+	cout << "DEBUG: Possible assignments\n";
+	for (auto x: ID2Fruit) {
+		cout << "DEBUG: " << x.second << "\t";
+		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
+			cout << i + 1 << " ";
+		cout << "\n"; 
+	}	
+	cout << "\n";
+}
+
+void Solver::printFruits() {
+	cout << "DEBUG: IDs of Fruits\n";
+	for (auto x: fruit2ID)
+		cout << "DEBUG: " << x.first << "   " << x.second << "\n";	
+	cout << "\n";
+}
+
+void Solver::printInfo(int num) {
+	auto x = infos[num];
+	for (auto y: x.first) cout << y << " ";
+	cout << "\n";
+	for (auto y: x.second) cout << ID2Fruit.find(y)->second << " ";
+	cout << "\n";	
+} 

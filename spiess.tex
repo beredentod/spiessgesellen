@@ -81,6 +81,7 @@
 \newtheorem{lemma}{Lemma}
 \newtheorem{definition}{Definition}
 \newtheorem{satz}{Satz}
+\newtheorem{axiom}{Axiom}
 %\renewcommand*{\proofname}{Solution}
 
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
@@ -107,17 +108,28 @@
 
 \section{Lösungsidee}
 \subsection{Formulierung des Problems}
-\TODO{use definitions}
-Gegeben sind eine Menge von $n$ \textit{Obstsorten} $A$ und eine Menge von $n$ ganzen Zahlen $B = \{1, 2, ..., n\}$,
-die für die Indizes der Obstsorten stehen.
-Gegeben sind auch $m$ \textit{Spießkombinationen}, wobei jede $i$--te Spießkombination
+\begin{axiom}\label{ax:obstsorte-index}
+Jeder \textbf{Obstsorte} wird genau ein einzigartiger natürlicher Index zugewiesen.\\
+Man schreibt: $o(x, i)$ --- eine Obstsorte besitzt $x$ einen Index $i$.
+\end{axiom}
+
+Gegeben sind eine Menge von $n$ \textit{Obstsorten} $A$ und eine Menge von $n$ ganzen Zahlen
+$B = \{1, 2, ..., n\}$, zu der die Indizes der Obstsorten aus $A$ gehören.
+
+\begin{definition}[Spießkombination]\label{def:spiesskomb}
+Als eine \textbf{Spießkombination} $K = (F, Z)$ bezeichnet man eine Veknüpfung von zwei Mengen 
+$F \subseteq A$ und $Z$, wobei $Z = \{x \in F, i \in B : o(x, i)\, |\, i\}$.
+\end{definition}
+
+Gegeben sind auch $m$ Spießkombinationen, wobei jede $i$--te Spießkombination
 aus einer Menge von Obstsorten $F_i \subseteq A$ und einer Menge der Zahlen $Z_i \subseteq B$ besteht. 
-Für jedes $i$ besteht die Menge $Z_i$ nur aus
-den in $B$ enthaltenen Indizes, die den Obstsorten in $F_i$ entsprechen, deshalb haben auch die beiden Mengen
+Nach der Definition \ref{def:spiesskomb} besteht die Menge $Z_i$ nur aus
+den in $B$ enthaltenen Indizes, die zu den Obstsorten in $F_i$ gehören, deshalb haben auch die beiden Mengen
 $F_i$ und $Z_i$ dieselbe Anzahl an Elementen.
-Außerdem gegeben ist auch eine \textit{Wunschliste} $W \subseteq A$.\\
+Außerdem gegeben ist auch eine \textit{\textbf{Wunschliste}} $W \subseteq A$.\\
+
 Die Aufgabe ist, zu entscheiden,
-ob die Menge der Indizes der in $W$ gegebenen Obstsorten $W' \subseteq B$ anhand der $m$ 
+ob die Menge der Indizes der in $W$ enthaltenen Obstsorten $W' \subseteq B$ anhand der $m$ 
 Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegebn werden.
 
 \subsection{Bipartiter Graph}
@@ -154,7 +166,7 @@ Die Buchstaben stehen für die entsprechenden Obstsorten aus diesem Beispiel (s.
 \end{subfigure}
 \end{figure}
 
-Jede $i$--te \textit{Spießkombinationen} bringt uns Informationen über die Obstsorten in $F_i$.
+Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
 Als $a \leadsto b$ bezeichnen wir, dass $a$ den Index $b$ haben kann. Wir können Folgendes festellen. 
 
 \begin{lemma} \label{lem:spiess-numbers}
@@ -221,25 +233,29 @@ in dem viele Kanten in $E$ entfernet wurden.
 Auf diese Weise können wir schon anfangen, die Indizes der Obstsorten aus $W$ festzulegen.
 
 \begin{definition}[Matching]\label{def:matching}
-Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Als ein \textbf{Matching} bezeichnen wir eine
-Teilmenge $S \subseteq E$, sodass für alle $v \in V$ gilt, dass höchstens eine Kante 
-aus $S$ inzident zu $v$ ist.\\
-Wir bezeichnen einen Knoten $v \in V$ als in $S$ \textbf{gematcht}, wenn eine Kante aus $S$ inzident
-zu $v$ sit.
+Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph.
+Als ein \textbf{Matching} bezeichnen wir eine Teilmenge $\mathcal{S} \subseteq \mathcal{E}$,
+sodass für alle $v \in \mathcal{V}$ gilt, dass höchstens eine Kante 
+aus $\mathcal{S}$ inzident zu $v$ ist.\\
+Wir bezeichnen einen Knoten $v \in \mathcal{V}$ als in $\mathcal{S}$ \textbf{gematcht},
+wenn eine Kante aus $\mathcal{S}$ inzident zu $v$ ist.
 \end{definition}
 
 \begin{definition}[Perfektes Matching]\label{def:perfect-matching}
-Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Ein \textbf{perfektes Matching} $\mathcal{M} \subseteq E$
-ist so ein Matching, in dem alle Knoten aus $V$ gematcht sind.
+Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph. Ein \textbf{perfektes Matching} 
+$\mathcal{M} \subseteq \mathcal{E}$ ist so ein Matching, in dem alle Knoten aus $\mathcal{V}$ gematcht sind.
 \end{definition}
 
 \begin{definition}[Nachbarschaft]\label{def:nachbarschaft}
-Sei $\mathcal{G} = (V, E)$ ein ungerichtetes Graph. Für alle $X \subseteq V$ definieren wir die 
-\textbf{Nachbarschaft} von $X$ als $\mathcal{N}(X) = \{y \in V: (x, y) \in E$ für einige $x \in X\}$.
+Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph.
+Für alle $X \subseteq \mathcal{V}$ definieren wir die \textbf{Nachbarschaft}
+von $X$ als $\mathcal{N}(X) = \{y \in \mathcal{V}| (x, y) \in \mathcal{E}$ für einige $x \in X\}$.
 \end{definition}
 
 \begin{satz}[Satz von Hall]
-Sei $\mathcal{G} = (L \cup R, E)$ ein bipartites, ungerichtetes Graph. Es existiert ein perfektes Matching genau dann, wenn es für alle Teilmengen $K \subseteq L$ gilt: $|K| \leqslant |N(K)|$.
+Sei $\mathcal{G} = (\mathcal{L} \cup \mathcal{R}, \mathcal{E})$ ein bipartites, ungerichtetes Graph.
+Es existiert ein perfektes Matching genau dann,
+wenn es für alle Teilmengen $\mathcal{K} \subseteq \mathcal{L}$ gilt:$|\mathcal{K}| \leqslant |N(\mathcal{K})|$.
 \end{satz}
 
 \begin{proof}
@@ -264,7 +280,7 @@ $x$ somit gefunden.
 
 \TODO{Lemma: 2. Fall $\rightarrow \Delta(x) > 1$\\
 + Beweis}
-\begin{lemma}
+\begin{lemma}\label{lem:grad-groesser1}
 Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
 Dann gehört $x$ zu einer Zusammenhangskomponente $C$, die aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
 und $y_1, ..., y_k \in B$ und $k^2$ Kanten, die das jeweilige Paar von Knoten $(x_i, y_j) \in E$
@@ -273,6 +289,34 @@ für alle $1 \leqslant i, j \leqslant k$ verbinden, besteht.
 \begin{proof}
 Der Beweis erfolgt durch Widerspruch. 
 \end{proof}
+
+\TODO{Lemmata über Zuweisungen (Satz von Hall) in Komponenten:\\
+eine Zuweisung ist immer möglich\\
+alle auf der Wunschliste\\
+mind. ein nicht auf der Wunschliste}
+
+\begin{lemma}
+Sei $C = (V_c, E_c) \subseteq G$ eine %in Lemma \ref{lem:grad-groesser1} beschriebene
+Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $C$.
+\end{lemma}
+\begin{proof} 
+\end{proof}
+
+\begin{lemma}
+Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\forall x \in A \cap V_c : x \in W$, dann fügen wir alle $y \in B \cap V_c$ in $W'$ hinzu.
+\end{lemma}
+\begin{proof} 
+\end{proof}
+
+\begin{lemma}
+Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\exists x \in A \cap V_c : x \notin W$, dann kann die Menge $W'$ nicht vollständig festgelegt werden.
+\end{lemma}
+\begin{proof} 
+\end{proof}
+
+
 
 \TODO{DFS beschreiben}
 
