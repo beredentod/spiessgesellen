@@ -257,10 +257,14 @@ bool Solver::checkResult(){
 
 			//falls mind. ein Knoten zur Komponente gehört, aber nicht 
 			//	gewünscht ist
-			if (prob) 
+			if (prob) {
 				//die Menge der Obstsorten der Komponente enthält 
 				//	mind. einen Knoten einer Obstsorte, die nicht gewünscht ist
-				problems.pb(setA);
+				set<int> currSet;
+				for (auto x: setA)
+					currSet.insert(x);
+				problems.pb(currSet);
+			}
 			//falls alle Knoten, die zur Komponente gehören, gewünscht sind
 			else
 				//alle Indizes der Obstsorte der Komponente werden 

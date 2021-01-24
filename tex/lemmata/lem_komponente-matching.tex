@@ -1,0 +1,36 @@
+\begin{lemma}\label{lem:komponente-matching}
+Sei $C = (V_c, E_c)$ eine
+Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $C$.
+\end{lemma}
+\begin{proof} 
+Nach Lemma \ref{lem:grad-groesser1} ist jede Zusammenhangskomponente ein vollständiger.
+bipartiter Graph. Nach Satz von Hall existiert ein perfektes Matching, wenn
+für alle Teilmengen $K \subseteq A \cap V_c$ gilt: $|K| \leqslant |N(K)|$.
+Die obere Behauptung kann für beliebig größe Mächtigkeiten $|K| = k \in \mathbb{N}$
+durch die vollständige Induktion bewiesen werden.\\
+
+\noindent
+\tbf{Induktionsanfang:} Für $k = 1$ hat der einzelne Knoten $x \in K \subseteq A \cap V_c$
+die Kardinalität $\Delta(x) = 1$.
+Deshalb gilt: $|x| = 1 \leqslant |N(x)| = 1$, was in Lemma \ref{lem:grad-1} 
+schon bewiesen wurde. Damit stimmt die Behauptung für $k = 1$ und der Induktionsanfang ist erledigt.\\
+
+\noindent
+\tbf{Induktionsschritt:} Es gelte die Aussage für ein $k \in \mathbb{N}$, also eine Teilemenge
+$K \subseteq A \cap V_c$ besteht aus $k$ Knoten und jeder Knoten $x \in K$ hat die Kardinalität
+$\Delta(x) = k$. Es gelte also: $|K| \leqslant |N(K)|$.\\
+Zu zeigen ist die Aussage für $k + 1$, also für eine Teilmenge $K' \subseteq A \cap V_c$ der Mächtigkeit 
+$|K'| = k+1$:
+\[
+|K'| \leqslant |N(K')|.
+\] 
+Wir verifizieren:
+
+Jeder Knoten in $C$ hat den Grad $k+1$, also: $|K'| = k + 1 \leqslant |N(K')| = (k+1)^2 = k^2 + 2k + 1$.\\
+Folglich stimmt die Behauptung für $k+1$.\\
+
+Der Induktionsschritt ist damit vollzogen und es wurde bewiesen, dass die Behauptung für beliebige
+Mächtigkeit von $K$ gilt.
+Dadurch wurde auch bewiesen, dass es in einer Zusammenhangskomponente in $G$
+ immer ein perfektes Matching gibt.
+\end{proof}

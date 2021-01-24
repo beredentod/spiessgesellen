@@ -56,6 +56,7 @@
 \usepackage{minibox}
 
 \usepackage{amsthm}
+\usepackage{enumitem}
 
 % Für Quelltext
 \usepackage{listings}
@@ -104,190 +105,49 @@
 \maketitle
 \tableofcontents
 
-\vspace{0.5cm}
-
 \section{Lösungsidee}
-\subsection{Formulierung des Problems}
-\begin{axiom}\label{ax:obstsorte-index}
-Jeder \textbf{Obstsorte} wird genau ein einzigartiger natürlicher Index zugewiesen.\\
-Man schreibt: $o(x, i)$ --- eine Obstsorte besitzt $x$ einen Index $i$.
-\end{axiom}
+\input{./tex/formulierung.tex}
 
-Gegeben sind eine Menge von $n$ \textit{Obstsorten} $A$ und eine Menge von $n$ ganzen Zahlen
-$B = \{1, 2, ..., n\}$, zu der die Indizes der Obstsorten aus $A$ gehören.
+\input{./tex/bipartiter-graph.tex}
 
-\begin{definition}[Spießkombination]\label{def:spiesskomb}
-Als eine \textbf{Spießkombination} $K = (F, Z)$ bezeichnet man eine Veknüpfung von zwei Mengen 
-$F \subseteq A$ und $Z$, wobei $Z = \{x \in F, i \in B : o(x, i)\, |\, i\}$.
-\end{definition}
+\input{./tex/logik.tex}
 
-Gegeben sind auch $m$ Spießkombinationen, wobei jede $i$--te Spießkombination
-aus einer Menge von Obstsorten $F_i \subseteq A$ und einer Menge der Zahlen $Z_i \subseteq B$ besteht. 
-Nach der Definition \ref{def:spiesskomb} besteht die Menge $Z_i$ nur aus
-den in $B$ enthaltenen Indizes, die zu den Obstsorten in $F_i$ gehören, deshalb haben auch die beiden Mengen
-$F_i$ und $Z_i$ dieselbe Anzahl an Elementen.
-Außerdem gegeben ist auch eine \textit{\textbf{Wunschliste}} $W \subseteq A$.\\
-
-Die Aufgabe ist, zu entscheiden,
-ob die Menge der Indizes der in $W$ enthaltenen Obstsorten $W' \subseteq B$ anhand der $m$ 
-Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegebn werden.
-
-\subsection{Bipartiter Graph}
-\TODO{use definitions\\
-Annahmen beschreiben}
-Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B = V, E)$ umwandeln.
-Die Menge der Kanten $E$ wird im Folgenden festgelegt.
-Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
-Als $M_i$ bezeichne ich die Liste der Länge $n$, die die Beziehungen des Knotens $i \in A$ zu jedem Knoten 
-$j \in B$ als 1 (Kante) 0 (keine Kante) darstellt.\\
-Nach der Aufgabenstellung gehört jeder Obstsorte aus $A$ genau ein Index aus $B$.
-Dennoch man kann am Anfang keiner Obsorte einen Index zuweisen.
-Deshalb verbinden wir zunächst jeden Knoten aus $A$ mit jedem Knoten aus $B$ durch eine Kante.
-Am Anfang ist $M$ dementsprechend voll mit 1--en.
-Bei der Erstellung der Adjazenzmatrix können wir den Vorteil nutzen, dass die jeweilige 
-Liste von Nachbarn des jeden Knotens $x \in A$ nur aus 0--en und 1-en besteht, indem
-wir diese Liste als Bitmasken darstellen (mehr dazu in der \nameref{sec:umsetzung}).
-
-\begin{figure}[H]
-\centering
-\caption{Beide Abbildungen stellen den Graphen für das Beispiel aus der Aufgabenstellung dar.\\
-Die Buchstaben stehen für die entsprechenden Obstsorten aus diesem Beispiel (s. auch \ref{example:0}).}
-\begin{subfigure}[c]{.49\textwidth}
-\centering
-\input{./tex/tikz/graph-a-b.tex}
-\caption{Die entsprechenden Mengen des Graphen}
-\label{fig:graph-anfang}
-\end{subfigure}
-\begin{subfigure}[c]{.49\textwidth}
-\centering
-\input{./tex/tikz/full-graph.tex}
-\caption{Der Graph am Anfang}
-\label{fig:graph-full}
-\end{subfigure}
-\end{figure}
-
-Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
-Als $a \leadsto b$ bezeichnen wir, dass $a$ den Index $b$ haben kann. Wir können Folgendes festellen. 
-
-\begin{lemma} \label{lem:spiess-numbers}
-Für jede $i$--te Spießkombination mit $F_i \subseteq A$ und $Z_i \subseteq B$ gilt, dass
-$\forall x \in F_i, \forall y \in Z_i: x \leadsto y$.\\
-Es gilt gleichzeitig, dass $\nexists p \in F_i, \forall q \in B \setminus Z_i: p \leadsto q$  
-\end{lemma}
-
-\TODO{Beweis}
-\begin{proof}
-\end{proof}
-
-Nach Lemma \ref{lem:spiess-numbers} dürfen wir alle Kanten, die aus jedem Knoten $x \in F_i$ 
-zu einem Knoten $y \in B \setminus Z_i$ führen, aus $E$ entfernen und nur die Kanten lassen, die
-zu allen $z \in Z_i$ führen.
-Da wir Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwenden, können wir 
-die Laufzeit bei der Analyse der jeweiligen Spießkombination optimieren,
-weil ich für die Operation des Entfernens Logikgatter verwende.
-
-\subsection{Logik}
-\TODO{Veranschauung}
-
-Betrachten wir, bzw. \textit{analysieren} wir, eine Spießkombination $s$, die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
-Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$. Die Bitmaske $bf$ besteht aus $n$ 1--en.In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
-Die Bitmaske $br$ wird auf folgende Weise definiert:
-\[
-br := \neg(bn) \land bf.
-\]
-\noindent So können wir auf allen Listen $M_i$, wobei $i \in F_s$, die AND--Operation mit der Maske $bn$ 
-durchführen:
-\[
-M_i := M_i \land bn.
-\]
-Analog führen wir die AND--Operation mit der Maske $br$ auf allen Listen $M_j$,
-wobei $j \in A \setminus F_s$, durch:
-\[
-M_j := M_j \land br.
-\]
-Was die beschriebenen Operationen verursachen, erläutere ich anhand der folgenden Fallunterscheidung.
-\begin{enumerate}
-  \item Falls es sich um einen Knoten $x \in F_s$ handelt.
-  \begin{enumerate}
-   \item Falls ein Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 0 steht, ergibt sich laut Lemma 
-    \ref {lem:spiess-numbers} ein Widerspruch. \mb{No i co z tego?? Dopisać} 
-   \item Falls ein Knoten $y$ zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 1 steht, bleibt es auch 1.
-   \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 0 steht, bleibt es auch 0.
-   \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 1 steht, 
-    wird die Stelle $y$ in $M_x$ zu 0.
-  \end{enumerate}
-  \item Falls es sich um einen Knoten $x \in A \setminus F_s$ handelt.
-  \begin{enumerate}
-    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 0 steht, ergibt sich 
-      laut Lemma \ref {lem:spiess-numbers} ein Widerspruch.
-    \item Falls ein Knoten $y$ nicht zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 1 steht, bleibt es auch 1.
-    \item Falls ein Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $y$ in $M_x$ 1, wird die Stelle 
-      $y$ in $M_x$ zu 0.
-    \item Falls ein Knoten $y$ zu $Z_s$ gehört und an der Stelle $y$ in $M_x$ 0 steht, bleibt es auch 0.
-  \end{enumerate}
-\end{enumerate}
-
-\subsection{Komponenten}
-Nach der Analyse der allen $m$ Spießkombinationen verfügen wir über einen Graphen $G$,
+\subsection{Zusammenhangskomponenten}
+Nach der Verarbeitung der allen $m$ Spießkombinationen verfügen wir über den Graphen $G$,
 in dem viele Kanten in $E$ entfernet wurden.
 Auf diese Weise können wir schon anfangen, die Indizes der Obstsorten aus $W$ festzulegen.
+Definieren wir zunächst, was generell ein \tbf{Matching} ist.
 
-\begin{definition}[Matching]\label{def:matching}
-Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph.
-Als ein \textbf{Matching} bezeichnen wir eine Teilmenge $\mathcal{S} \subseteq \mathcal{E}$,
-sodass für alle $v \in \mathcal{V}$ gilt, dass höchstens eine Kante 
-aus $\mathcal{S}$ inzident zu $v$ ist.\\
-Wir bezeichnen einen Knoten $v \in \mathcal{V}$ als in $\mathcal{S}$ \textbf{gematcht},
-wenn eine Kante aus $\mathcal{S}$ inzident zu $v$ ist.
-\end{definition}
+\input{./tex/lemmata/def_matching.tex}
 
-\begin{definition}[Perfektes Matching]\label{def:perfect-matching}
-Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph. Ein \textbf{perfektes Matching} 
-$\mathcal{M} \subseteq \mathcal{E}$ ist so ein Matching, in dem alle Knoten aus $\mathcal{V}$ gematcht sind.
-\end{definition}
+\noindent
+Zwischen verschiedenen Typen des Matchings unterscheidet man auch das \tbf{perfekte Matching}.
 
-\begin{definition}[Nachbarschaft]\label{def:nachbarschaft}
-Sei $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ ein ungerichtetes Graph.
-Für alle $X \subseteq \mathcal{V}$ definieren wir die \textbf{Nachbarschaft}
-von $X$ als $\mathcal{N}(X) = \{y \in \mathcal{V}| (x, y) \in \mathcal{E}$ für einige $x \in X\}$.
-\end{definition}
+\input{./tex/lemmata/def_perfect-matching.tex}
 
-\begin{satz}[Satz von Hall]
-Sei $\mathcal{G} = (\mathcal{L} \cup \mathcal{R}, \mathcal{E})$ ein bipartites, ungerichtetes Graph.
-Es existiert ein perfektes Matching genau dann,
-wenn es für alle Teilmengen $\mathcal{K} \subseteq \mathcal{L}$ gilt:$|\mathcal{K}| \leqslant |N(\mathcal{K})|$.
-\end{satz}
+\noindent
+Um die Aufgabe in der Form zu lösen, eignet sich gut der \tbf{Satz von Hall},
+der als ein Ausgangspunkt der ganzen Matching--Theorie gilt. 
+Um sich dieses Satzes zu bedienen, muss man noch den Begriff der \tbf{Nachbarschaft} einführen.
 
-\begin{proof}
-Auf den Beweis verzichte ich. Ein Beweis ist beispielsweise
-\href{https://homes.cs.washington.edu/~anuprao/pubs/CSE599sExtremal/lecture6.pdf}{hier}
-\footnote{Anup Rao. Lecture 6 Hall’s Theorem. October 17, 2011. University of Washington. [Zugang 21.01.2021]\\
-\url{https://homes.cs.washington.edu/~anuprao/pubs/CSE599sExtremal/lecture6.pdf}} zu finden.
-\end{proof}
+\input{./tex/lemmata/def_nachbarschaft.tex}
 
-\begin{lemma}
-Seien $x \in A$ ein Knoten in $G$, seine Kardinalität $\Delta(x) = 1$,
-und der einzelne Nachbar von $x$ sei $y \in B$.
-Dann gehört der Index $y$ der Obstsorte $x$.
-\end{lemma} 
+\input{./tex/lemmata/satz_von_hall.tex}
 
-\begin{proof}
-Nach dem Satz von Hall ist für $x \in A$ die Bedingung $|x| = \Delta(x) = 1 \leqslant |N(x)| = 1$ erfüllt.
-Deshalb existiert ein perfektes Matching für $x \in A$ und das ist auch das einzelne mögliche Matching.
-Nach der Aufgabenstellung hat jede Obstsorte genau einen Index, also ist der Index der Obstsorte
-$x$ somit gefunden.
-\end{proof}
+\input{./tex/lemmata/lem_grad1.tex}
 
-\TODO{Lemma: 2. Fall $\rightarrow \Delta(x) > 1$\\
-+ Beweis}
+
 \begin{lemma}\label{lem:grad-groesser1}
 Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
-Dann gehört $x$ zu einer Zusammenhangskomponente $C$, die aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
-und $y_1, ..., y_k \in B$ und $k^2$ Kanten, die das jeweilige Paar von Knoten $(x_i, y_j) \in E$
-für alle $1 \leqslant i, j \leqslant k$ verbinden, besteht. 
+Dann gehört $x$ zu einer Zusammenhangskomponente $C = (V_c, E_c)$, wobei
+die Menge $V_c$ aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
+und $y_1, ..., y_k \in B$ besteht. Für die Menge $E_c$ gilt:
+$E_c = \{(x_i, y_j) \,|\, $für alle $ 1 \leqslant i,j \leqslant k \}$.
+$C$ ist deshalb selbt ein vollständiger, bipartiter Graph.
 \end{lemma}
 \begin{proof}
-Der Beweis erfolgt durch Widerspruch. 
+Der Beweis erfolgt durch Widerspruch.
+\TODO{Beweis} 
 \end{proof}
 
 \TODO{Lemmata über Zuweisungen (Satz von Hall) in Komponenten:\\
@@ -295,30 +155,51 @@ eine Zuweisung ist immer möglich\\
 alle auf der Wunschliste\\
 mind. ein nicht auf der Wunschliste}
 
-\begin{lemma}
-Sei $C = (V_c, E_c) \subseteq G$ eine %in Lemma \ref{lem:grad-groesser1} beschriebene
-Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $C$.
+\input{./tex/lemmata/lem_komponente-matching.tex}
+
+\begin{lemma}\label{}
+Sei $C = (V_c, E_c)$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\forall x \in A \cap V_c : x \in W$, dann werden alle $y \in B \cap V_c$ in $W'$ hinzugefügt.
 \end{lemma}
 \begin{proof} 
+Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte genau einen einzigartigen Index.
+Die Zusammenhangskomponente $C$ beschreibt nach Lemmata \ref{lem:grad-groesser1} und \ref{lem:komponente-matching},
+dass jede Obstsorte $x \in A \cap V_c$ jeden Index $y \in B \cap V_c$ haben kann, weil
+ein perfektes Matching stets existiert und $C$ ein vollständiger, bipartiter Graph ist.
+
+Dadurch, dass $\forall x \in A \cap V_c : x \in W$ gilt,
+ist ohne Bedeutung, welchen Index die jeweilige Obstsorte besitzt, da
+ die Lösung des Problems eine Menge $W'$ mit den Indizes der Obstsorten aus $W$ sein soll.
+Dadurch, dass $A \cap V_c \subseteq W$ auch gilt: $B \cap V_c \subseteq W'$. 
 \end{proof}
 
 \begin{lemma}
-Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente in $G$.
-Wenn gilt: $\forall x \in A \cap V_c : x \in W$, dann fügen wir alle $y \in B \cap V_c$ in $W'$ hinzu.
+Sei $C = (V_c, E_c)$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\exists x \in A \cap V_c : x \notin W$, dann kann die Menge $W'$ nicht eindeutig
+festgelegt werden.
 \end{lemma}
-\begin{proof} 
+\begin{proof}
+Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte genau einen einzigartigen Index.
+Die Zusammenhangskomponente $C$ beschreibt nach Lemmata \ref{lem:grad-groesser1} und \ref{lem:komponente-matching},
+dass jede Obstsorte $x \in A \cap V_c$ jeden Index $y \in B \cap V_c$ haben kann, weil
+ein perfektes Matching stets existiert und $C$ ein vollständiger, bipartiter Graph ist.
+
+Angenommen, $\exists p \in A \cap V_c \land p \notin W$. Dann ist es unmöglich, festzustellen,
+welcher Index aus $B \cap V_c$ der Obstsorte $p$ gehört.
+Also ist es auch unmöglich, festzustellen, welche Indizes in $W'$ hinzugefügt werden sollen.
+Deshalb, unabhängig von allen anderen Zusammenhangskomponenten des Graphen $G$,
+ist unmöglich, eine eindeutige Menge der Indizes der gewünschten Obstsorten festzulegen.
+Dadurch gibt es keine eindeutige Lösung zu diesem Problem für diese Eingabe.
 \end{proof}
+
 
 \begin{lemma}
-Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente in $G$.
-Wenn gilt: $\exists x \in A \cap V_c : x \notin W$, dann kann die Menge $W'$ nicht vollständig festgelegt werden.
+\TODO{umschreiben}
+Wenn alle Zusammenhangskomponten, die die Wünsche aus $W$ beinhalten, nur aus den Wüschen
+aus $W$ bestehen, kann $W'$ eindeutig und vollständig festgelegt werden.
 \end{lemma}
 \begin{proof} 
 \end{proof}
-
-
-
-\TODO{DFS beschreiben}
 
 
 \begin{figure}[h]
@@ -337,21 +218,16 @@ Wenn gilt: $\exists x \in A \cap V_c : x \notin W$, dann kann die Menge $W'$ nic
 \end{subfigure}
 \end{figure}
 
-\subsection{Prüfung auf Korrektheit der Eingabe}
-\subsection{Laufzeit}
+\subsection{Prüfung auf Korrektheit der Eingabe}\label{sec:korrektheit-eingabe}
+\subsection{Laufzeit}\label{sec:laufzeit}
 
 \section{Umsetzung}\label{sec:umsetzung}
+\subsection{Klasse \ttt{Solver}}
+\subsection{Klasse \ttt{Graph}}
 
 \section{Beispiele}
 
-\input{./tex/beispiel0.tex}
-\input{./tex/beispiel1.tex}
-\input{./tex/beispiel2.tex}
-\input{./tex/beispiel3.tex}
-\input{./tex/beispiel4.tex}
-\input{./tex/beispiel5.tex}
-\input{./tex/beispiel6.tex}
-\input{./tex/beispiel7.tex}
+\input{./tex/beispiele.tex}
 
 \section{Quellcode}
 \lstinputlisting[language=C++]{./tex/spiesse.m}

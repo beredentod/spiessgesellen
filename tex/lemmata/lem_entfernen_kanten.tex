@@ -1,0 +1,15 @@
+\begin{lemma} \label{lem:spiess-numbers}
+Sei $K = (F, Z)$ eine Spießkombination. Für jede Obstsorte $o(x, i)$, wobei $x \in F$, gilt:
+\begin{enumerate}[label={\upshape(\roman*)}]
+  %\item $\forall x \in F\, \forall y \in Z: x \leadsto y$
+  %\item $\nexists p \in F\, \forall q \in B \setminus Z: p \leadsto q$.
+  \item $i \in Z$. \label{lem:spiess-numbers1}
+  \item $i \notin B \setminus Z$. \label{lem:spiess-numbers2}
+\end{enumerate}   
+\end{lemma}
+
+\begin{proof}
+Nach Definition \ref{def:spiesskomb} gilt \ref{lem:spiess-numbers1}. 
+Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte einen einzigartigen Index $i$,
+deshalb kann $i$ nicht gleichzeitig zu $Z$ und $B \setminus Z$ gehören \ref{lem:spiess-numbers2}.
+\end{proof}

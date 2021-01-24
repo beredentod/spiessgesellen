@@ -1,0 +1,47 @@
+\subsection{Logik}
+\TODO{Veranschauung}
+
+Betrachten wir eine Spießkombination $s = (F_s, Z_s)$.
+%die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
+Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$.
+Die Bitmaske $bf$ besteht aus $n$ 1--en.
+In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
+Die Bitmaske $br$ wird auf folgende Weise definiert:
+\[
+br := \neg(bn) \land bf.
+\]
+\noindent So können wir auf allen Listen $M_i$, wobei $i \in F_s$, die AND--Operation mit der Maske $bn$ 
+durchführen:
+\[
+M_i := M_i \land bn.
+\]
+Analog führen wir die AND--Operation mit der Maske $br$ auf allen Listen $M_j$,
+wobei $j \in A \setminus F_s$, durch:
+\[
+M_j := M_j \land br.
+\]
+Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunterscheidung erläutert.
+\begin{enumerate}
+  \item Falls es sich um einen Knoten $x \in F_s$ handelt, betrachten wir dazu die entsprechende
+  Liste $M_x$ und einen Knoten $y \in B$.
+  \begin{enumerate}
+   \item Falls der Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
+   %Allerdings ergibt sich laut Lemma \ref {lem:spiess-numbers} ein Widerspruch.
+   %Später wird dieser Widerspruch bei der Prüfung der Korrektheit der Eingabe entdeckt.
+   \item Falls der Knoten $y$ zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 1 steht, bleibt es auch 1.
+   \item Falls der Knoten $y$ zu $Z_s$ nicht gehört und an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
+   \item Falls der Knoten $y$ zu $Z_s$ nicht gehört, aber an der Stelle $M_{x,y}$ 1 steht, 
+    wird die Stelle $M_{x,y}$ zu 0.
+  \end{enumerate}
+  \item Falls es sich um einen Knoten $x \in A \setminus F_s$ handelt, betrachten wir dazu die entsprechende
+  Liste $M_x$ und einen Knoten $y \in B$.
+  \begin{enumerate}
+    \item Falls der Knoten $y$ zu $Z_s$ nicht gehört, aber an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
+    %Allerdings ergibt sich laut Lemma \ref {lem:spiess-numbers} ein Widerspruch.
+    %Später wird dieser Widerspruch bei der Prüfung der Korrektheit der Eingabe entdeckt.
+    \item Falls der Knoten $y$ zu nicht $Z_s$ gehört und an der Stelle $M_{x,y}$ 1 steht, bleibt es auch 1.
+    \item Falls der Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $M_{x,y}$ 1, 
+      wird die Stelle $M_{x,y}$ zu 0.
+    \item Falls der Knoten $y$ zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
+  \end{enumerate}
+\end{enumerate}

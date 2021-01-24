@@ -1,0 +1,53 @@
+\subsection{Bipartiter Graph}
+\TODO{use definitions[?]}
+Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B = V, E)$ umwandeln.
+Die Menge der Kanten $E$ wird im Folgenden festgelegt.
+Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
+Als $M_i$ bezeichnet wird die Liste der Länge $n$,
+die die Beziehungen eines Knotens
+$i \in A$ zu jedem Knoten $j \in B$ als 1 (Kante) oder 0 (keine Kante) darstellt.
+Als $M_{i, j}$ bezeichnet wird die $j$--te Stelle in der $i$--ten Liste der Matrix.\\
+Nach Axiom \ref{ax:obstsorte-index} gehört jeder Obstsorte aus $A$ genau ein Index aus $B$.
+Dennoch man kann am Anfang keiner Obsorte einen Index zuweisen.
+Deshalb wird zunächst jeder Knoten aus $A$ mit jedem Knoten aus $B$ durch eine Kante verbunden:
+\[
+E = \{(x, y) \,|\,  x \in A, y \in B\}.
+\]
+
+Am Anfang ist $M$ dementsprechend voll mit 1--en.
+Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die jeweilige 
+Liste von Nachbarn des jeden Knotens $x \in A$ nur aus 0--en und 1-en besteht, indem
+ diese Liste als Bitmasken dargestellt werden kann (mehr dazu in der \nameref{sec:umsetzung}).
+
+\begin{figure}[H]
+\centering
+\caption{Beide Abbildungen stellen den Graphen für das Beispiel aus der Aufgabenstellung dar.\\
+Die Buchstaben stehen für die entsprechenden Obstsorten aus diesem Beispiel (s. auch \ref{example:0}).}
+\begin{subfigure}[b]{.49\textwidth}
+\centering
+\input{./tex/tikz/graph-a-b.tex}
+\caption{Die entsprechenden Mengen des Graphen}
+\label{fig:graph-anfang}
+\end{subfigure}
+\begin{subfigure}[b]{.49\textwidth}
+\centering
+\input{./tex/tikz/full-graph.tex}
+\caption{Der Graph am Anfang}
+\label{fig:graph-full}
+\end{subfigure}
+\end{figure}
+
+Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
+%Als $a \leadsto b$ bezeichnet man, dass $a$ den Index $b$ haben kann. 
+Man kann Folgendes festellen. 
+
+\input{./tex/lemmata/lem_entfernen_kanten.tex}
+
+Nach Lemma \ref{lem:spiess-numbers}, wenn man die $i$--te Spießkombination betrachtet,
+ darf man alle Kanten, die aus jedem Knoten $x \in F_i$ 
+zu jedem Knoten $y \in B \setminus Z_i$ führen, aus $E$ entfernen und nur die Kanten lassen, die
+zu allen $z \in Z_i$ führen.
+Da Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwendet werden, kann
+die Laufzeit bei der Analyse der jeweiligen Spießkombination optimiert werden
+(mehr dazu im Teil \ref{sec:laufzeit}),
+weil man für die Operation des Entfernens Logikgatter verwenden kann.
