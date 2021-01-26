@@ -1,5 +1,4 @@
 \subsection{Logik}
-\TODO{Veranschauung}
 
 Betrachten wir eine Spießkombination $s = (F_s, Z_s)$.
 %die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
@@ -20,6 +19,59 @@ wobei $j \in A \setminus F_s$, durch:
 \[
 M_j := M_j \land br.
 \]
+
+\begin{figure}[H]
+\vspace{-0.7cm}
+\caption{Beide Abbildungen stellen die Adjazenzmatrix für das Beispiel aus der Aufgabenstellung dar.
+Die Buchstaben in der ersten Spalte stehen für die entsprechenden Obstsorten
+und die Zahlen in der ersten Zeile stehen für die Indizes aus demselben Beispiel (s. auch \ref{example:0}).\\
+Auf der Abb. \ref{fig:matrix-danach} stehen $bn$ und $br$ für die entsprechenden Bitmasken.}
+\begin{subfigure}[b]{.39\textwidth}
+\centering
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+A & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+B & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+Br & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+E & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+P & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+W & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+\end{tabular}
+\caption{$M$ vor der neuen Spießkombination}
+\label{fig:matrix-anfang}
+\end{subfigure}
+\begin{subfigure}[b]{.59\textwidth}
+\vspace{0.25cm}
+\begin{tabular}{lll}
+Spießkombination: & F =&\{Banane, Pflaume, Weintraube\} \\
+ & Z =&\{3, 5, 6\} \\
+\end{tabular}\\
+\centering
+
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+\cellcolor{lightblue}bn & 1 & 1 & 0 & 1 & 0 & 0 \\ \hline
+\cellcolor{lightred}br & 0 & 0 & 1 & 0 & 1 & 1 \\ \hline
+\end{tabular}\\
+\vspace{0.5cm}
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+\cellcolor{lightred}A & 0 & {\color{red} 0} & 1 &0 & 0 & 1 \\ \hline 
+\cellcolor{lightblue}B & 0 & 1 & {\color{red} 0} &0 & 0 & {\color{red} 0} \\ \hline 
+\cellcolor{lightred}Br & 0 & {\color{red} 0} & 1 &0 & 0 & 1 \\ \hline 
+\cellcolor{lightred}E & {\color{red} 0} & 0 & 0 & {\color{red} 0} & 1 & 0 \\ \hline 
+\cellcolor{lightblue}P & 1 & 0 & 0 & 1 & {\color{red} 0} & 0 \\ \hline 
+\cellcolor{lightblue}W & 1 & 0 & 0 & 1 & {\color{red} 0} & 0 \\ \hline
+\end{tabular}
+\caption{$M$ nach der Verarbeitung der beschriebenen Spießkombination.}
+\label{fig:matrix-danach}
+\end{subfigure}
+\end{figure}
+
+Auf der obigen Abbildung werden \colorbox{lightblue}{blau} und \colorbox{lightred}{rot} die entsprechenden
+Listen gekennzeichnet, auf denen die AND--Operation mit der entsprechenden Bitmaske durchgefüht wurde.
+{\color{red} Rot} werden die Bits gekennzeichnet, die sich nach der Verarbeitung der Spießkombination veränderten.\\
+
 Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunterscheidung erläutert.
 \begin{enumerate}
   \item Falls es sich um einen Knoten $x \in F_s$ handelt, betrachten wir dazu die entsprechende
@@ -45,3 +97,32 @@ Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunt
     \item Falls der Knoten $y$ zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
   \end{enumerate}
 \end{enumerate}
+
+\begin{lemma}\label{lem:neune-komponenten}
+Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente.
+Sei $K = (F, Z)$ eine Spießkombiantion.
+Wir betrachten, was mit $G$ nach der Verarbeitung von $K$ passiert.
+
+\begin{enumerate}[label={\upshape(\roman*)}]
+  \item Falls gilt: $F \cup Z = V_c$, dann entsteht keine neue Zusammenhangskomponente in $G$. \label{lem:neue-komponenten1}
+  \item Falls gilt: $F \cup Z \subsetneq V_c\, \land\, F \cup Z \not\subset V \setminus V_c$, 
+  dann entstehen genau zwei neue Zusammenhangskomponenten in $G$ --- $C$ wird in zwei Komponenten gespalten.\label{lem:neue-komponenten2}
+  \item Seien $C_1, C_2, ..., C_k \subset G$ voneinander unterschiedliche Zusammenhangskomponenten.\\
+  Falls $F \cup Z$ aus mehreren Teilmengen aus $C_1, C_2, ..., C_k$ besteht, gelten für jede Komponente $C_i$ ebenfalls \ref{lem:neue-komponenten1} und \ref{lem:neue-komponenten2}.
+\end{enumerate}
+
+\end{lemma}
+
+\begin{proof}
+Die Beweise für die entsprechenden Punkte:
+\begin{enumerate}[label={\upshape(\roman*)}]
+  \item Nach der Definition einer Zusammenhangskomponente gilt: $\nexists x \in V_c: x \in V \setminus V_c$.
+  Bei Bearbeiteung von $K$ werden nach Lemma \ref{lem:spiess-numbers} alle Kanten zwischen 
+  $x \in V \setminus V_c$ und $y \in V_c$ aus $E$ entfernt.
+  Deshalb werden bei so einer Spießkombination $K$ keine Kanten entfernt.
+  \item ss
+\end{enumerate}
+\end{proof}
+
+
+

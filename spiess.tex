@@ -51,6 +51,8 @@
 \usepackage{tikz}
 \usepackage{caption}
 \usepackage{subcaption}
+\usepackage{array}
+\usepackage{makecell}
 
 \usepackage[backgroundcolor=lightgray]{todonotes}
 \usepackage{minibox}
@@ -60,10 +62,13 @@
 
 % Für Quelltext
 \usepackage{listings}
-\usepackage{color}
+\usepackage{color, colortbl}
 \definecolor{mygreen}{rgb}{0,0.6,0}
 \definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
+\definecolor{lightblue}{HTML}{cce6ff}
+\definecolor{lightred}{HTML}{ffb3b3}
+
 \lstset{
   keywordstyle=\color{blue},commentstyle=\color{mygreen},
   stringstyle=\color{mymauve},rulecolor=\color{black},
@@ -134,15 +139,19 @@ Um sich dieses Satzes zu bedienen, muss man noch den Begriff der \tbf{Nachbarsch
 
 \input{./tex/lemmata/satz_von_hall.tex}
 
+An dieser Stelle ist es leicht, Folgendes festzustellen.
+
 \input{./tex/lemmata/lem_grad1.tex}
 
+Dennoch es bleibt noch der allgemeine Fall --- für $\Delta(x) > 1$.
+Dazu stellen wir das Folgende fest.
 
 \begin{lemma}\label{lem:grad-groesser1}
 Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
 Dann gehört $x$ zu einer Zusammenhangskomponente $C = (V_c, E_c)$, wobei
 die Menge $V_c$ aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
 und $y_1, ..., y_k \in B$ besteht. Für die Menge $E_c$ gilt:
-$E_c = \{(x_i, y_j) \,|\, $für alle $ 1 \leqslant i,j \leqslant k \}$.
+$E_c = A \setminus V_c \times B \setminus V_c $.
 $C$ ist deshalb selbt ein vollständiger, bipartiter Graph.
 \end{lemma}
 \begin{proof}
@@ -150,10 +159,7 @@ Der Beweis erfolgt durch Widerspruch.
 \TODO{Beweis} 
 \end{proof}
 
-\TODO{Lemmata über Zuweisungen (Satz von Hall) in Komponenten:\\
-eine Zuweisung ist immer möglich\\
-alle auf der Wunschliste\\
-mind. ein nicht auf der Wunschliste}
+Nun kann man das folgende Lemma für den allgemeinen Fall formulieren. 
 
 \input{./tex/lemmata/lem_komponente-matching.tex}
 

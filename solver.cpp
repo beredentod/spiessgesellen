@@ -117,7 +117,7 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 
 	//die Bitmaske für die Obstsorten außerhalb der Menge
 	mask_rev = ~(mask_nums) & mask_full;
-
+	
 	//es wird über die Menge der Obstsorten der Spießkombination
 	//	iteriert
 	auto it = fruits.begin();
