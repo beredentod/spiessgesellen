@@ -1,4 +1,4 @@
-\subsection{Logik}
+\subsection{Logik}\label{sec:logik}
 
 Betrachten wir eine Spießkombination $s = (F_s, Z_s)$.
 %die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
@@ -98,15 +98,18 @@ Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunt
   \end{enumerate}
 \end{enumerate}
 
-\begin{lemma}\label{lem:neune-komponenten}
+
+
+
+\begin{lemma}\label{lem:neue-komponenten}
 Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente.
 Sei $K = (F, Z)$ eine Spießkombiantion.
 Wir betrachten, was mit $G$ nach der Verarbeitung von $K$ passiert.
 
 \begin{enumerate}[label={\upshape(\roman*)}]
   \item Falls gilt: $F \cup Z = V_c$, dann entsteht keine neue Zusammenhangskomponente in $G$. \label{lem:neue-komponenten1}
-  \item Falls gilt: $F \cup Z \subsetneq V_c\, \land\, F \cup Z \not\subset V \setminus V_c$, 
-  dann entstehen genau zwei neue Zusammenhangskomponenten in $G$ --- $C$ wird in zwei Komponenten gespalten.\label{lem:neue-komponenten2}
+  \item Falls gilt: $F \cup Z \subsetneq V_c$,%\, \land\, F \cup Z \not\subset V \setminus V_c$, 
+  dann entstehen zwei neue Zusammenhangskomponenten in $G$ --- $C$ wird in zwei Komponenten gespalten.\label{lem:neue-komponenten2}
   \item Seien $C_1, C_2, ..., C_k \subset G$ voneinander unterschiedliche Zusammenhangskomponenten.\\
   Falls $F \cup Z$ aus mehreren Teilmengen aus $C_1, C_2, ..., C_k$ besteht, gelten für jede Komponente $C_i$ ebenfalls \ref{lem:neue-komponenten1} und \ref{lem:neue-komponenten2}.
 \end{enumerate}
@@ -114,13 +117,29 @@ Wir betrachten, was mit $G$ nach der Verarbeitung von $K$ passiert.
 \end{lemma}
 
 \begin{proof}
+\TODO{Beweis zu Ende}
 Die Beweise für die entsprechenden Punkte:
 \begin{enumerate}[label={\upshape(\roman*)}]
   \item Nach der Definition einer Zusammenhangskomponente gilt: $\nexists x \in V_c: x \in V \setminus V_c$.
   Bei Bearbeiteung von $K$ werden nach Lemma \ref{lem:spiess-numbers} alle Kanten zwischen 
   $x \in V \setminus V_c$ und $y \in V_c$ aus $E$ entfernt.
   Deshalb werden bei so einer Spießkombination $K$ keine Kanten entfernt.
-  \item ss
+  \item% 
+  %Laut dieser Bedingung gilt: $\exists x \in A \cap V_c: x \notin F$ und
+  %$\exists y \in B \cap V_c: y \notin Z$.\\
+  Die beiden Mengen $A$ und $B$ gleichmächtig und ganz am Anfang ist $G$ vollständig.
+  Nach der ersten Spießkombination $K_1 = (F_1, Z_1)$, wobei $F_1 \neq A$, 
+  entstehen zwei Zusammenhangskomponenten: $C_1 \cup C_2 = G$.
+  Dann sind $C_1 \cap A$ und $C_1 \cap B$ auch gleichmächtig. 
+  Ebenfalls sind $C_2 \cap A$ und $C_2 \cap B$ gleichmächtig.
+  Nach \ref{lem:spiess-numbers} gilt, dass alle Kanten zwischen $C_1$ und $C_2$
+  aus $E$ entfernt wurden, aber alle innerhalb von $C_1$ und innerhalb von $C_2$
+  beibehalten wurden.
+  Dies bedeutet, dass die Komponenten $C_1$ und $C_2$ selbst vollständige, bipartite Graphen sind.
+\TODO{
+  I.A. jest powyżej.\\
+  I.S.: co się dzieje po każdym $K_i$ => własność grafu (pełność) pozostaje utrzymana na wszystkich spójnych
+}
 \end{enumerate}
 \end{proof}
 

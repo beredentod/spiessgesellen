@@ -1,0 +1,51 @@
+\subsection{Klasse \ttt{Solver}}
+Die Matrix $M$ wird als ein \ttt{vector} von \ttt{bitset} dargestellt.
+Dazu muss man erwähnen, dass ein \ttt{bitset} in C++ eine feste Länge besitzen muss.
+Dazu wurde die maximale Größe von $n$ eingegeben, also 26.
+Das müsste ggf. im Program selbst umgestellt werden,
+falls man eine größere Datei einlesen möchte.\\
+Die feste Länge ist auch der Grund dafür, dass die Bitmaske $br$ im Teil \ref{sec:logik}
+auf folgende Weise definiert wird:
+\[
+br := \neg(bn) \land bf.
+\]
+Im Fall, wenn man mit einer Bimaske einer festen Größe operiert, würde 
+eine einfache Negation der Bitmaske $bn$ nicht hinreichen.\\
+
+Die Obstsorten werden als Strings eingelesen, aber in der Methode \ttt{readFile()}
+wird jeder Obstsorte ein interner Index\footnote{Nummerierung ab 0.} zugewiesen
+und in weiteren Operationen im Programm
+werden die Obstsorten als einfache Integers behandelt. 
+Es werden dazu zwei Maps festgelegt: \ttt{fruit2ID} und \ttt{ID2Fruit}, 
+in denen die Obstsorten und die entsprechenden internen Indizes gespeichert sind.\\
+
+Jede Spießkombination wird als \ttt{pair<set<int>, set<int>}, also ein Tupel entsprechend
+aus der Menge der internen Indizes der Obstsorten und der Menge der Indizes aus der Aufgabenstellung.
+Alle Spießkombinationen werden in einem \ttt{vector} gespiechert, der \ttt{infos} heißt.\\
+
+In \ttt{wishes} werden als ein \ttt{set} von Integers werden die internen Indizes der gewünschten 
+Obstsorten, also der Elemente der Menge $W$, gespeichert.
+Analog werden in \ttt{result}, also ebenfalls ein \ttt{set} von Integers, die Indizes der gewünschten 
+Obstsorten, also die Elemente der Menge $W'$ hinzugefügt.\\ 
+
+Der \ttt{vector}, der \ttt{used} heißt, wird verwendet, um die benutzten internen Indizes der Obstsorten,
+wie auch die Indizes der Obstsorten zu markieren, die im Graphen verwendet werden,
+da es in einzigen Textdateien ein größeres $n$ gibt als die Mächtigkeit der entsprechenden Menge $A$. 
+Diese Markierung zeigt sich bei der Prüfung auf korrekte Eingabe hilfreich.\\
+
+Die Methode \ttt{analyzeInfo()} nimmt als Argument eine Spießkombination. 
+In der Methode werden die drei Bitmasken $bn, br, bf$ erstellt.
+Um die Laufzeit zu optimieren, wird durch die Menge der internen Indizes der Obstsorten \ttt{fruits}
+aus dieser Spießkombination gleichzeitig mit den Obstsorten aus der Matrix iteriert.
+Da die Menge \ttt{fruits} vorsortiert ist, müssen wir nicht bei jeder Obstsorte in der Matrix
+prüfen, ob sie sich in \ttt{fruits} befindet, um die Entscheidung zu treffen, welche der beiden
+Bitmasken anzuwenden.\\
+Nachdem alle $m$ Spießkombinationen verarbeitet wurden, werden in der Methode \ttt{analyzeAllInfos()}
+alle übrigen 1--Beziehungen in der Adjazenzmatrix
+als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert.\\
+
+\TODO{\ttt{checkCoherence()}}
+
+Nachdem die Korrektheit der Eingabe geprüft wurde, kann festgestellt werden, ob $W'$ eindeutig
+bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.
+\TODO{\ttt{checkResult()}}

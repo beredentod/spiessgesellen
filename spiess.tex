@@ -151,7 +151,7 @@ Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
 Dann gehört $x$ zu einer Zusammenhangskomponente $C = (V_c, E_c)$, wobei
 die Menge $V_c$ aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
 und $y_1, ..., y_k \in B$ besteht. Für die Menge $E_c$ gilt:
-$E_c = A \setminus V_c \times B \setminus V_c $.
+$E_c = (A \setminus V_c) \times (B \setminus V_c) $.
 $C$ ist deshalb selbt ein vollständiger, bipartiter Graph.
 \end{lemma}
 \begin{proof}
@@ -228,9 +228,11 @@ aus $W$ bestehen, kann $W'$ eindeutig und vollständig festgelegt werden.
 \subsection{Laufzeit}\label{sec:laufzeit}
 
 \section{Umsetzung}\label{sec:umsetzung}
-\subsection{Klasse \ttt{Solver}}
-\subsection{Klasse \ttt{Graph}}
+\input{./tex/ums_solver.tex}
 
+\input{./tex/ums_graph.tex}
+
+\newpage
 \section{Beispiele}
 
 \input{./tex/beispiele.tex}

@@ -18,11 +18,11 @@ class Solver {
 	//m -- die Anzahl der Spießkombinationen
 	int n, m;
 
-	//die Spießkombinationen als < die Menge der Obsorten > 
+	//die Spießkombinationen als < die Menge der Obstorten > 
 	//	und < die Menge der Indizes >
 	vector< pair<set<int>, set<int>> > infos;
 
-	//die Adjazenzmatrzi des Graphen
+	//die Adjazenzmatrix des Graphen
 	vector< bitset<MAXN> > matrix;
 
 	//die Liste der im Programm verwendeten Indizes

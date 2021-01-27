@@ -43,10 +43,26 @@ Man kann Folgendes festellen.
 
 \input{./tex/lemmata/lem_entfernen_kanten.tex}
 
-Nach Lemma \ref{lem:spiess-numbers}, wenn man die $i$--te Spießkombination betrachtet,
- darf man alle Kanten, die aus jedem Knoten $x \in F_i$ 
-zu jedem Knoten $y \in B \setminus Z_i$ führen, aus $E$ entfernen und nur die Kanten lassen, die
-zu allen $z \in Z_i$ führen.
+Aus Lemma \ref{lem:spiess-numbers} ergibt sich direkt aus eine andere Bemerkung.
+
+\begin{lemma}\label{lem:komponente-mengen}
+Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente.
+Sei $K = (F, Z)$ eine Spießkombiantion.
+Falls $F \cup Z \subsetneq V_c$ gilt, dann gilt auch:
+\begin{enumerate}[label={\upshape(\roman*)}]
+  \item $\forall p \in F, o(p, i): i \in Z$,
+  \item $\forall q \in A \cap (V_c \cap F), o(q, j): j \in B \cap (V_c \cap Z)$.
+\end{enumerate}
+Deshalb werden alle Kanten, die aus jedem Knoten $x \in F$ 
+zu jedem Knoten $y \in B \cap (V_c \setminus Z)$ führen, aus $E$ entfernt und nur die Kanten lassen, die
+zu allen $z \in Z$ führen.
+\end{lemma}
+
+\begin{proof}
+\TODO{Beweis}
+\end{proof}
+
+ 
 Da Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwendet werden, kann
 die Laufzeit bei der Analyse der jeweiligen Spießkombination optimiert werden
 (mehr dazu im Teil \ref{sec:laufzeit}),

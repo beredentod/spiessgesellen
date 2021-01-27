@@ -1,0 +1,13 @@
+\subsection{Klasse \ttt{Graph}}
+Diese Klasse ist grundsätzlich aus Übersichtlichkeits-- sowie aus Vereinfachungsgründen
+entstanden. Theoretisch könnte man die enthaltenen Methoden in der Klasse \ttt{Solver} 
+speichern.\\
+
+Der Graph ist als eine Adjazenzliste aus \ttt{vector} von \ttt{vector} von Integers gespeichert.
+Der Konstruktor nimmt zwei Parameter: die Größen der beiden Partitionen
+im bipartiten Grphen, obwohl sie in der Aufgabe gleich groß sind.\\
+
+Zu den verfügbaren Methoden zählen: \ttt{addEdge()},
+die eine ungerichtete Kante zwischen zwei Knoten einfügt; \ttt{deg()}, die die Kardinalität
+eines Knotens zurückgibt; \ttt{getNeighbors()}, die den \ttt{vector}, also die Adjazenzliste
+eines Knotens zurückgibt. Außerdem gibt es ein paar Methoden, die zum Debugging dienen. 
