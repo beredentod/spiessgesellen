@@ -189,9 +189,6 @@ bool Solver::checkResult(){
 	//die Liste der Knoten der gewünschten Obstsorten
 	vector<int> todo(n);
 
-	//eine temporäre Menge für die Indizes der gewünschten Obstsorten
-	set<int> temp;
-
 	//es wird durch die Menge der Wünsche iteriert
 	for (auto x: wishes) {
 		//falls der Grad des Knotens der gewünschten Obstsorte
@@ -268,18 +265,14 @@ bool Solver::checkResult(){
 			//falls alle Knoten, die zur Komponente gehören, gewünscht sind
 			else
 				//alle Indizes der Obstsorte der Komponente werden 
-				//	in temp hinzugefügt
+				//	in die Menge der Indizes der gewünschten Obstsorten hinzugefügt
 				for (auto x: setB)
-					temp.insert(x - n + 1);
+					result.insert(x - n + 1);
 		}
 	}
 	
 	//falls eine Lösung für die Eingabe existiert
 	if (solv) {
-		//die Menge der Indizes der gewünschten Obstsorten
-		//	ist um die fehlenden Indizes erweitert
-		for (auto x: temp) 
-			result.insert(x);
 		return true;
 	}
 	//falls es keine eindeutige Lösung für die Eingabe gibt

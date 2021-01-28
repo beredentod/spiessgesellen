@@ -127,8 +127,60 @@
 Am Ende des Teils \ref{sec:formulierung} wurde bemerkt, dass die Korrektheit und Vollstädigkeit
 der Lösung davon abhängt, ob alle Obstsorten in einer Eingabe Axiom \ref{ax:obstsorte-index} folgen.
 
+\TODO{zrobić}
 
 \subsection{Laufzeit}\label{sec:laufzeit}
+$n$ --- die Anzahl der Obstsorten\\
+$m$ --- die Anzahl der Spießkombinationen\\
+$w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$
+
+\begin{itemize}
+  \item Einlesen: $O(m \cdot n \log n)$ (worst-case) \mb{sprawdzić bitsety}
+  \TODO{dodać złożoności dla $w$}
+  \begin{itemize}
+    \item Erstellung der Adjazenzmatrix $M$: \mb{$O(\frac{n}{w?})$; dodać info o bitsetach}
+    \item Einlesen der Menge $W$: $O(w \log w)$\\
+     Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}
+    \item Einlesen der Spießkombinationen: $O(m \cdot n \log n)$ (worst-case)\\
+    Im schlimmsten Fall enthält jede Spießkombination alle Obstsorten.
+    Die logarithmische Laufzeit ist durch Einfügen in eine Menge verursacht.
+    \item Zuweisung der internen Indizes der Obstsorten (s. \nameref{sec:umsetzung}): $O(n \log n)$\\
+     Implementierug von \ttt{map} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/map}{https://en.cppreference.com/w/cpp/container/map}}    
+    \item Umwandlung der gewünschten Obstsorten von Strings zu Integers: $O(w \log n)$\\
+    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$.
+    Das Einfügen in eine \ttt{set} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Wünsche: $O(\log w)$. Wir schätzen nach oben ab und im worst-case gilt: $w = n$,
+    deshalb gilt für die gesamte Laufzeit: $O(w (\log n + \log w)) \in O(w (\log n + \log n)) \in 
+    O(w \log n)$. \mb{czy to tak może być?}
+    \item Umwandlung der Obstsorten in allen Spießkombinationen von Strings zu Integers:
+    $O(m \cdot n \log n)$\\
+    In jeder Spießkombination können sich im worst-case alle $n$ Obstsorten befinden.
+    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$.
+    Das Einfügen in eine \ttt{set} hat ebenfalls logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$. 
+    Deshalb beträgt die Laufzeit für alle Obstsorten in einer Spießkombination höchstens: $O(n \log n)$.   
+  \end{itemize}
+  \item Verarbeitung der Spießkombinationen
+    \TODO{dodać coś o bitsetach}
+  \begin{itemize}
+    \item Verarbeitung einer Spießkombination:\\
+    Man geht davon aus, dass eine Spießkombination im worst-case alle Obstsorten enthält.
+    \begin{itemize}
+      \item Erstellung der Bitmaske $bf$: $O(n)$ (worst-case)
+      \item Erstellung der Bitmaske $bn$: $O(w)$ (worst-case)
+    \end{itemize}
+
+
+    \item Kopieren der Adjazenzmatrix in \ttt{Graph G} (s. \nameref{sec:umsetzung}): 
+  \end{itemize}
+  \item Prüfung der Korrektheit der Eingabe
+  \item Prüfung der Existenz einer Lösung
+\end{itemize}
+
+\subsection{Speicherplatz}\label{sec:Speicherplatz}
+
 
 \printbibliography
 
@@ -140,7 +192,7 @@ der Lösung davon abhängt, ob alle Obstsorten in einer Eingabe Axiom \ref{ax:ob
 
 \newpage
 \section{Beispiele}
-
+\TODO{dodać dodatkowe przykłady}
 \input{./tex/beispiele.tex}
 
 \section{Quellcode}

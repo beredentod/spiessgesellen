@@ -47,5 +47,42 @@ als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert.\\
 \TODO{\ttt{checkCoherence()}}
 
 Nachdem die Korrektheit der Eingabe geprüft wurde, kann festgestellt werden, ob $W'$ eindeutig
-bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.
-\TODO{\ttt{checkResult()}}
+bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.\\
+Es werden ein \ttt{vector todo} der Länge $n$, ein \ttt{vector ready} der Länge $n$ und 
+ein \ttt{set multip} erstellt.
+\ttt{todo} ist die Liste $\bar{W}$. \ttt{ready} ist die Liste $\bar{R}$.\\
+Es wird zunächst über die Menge der Wünsche \ttt{wishes} iteriert. 
+Falls ein Knoten \ttt{x} (der interne Index einer Obstsorte) in \ttt{G}
+die Kardinalität 1 besitzt, wird sein einzelner
+Nachbar in \ttt{result} hinzugefügt.
+Im sonstigen Fall wird \ttt{x} in \ttt{multip} hinzugefügt und die Stelle \ttt{x} in \ttt{todo}
+wird mit 1 markiert.\\
+Dann wird geprüft, ob die Menge \ttt{multip} überhaupt irgendwelche Elemente enthält.
+Falls nicht, gibt die ganze Funktion an dieser Stelle \ttt{true} zurück.\\
+Sont wird eine boolsche Variable \ttt{solv} erstellt, die für die Existenz einer Lösung steht.
+Am Anfang nimmt sie \ttt{true} als Wert. 
+Dazu wird auch eine Liste von Mengen \ttt{problems} erstellt, die dazu da ist, um
+die Obstsorten einer Zusammenhangskomponente zu speichern, die eine nicht gewünschte Obstsorte enthält.\\
+Danach wird über die Menge \ttt{multip} iteriert. 
+Für jedes Element \ttt{x} aus dieser Menge wird eine boolsche Variable \ttt{prob} erstellt, die 
+anzeigt, ob mindestens eine Obstsorte zu der Komponente gehört, die nicht gewünscht ist.
+Am Anfang hat sie den Wert \ttt{false}.\\
+Es wird zunächst geprüft, ob an der Stelle \ttt{x} in \ttt{ready} 0 steht, d.h.,
+der Knoten gehört zu einer Zusammenhangskomponente, die noch nicht bearbeitet wurde.
+Falls ja, dann werden zwei Listen \ttt{setB} und \ttt{setA} erstellt,
+die der Liste der Nachbarn von \ttt{x} und der Liste der Nachbarn von einem Nachbarn von \ttt{x}
+entsprechen.
+Es wird durch die Menge \ttt{setA} iteriert.\\
+Falls an der Stelle eines internen Index
+einer Obstsorte in \ttt{todo} keine 1 steht, wird \ttt{solv = false} und \ttt{prob = true} gesetzt.
+Dies bedeutet, es gibt eine nicht gewünschte Obstsorte in der Komponente.\\
+Sonst wird die Stelle des internen Index dieser Obstsorte in \ttt{ready} mit 1 markiert.\\
+Danach wird geprüft, ob \ttt{prob == true}. Falls \ttt{prob == false} gilt, wird die Menge \ttt{setB}
+in \ttt{result} hinzugefügt. Sonst, wird die Menge \ttt{setA} in \ttt{problems} hinzugefügt, um sie 
+danach als Nachricht für den Nutzer vorzustellen, dass aufgrund von einzigen Obstsorten 
+die Menge $W'$ nicht eindeutig bestimmt werden kann.\\
+Am Ende, nach der Schleife über \ttt{multip}, wird geprüft, ob es eine Lösung zur Aufgabe für eine
+Eingabe gibt: Es wird gepüft, ob \ttt{solv == true}. Falls ja, dann wir \ttt{true} zurückgegeben.
+Sonst wird eine Meldung ausgegeben, die alle Zusammenhangskomponenten beinhaltet, 
+die eine nicht gewünschte Obstsorte enthalten, und die nicht gewünschten Obstsorten werden
+ebenfalls angezeigt.
