@@ -1,0 +1,25 @@
+\begin{korollar}\label{kor:komponente-mengen}
+Sei $C = (L_c \cup R_c, E_c)$ eine Zusammenhangskomponente in $G$.
+Sei $K = (F, Z)$ eine Spießkombiantion.
+%Falls $F \subsetneq L_c$ gilt, dann:
+Falls $F \subseteq L_c$ gilt, dann gilt für jede Obstsorte $o(x, i)$, wobei $x \in F$:
+\begin{enumerate}[label={\upshape(\roman*)}]
+	\item $i \in Z$,
+	\item $i \notin R_c \setminus Z$.
+  %\item Für jede Obstsorte $o(p, i)$, wobei $p \in F$, gilt: $i \in Z \land i \notin R_c \setminus Z$,\label{lem:komponente-mengen1}
+  %\item Für jede Obstsorte $o(q, j)$, wobei $q \in L_c \setminus F$, gilt: 
+  %$(j \in R_c \setminus Z) \land j \notin Z$.\label{lem:komponente-mengen2}
+\end{enumerate}
+Deshalb werden alle Kanten, die aus jedem Knoten $x \in F$ 
+zu jedem Knoten $y \in R_c \setminus Z$ führen,\\ aus $E$ entfernt.
+\end{korollar}
+
+\begin{comment}
+\begin{proof}
+\ref{lem:komponente-mengen1} gilt nach Defintion \ref{def:spiesskomb}, Axiom \ref{ax:obstsorte-index}
+und Lemma \ref{lem:spiess-numbers}.\\
+\ref{lem:komponente-mengen2} gilt aus dem Grund, dass $L_c$ und $R_c$ gleichmächtig sind.
+(Sonst, könnte man nicht allen $x \in A$ einen $y \in B$ zuweisen.)
+\TODO{Beweis zu Ende}
+\end{proof}
+\end{comment}

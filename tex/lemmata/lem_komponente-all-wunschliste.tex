@@ -1,0 +1,14 @@
+\begin{lemma}\label{lem:komponente-all-wunschliste}
+Sei $C = (L_c \cup R_c, E_c)$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\forall x \in L_c : x \in W$, dann werden alle $y \in R_c$ in $W'$ hinzugefügt.
+\end{lemma}
+\begin{proof} 
+Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte genau einen einzigartigen Index.
+Die Zusammenhangskomponente $C$ beschreibt nach Lemmata \ref{lem:komponente-complete} und \ref{lem:komponente-matching},
+dass jede Obstsorte $p \in L_c$ jeden Index $q \in R_c$ haben kann, weil $C$ ein vollständiger, bipartiter Graph ist und ein perfektes Matching stets existiert.
+
+Dadurch, dass $\forall x \in L_c : x \in W$ gilt,
+ist ohne Bedeutung, welchen Index die jeweilige Obstsorte besitzt, da
+ die Lösung des Problems eine Menge $W'$ mit den Indizes der Obstsorten aus $W$ sein soll.\\
+Dadurch, dass $L_c \subseteq W$ gilt, gilt auch: $R_c \subseteq W'$. 
+\end{proof}

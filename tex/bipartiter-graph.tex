@@ -1,5 +1,5 @@
 \subsection{Bipartiter Graph}
-\TODO{use definitions[?]}
+%\TODO{use definitions[?]}
 Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B = V, E)$ umwandeln.
 Die Menge der Kanten $E$ wird im Folgenden festgelegt.
 Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
@@ -19,23 +19,7 @@ Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die jewe
 Liste von Nachbarn des jeden Knotens $x \in A$ nur aus 0--en und 1-en besteht, indem
  diese Liste als Bitmasken dargestellt werden kann (mehr dazu in der \nameref{sec:umsetzung}).
 
-\begin{figure}[H]
-\centering
-\caption{Beide Abbildungen stellen den Graphen für das Beispiel aus der Aufgabenstellung dar.\\
-Die Buchstaben stehen für die entsprechenden Obstsorten aus diesem Beispiel (s. auch \ref{example:0}).}
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\input{./tex/tikz/graph-a-b.tex}
-\caption{Die entsprechenden Mengen des Graphen}
-\label{fig:graph-anfang}
-\end{subfigure}
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\input{./tex/tikz/full-graph.tex}
-\caption{Der Graph am Anfang}
-\label{fig:graph-full}
-\end{subfigure}
-\end{figure}
+\input{./tex/figures/fig_graph_sets_complete.tex}
 
 Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
 %Als $a \leadsto b$ bezeichnet man, dass $a$ den Index $b$ haben kann. 
@@ -43,26 +27,10 @@ Man kann Folgendes festellen.
 
 \input{./tex/lemmata/lem_entfernen_kanten.tex}
 
-Aus Lemma \ref{lem:spiess-numbers} ergibt sich direkt aus eine andere Bemerkung.
+\noindent Aus Lemma \ref{lem:spiess-numbers} ergibt sich direkt auch eine andere Beobachtung.
 
-\begin{lemma}\label{lem:komponente-mengen}
-Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente.
-Sei $K = (F, Z)$ eine Spießkombiantion.
-Falls $F \cup Z \subsetneq V_c$ gilt, dann gilt auch:
-\begin{enumerate}[label={\upshape(\roman*)}]
-  \item $\forall p \in F, o(p, i): i \in Z$,
-  \item $\forall q \in A \cap (V_c \cap F), o(q, j): j \in B \cap (V_c \cap Z)$.
-\end{enumerate}
-Deshalb werden alle Kanten, die aus jedem Knoten $x \in F$ 
-zu jedem Knoten $y \in B \cap (V_c \setminus Z)$ führen,\\ aus $E$ entfernt und nur die Kanten gelassen, die
-zu allen $z \in Z$ führen.
-\end{lemma}
+\input{./tex/lemmata/kor_komponente_entfernen_kanten.tex}
 
-\begin{proof}
-\TODO{Beweis}
-\end{proof}
-
- 
 Da Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwendet werden, kann
 die Laufzeit bei der Analyse der jeweiligen Spießkombination optimiert werden
 (mehr dazu im Teil \ref{sec:laufzeit}),

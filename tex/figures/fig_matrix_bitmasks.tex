@@ -1,0 +1,47 @@
+\begin{figure}[H]
+\vspace{-0.7cm}
+\caption{Beide Abbildungen stellen die Adjazenzmatrix für das Beispiel aus der Aufgabenstellung dar.
+Die Buchstaben in der ersten Spalte stehen für die entsprechenden Obstsorten
+und die Zahlen in der ersten Zeile stehen für die Indizes aus demselben Beispiel (s. auch \ref{example:0}).\\
+Auf der Abb. \ref{fig:matrix-danach} stehen $bn$ und $br$ für die entsprechenden Bitmasken.}
+\begin{subfigure}[b]{.39\textwidth}
+\centering
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+A & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+B & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+Br & 0 & 1 & 1 &0 & 0 & 1 \\ \hline 
+E & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+P & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+W & 1 & 0 & 0 & 1 & 1 & 0 \\ \hline 
+\end{tabular}
+\caption{$M$ vor der neuen Spießkombination}
+\label{fig:matrix-anfang}
+\end{subfigure}
+\begin{subfigure}[b]{.59\textwidth}
+\vspace{0.25cm}
+\begin{tabular}{lll}
+Spießkombination: & F =&\{Banane, Pflaume, Weintraube\} \\
+ & Z =&\{3, 5, 6\} \\
+\end{tabular}\\
+\centering
+
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+\cellcolor{lightblue}bn & 1 & 1 & 0 & 1 & 0 & 0 \\ \hline
+\cellcolor{lightred}br & 0 & 0 & 1 & 0 & 1 & 1 \\ \hline
+\end{tabular}\\
+\vspace{0.5cm}
+\begin{tabular}{>{\itshape}l|c|c|c|c|c|c|}
+ & 6 & 5 & 4 & 3 & 2 & 1 \\ \hline
+\cellcolor{lightred}A & 0 & {\color{red} 0} & 1 &0 & 0 & 1 \\ \hline 
+\cellcolor{lightblue}B & 0 & 1 & {\color{red} 0} &0 & 0 & {\color{red} 0} \\ \hline 
+\cellcolor{lightred}Br & 0 & {\color{red} 0} & 1 &0 & 0 & 1 \\ \hline 
+\cellcolor{lightred}E & {\color{red} 0} & 0 & 0 & {\color{red} 0} & 1 & 0 \\ \hline 
+\cellcolor{lightblue}P & 1 & 0 & 0 & 1 & {\color{red} 0} & 0 \\ \hline 
+\cellcolor{lightblue}W & 1 & 0 & 0 & 1 & {\color{red} 0} & 0 \\ \hline
+\end{tabular}
+\caption{$M$ nach der Verarbeitung der beschriebenen Spießkombination.}
+\label{fig:matrix-danach}
+\end{subfigure}
+\end{figure}

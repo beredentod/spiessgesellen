@@ -1,0 +1,19 @@
+\begin{lemma}\label{lem:komponente-one-not-wunschliste}
+Sei $C = (L_c \cup R_c, E_c)$ eine Zusammenhangskomponente in $G$.
+Wenn gilt: $\exists x \in L_c : x \notin W$ und $\exists y \in L_c : y \in W$,
+dann kann die Menge $W'$ nicht eindeutig
+festgelegt werden.
+\end{lemma}
+\begin{proof}
+Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte genau einen einzigartigen Index.
+Die Zusammenhangskomponente $C$ beschreibt nach Lemmata \ref{lem:komponente-complete} und \ref{lem:komponente-matching},
+dass jede Obstsorte $p \in L_c$ jeden Index $q \in R_c$ haben kann, weil $C$ ein vollständiger, bipartiter Graph ist und ein perfektes Matching stets existiert.
+
+Angenommen, $\exists r \in L_c : r \notin W$. Dann ist es unmöglich, festzustellen,
+welcher Index aus $R_c$ der Obstsorte $r$ gehört.
+Also ist es auch unmöglich, festzustellen, welche Indizes in $W'$ hinzugefügt werden sollen.
+Deshalb
+ist es unmöglich (unabhängig von allen anderen Zusammenhangskomponenten des Graphen $G$),
+eine eindeutige Menge der Indizes der gewünschten Obstsorten festzulegen.
+Dadurch gibt es keine eindeutige Lösung zu diesem Problem für diese Eingabe.
+\end{proof}

@@ -1,16 +1,10 @@
-\subsection{Formulierung des Problems}
-\begin{axiom}\label{ax:obstsorte-index}
-Jeder \textbf{Obstsorte} wird genau ein einzigartiger natürlicher Index zugewiesen.\\
-Man schreibt: $o(x, i)$ --- eine Obstsorte $x$ besitzt einen Index $i$.
-\end{axiom}
+\subsection{Formulierung des Problems}\label{sec:formulierung}
+\input{./tex/lemmata/ax_obstsorte.tex}
 
 Gegeben sind eine Menge von $n$ Obstsorten $A$ und eine Menge von $n$ ganzen Zahlen
 $B = \{1, 2, ..., n\}$, zu der die Indizes der Obstsorten aus $A$ gehören.
 
-\begin{definition}[Spießkombination]\label{def:spiesskomb}
-Als eine \textbf{Spießkombination} $K = (F, Z)$ bezeichnet man eine Veknüpfung von zwei Mengen 
-$F \subseteq A$ und $Z$, wobei $Z = \{i \in B \,|\, \forall x \in F : o(x, i)\}.$
-\end{definition}
+\input{./tex/lemmata/def_spiesskombination.tex}
 
 Gegeben sind auch $m$ Spießkombinationen, wobei jede $i$--te Spießkombination
 aus einer Menge von Obstsorten $F_i \subseteq A$ und einer Menge der Zahlen $Z_i \subseteq B$ besteht. 
@@ -19,7 +13,7 @@ den in $B$ enthaltenen Indizes, die zu den Obstsorten in $F_i$ gehören, deshalb
 $F_i$ und $Z_i$ auch gleichmächtig.\\
 Außerdem gegeben ist auch eine \textit{\textbf{Wunschliste}} $W \subseteq A$.\\
 
-Die Aufgabe ist, zu entscheiden,
+Die Aufgabe ist ein Entscheidungsproblem. Es soll entschieden werden,
 ob die Menge der Indizes der in $W$ enthaltenen Obstsorten $W' \subseteq B$ anhand der $m$ 
 Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegebn werden.\\
 

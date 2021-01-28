@@ -3,7 +3,8 @@ Sei $C = (V_c, E_c)$ eine
 Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $C$.
 \end{lemma}
 \begin{proof} 
-Nach Lemma \ref{lem:grad-groesser1} ist jede Zusammenhangskomponente ein vollständiger.
+\TODO{check details, fomulate things differently}
+Nach Lemma \ref{lem:komponente-complete} ist jede Zusammenhangskomponente ein vollständiger,
 bipartiter Graph. Nach Satz von Hall existiert ein perfektes Matching, wenn
 für alle Teilmengen $K \subseteq A \cap V_c$ gilt: $|K| \leqslant |N(K)|$.
 Die obere Behauptung kann für beliebig größe Mächtigkeiten $|K| = k \in \mathbb{N}$
@@ -12,13 +13,12 @@ durch die vollständige Induktion bewiesen werden.\\
 \noindent
 \tbf{Induktionsanfang:} Für $k = 1$ hat der einzelne Knoten $x \in K \subseteq A \cap V_c$
 die Kardinalität $\Delta(x) = 1$.
-Deshalb gilt: $|x| = 1 \leqslant |N(x)| = 1$, was in Lemma \ref{lem:grad-1} 
-schon bewiesen wurde. Damit stimmt die Behauptung für $k = 1$ und der Induktionsanfang ist erledigt.\\
+Deshalb gilt: $|K| = 1 \leqslant |N(x)| = 1$. Damit stimmt die Behauptung für $k = 1$ und der Induktionsanfang ist erledigt.\\
 
 \noindent
-\tbf{Induktionsschritt:} Es gelte die Aussage für ein $k \in \mathbb{N}$, also eine Teilemenge
-$K \subseteq A \cap V_c$ besteht aus $k$ Knoten und jeder Knoten $x \in K$ hat die Kardinalität
-$\Delta(x) = k$. Es gelte also: $|K| \leqslant |N(K)|$.\\
+\tbf{Induktionsschritt:} Es gelte die Aussage für ein $k \in \mathbb{N}$, also für eine Teilemenge
+$K \subseteq A \cap V_c$, die aus $k$ Knoten besteht und in der jeder Knoten $x \in K$ die Kardinalität
+$\Delta(x) = k$ hat.\\ Es gelte also: $|K| \leqslant |N(K)|$.\\
 Zu zeigen ist die Aussage für $k + 1$, also für eine Teilmenge $K' \subseteq A \cap V_c$ der Mächtigkeit 
 $|K'| = k+1$:
 \[

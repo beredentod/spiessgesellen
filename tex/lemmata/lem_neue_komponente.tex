@@ -1,0 +1,30 @@
+\begin{comment}
+\begin{lemma}\label{lem:neue-komponenten}
+Sei $C = (V_c, E_c) \subseteq G$ eine Zusammenhangskomponente.
+Sei $K = (F, Z)$ eine Spießkombiantion.
+Wir betrachten, was mit $G$ nach der Verarbeitung von $K$ passiert.
+\begin{enumerate}[label={\upshape(\roman*)}]
+  \item Falls gilt: $F \cup Z = V_c$, dann entsteht keine neue Zusammenhangskomponente in $G$. \label{lem:neue-komponenten1}
+  \item Falls gilt: $F \cup Z \subsetneq V_c$,%\, \land\, F \cup Z \not\subset V \setminus V_c$, 
+  dann entstehen zwei neue Zusammenhangskomponenten in $G$ --- $C$ wird in zwei Komponenten gespalten.\label{lem:neue-komponenten2}
+  \item Seien $C_1, C_2, ..., C_k \subset G$ voneinander unterschiedliche Zusammenhangskomponenten.\\
+  Falls $F \cup Z$ aus mehreren Teilmengen aus $C_1, C_2, ..., C_k$ besteht, gelten für jede Komponente $C_i$ ebenfalls \ref{lem:neue-komponenten1} und \ref{lem:neue-komponenten2}.
+\end{enumerate}
+
+\end{lemma}
+
+\begin{proof}
+\TODO{was machen wir mit dem Beweis?}
+Die Beweise für die entsprechenden Punkte:
+\begin{enumerate}[label={\upshape(\roman*)}]
+  \item Nach der Definition einer Zusammenhangskomponente gilt: $\nexists x \in V_c: x \in V \setminus V_c$.
+  Bei Bearbeiteung von $K$ werden nach Lemma \ref{lem:spiess-numbers} alle Kanten zwischen 
+  $x \in V \setminus V_c$ und $y \in V_c$ aus $E$ entfernt.
+  Deshalb werden bei so einer Spießkombination $K$ keine Kanten entfernt.
+  \item blablabla
+  %Laut dieser Bedingung gilt: $\exists x \in A \cap V_c: x \notin F$ und
+  %$\exists y \in B \cap V_c: y \notin Z$.\\
+\end{enumerate}
+\end{proof}
+\end{comment}
+
