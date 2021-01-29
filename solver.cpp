@@ -64,6 +64,12 @@ void Solver::readFile(string path) {
 			for (auto x: currFruits)
 				all_fruits.insert(x);
 
+			//falls die beiden Menge einer Spießkombination nicht gleichmächtig sind
+			if (currNum.size() != currFruits.size()) {
+				cerr << "Error: Es gibt Fehler in der Eingabedatei.\n";
+				exit(0);
+			}
+
 			//eine Spießkombination als ein Menge von Zahlen und 
 			//	eine Menge von Strings wird gespeichert
 			tempInfos.pb({currNum, currFruits});
@@ -98,6 +104,7 @@ void Solver::readFile(string path) {
 	//falls die Textdatei nicht geöffnet werden kann
 	else {
 		cerr << "Error: File could not be opened. Abort.\n";
+		exit(0);
 	}
 }
 

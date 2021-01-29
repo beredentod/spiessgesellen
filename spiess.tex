@@ -94,6 +94,8 @@
 \newtheorem{korollar}{Korollar}
 %\renewcommand*{\proofname}{Solution}
 
+\usepackage[export]{adjustbox}
+
 \newcommand{\TODO}[1]{\todo[inline]{TODO: #1}}
 \newcommand{\mb}[1]{{\color{red}[MB: #1]}}
 \newcommand{\tbf}[1]{\textbf{#1}}
@@ -123,11 +125,7 @@
 
 \input{./tex/komponenten.tex}
 
-\subsection{Prüfung auf Korrektheit der Eingabe}\label{sec:korrektheit-eingabe}
-Am Ende des Teils \ref{sec:formulierung} wurde bemerkt, dass die Korrektheit und Vollstädigkeit
-der Lösung davon abhängt, ob alle Obstsorten in einer Eingabe Axiom \ref{ax:obstsorte-index} folgen.
-
-\TODO{zrobić}
+\input{./tex/korrekte_eingabe.tex}
 
 \subsection{Laufzeit}\label{sec:laufzeit}
 $n$ --- die Anzahl der Obstsorten\\

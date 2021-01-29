@@ -30,7 +30,8 @@ Obstsorten, also die Elemente der Menge $W'$ hinzugefügt.\\
 
 Der \ttt{vector}, der \ttt{used} heißt, wird verwendet, um die benutzten internen Indizes der Obstsorten,
 wie auch die Indizes der Obstsorten zu markieren, die im Graphen verwendet werden,
-da es in einzigen Textdateien ein größeres $n$ gibt als die Mächtigkeit der entsprechenden Menge $A$. 
+da es in einzigen Textdateien ein größeres $n$ gibt als die Anzahl der in den Spießkombinationen 
+un der Wunschliste verwendeten Obstsorten und Indizes. 
 Diese Markierung zeigt sich bei der Prüfung auf korrekte Eingabe hilfreich.\\
 
 Die Methode \ttt{analyzeInfo()} nimmt als Argument eine Spießkombination. 
@@ -44,7 +45,17 @@ Nachdem alle $m$ Spießkombinationen verarbeitet wurden, werden in der Methode \
 alle übrigen 1--Beziehungen in der Adjazenzmatrix
 als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert.\\
 
-\TODO{\ttt{checkCoherence()}}
+Die Methode \ttt{checkCoherence()} prüft, ob die Eingabe dem Axiom \ref{ax:obstsorte-index} folgt.
+Dennoch es gibt Beispiele, in denen $n$ größer ist als die Anzahl der verwendeten Elementen in den
+Spießkombinationen und der Wunschliste.
+Bei der Zuweisung der internen Indizes jeder Obstsorte werden die verwendeten Obstsorten und Indizes
+in \ttt{used} markiert. Diesen Vorteil können wir nutzen, um die Prüfung der Kardinalität des
+jeden Knotens in \ttt{G} zu überprüfen: Es wird geprüft, ob die Kardinalität 0 beträgt. 
+Alle Knoten, die in \ttt{used} nicht markiert wurden, werden übersprungen.
+Falls bei mindestens einem Knoten die Kardinalität 0 ist, wird \ttt{false} ausgegeben und
+die Eingabe im gegebenen Beispiel ist fehlerhaft.\\
+Sonst, wenn alle verwendeten Knoten eine Kardinalität von mindestens 1 besitzen, wird \ttt{true}
+ausgegeben.\\ 
 
 Nachdem die Korrektheit der Eingabe geprüft wurde, kann festgestellt werden, ob $W'$ eindeutig
 bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.\\

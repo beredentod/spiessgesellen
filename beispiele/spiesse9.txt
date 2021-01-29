@@ -1,11 +1,7 @@
 5
-Apfel Banane Erdbeere
-3
-1 2 3
-Apfel Banane Dattel
-1 2
-Apfel Banane
-1 3
-Clementine Banane
+Aprfel Erdbeere Banane
+2
+2 3
+Banane Clementine
 4 5
-Clementine Dattel
+Banane Dattel

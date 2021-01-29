@@ -1,0 +1,24 @@
+\begin{tikzpicture}
+    \node[vertex,text=white,fill=black!30!green] (A) {$A$};
+    \node[vertex] (B) [below = 0.4cm of A] {$B$};
+    \node[vertex,text=white,fill=black!30!green] (Br) [below = 0.4cm of B] {$Br$};
+    \node[vertex] (E) [below = 0.4cm of Br] {$E$};
+    \node[vertex] (P) [below = 0.4cm of E] {$P$};
+    \node[vertex,text=white,fill=black!30!green] (W) [below = 0.4cm of P] {$W$};
+    \node[vertex,text=white,fill=black!5!blue] (1) [right = 1.5cm of A] {$1$};
+    \node[vertex] (2) [right = 1.5cm of B] {$2$};
+    \node[vertex,text=white,fill=black!5!blue] (3) [right = 1.5cm of Br] {$3$};
+    \node[vertex,text=white,fill=black!5!blue] (4) [right = 1.5cm of E] {$4$};
+    \node[vertex] (5) [right = 1.5cm of P] {$5$};
+    \node[vertex] (6) [right = 1.5cm of W] {$6$};
+
+    \path[draw,thick]
+    (A) edge node {} (1)
+    (A) edge node {} (4)
+    (B) edge[line width=2pt] node {} (5)
+    (Br) edge node {} (1)
+    (Br) edge node {} (4)
+    (E) edge[line width=2pt] node {} (2)
+    (P) edge[line width=2pt] node {} (6)
+    (W) edge[line width=2pt] node {} (3);
+\end{tikzpicture}
