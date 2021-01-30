@@ -160,21 +160,6 @@ void Solver::analyzeAllInfos(){
 //diese Methode prüft, ob die eingegeben Informationen über den Graphen
 //	keinen Widerspruch ergeben
 bool Solver::checkCoherence(){ 
-	//die Anzahl der nicht verwendeten Indizes 
-	//	der Obstsorten (notusedA) und der Indizes der Obstsorten (notusedB)
-	int notusedA = 0, notusedB = 0;
-
-	//es wird gezählt, wie viele von diesen im Programm nicht verwendet werden
-	for (int i = 0; i < n; i++)
-		if (!used[i]) notusedA++;
-	for (int i = 0; i < n; i++)
-		if (!used[i]) notusedB++;
-
-	//falls die Anzahl der nicht verwendeten in den beiden Partitionen nicht übereinstimmt,
-	//	ist die Eingabe falsch
-	if (notusedA != notusedB)
-		return false;
-
 	//falls ein im Programm verwendeter Knoten den Grad 0 hat,
 	//	ist die Eingabe falsch
 	for (int i = 0; i < int(used.size()); i++)
@@ -290,9 +275,10 @@ bool Solver::checkResult(){
 			//Aufzählen der Obstsorten, die zur Komponente gehören
 			for (auto y: x)
 				cout << ID2Fruit.find(y)->second << " ";
-			cout << "\n\t--> Nicht auf der Wunschliste: ";
+
 			//Aufzählen der Obstsorten, die zur Komponente gehören,
 			//	 aber nicht gewünscht sind
+			cout << "\n\t--> Nicht auf der Wunschliste: ";
 			for (auto y: x) 
 				if (!todo[y])
 					cout << ID2Fruit.find(y)->second << " ";

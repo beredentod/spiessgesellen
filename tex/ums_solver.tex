@@ -43,7 +43,9 @@ prüfen, ob sie sich in \ttt{fruits} befindet, um die Entscheidung zu treffen, w
 Bitmasken anzuwenden.\\
 Nachdem alle $m$ Spießkombinationen verarbeitet wurden, werden in der Methode \ttt{analyzeAllInfos()}
 alle übrigen 1--Beziehungen in der Adjazenzmatrix
-als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert.\\
+als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert. 
+Die einzelnen 1--en in \ttt{matrix} werden mithilfe der eingebauten Funktion \ttt{\_Find\_next()}
+gefunden.\\
 
 Die Methode \ttt{checkCoherence()} prüft, ob die Eingabe dem Axiom \ref{ax:obstsorte-index} folgt.
 Dennoch es gibt Beispiele, in denen $n$ größer ist als die Anzahl der verwendeten Elementen in den

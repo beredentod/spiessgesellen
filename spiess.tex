@@ -130,27 +130,41 @@
 \subsection{Laufzeit}\label{sec:laufzeit}
 $n$ --- die Anzahl der Obstsorten\\
 $m$ --- die Anzahl der Spießkombinationen\\
-$w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$
+$w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$\\
+
+Da wir Bitmasken in unserem Programm verwenden, ist nocht eine Konstante einzuführen: $\beta$,
+die für die $\beta$--Bit--Architektur eines Rechners\footnote{\href{https://en.wikipedia.org/wiki/Word_(computer_architecture)}{https://en.wikipedia.org/wiki/Word\_(computer\_architecture)}}
+steht, auf dem das Programm ausgeführt wird. D.h., bei der 64--Bit--Architektur beträgt $\beta = 64$.
+Die bitweisen Operationen in C++ auf \ttt{bitset} werden in der Laufzeit von $O(\frac{|k|}{\beta})$
+ausgefüht, wobei $|k|$ die Länge eines \ttt{bitset} ist. Außerdem muss die Länge eines \ttt{bitset}
+kontant sein, d.h., man muss schon im Programm eine feste Länge für alle Eingabegrößen eingeben.
+Diese feste Länge nennen wir $N$ und setzen $N =26$, da so viele Obstsorten das größte Beispiel
+auf der BWINF--Webseite umfasst.
+\mb{coś na temat słowa maszynowego}\\
 
 \begin{itemize}
-  \item Einlesen: $O(m \cdot n \log n)$ (worst-case) \mb{sprawdzić bitsety}
-  \TODO{dodać złożoności dla $w$}
+  \item Einlesen: $O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$ (worst-case) \mb{sprawdzić bitsety}
   \begin{itemize}
-    \item Erstellung der Adjazenzmatrix $M$: \mb{$O(\frac{n}{w?})$; dodać info o bitsetach}
-    \item Einlesen der Menge $W$: $O(w \log w)$\\
+    \item Erstellung der Adjazenzmatrix $M$: $O(n \cdot \frac{N}{\beta})$
+
+    \item Erstellung der Liste \ttt{used} (s. \nameref{sec:umsetzung}): $O(n)$
+
+    \item Einlesen der Menge $W$: $O(w \log w)$\\%, worst-case: $O(n \log n)$\\
      Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}
+
     \item Einlesen der Spießkombinationen: $O(m \cdot n \log n)$ (worst-case)\\
     Im schlimmsten Fall enthält jede Spießkombination alle Obstsorten.
     Die logarithmische Laufzeit ist durch Einfügen in eine Menge verursacht.
+
     \item Zuweisung der internen Indizes der Obstsorten (s. \nameref{sec:umsetzung}): $O(n \log n)$\\
-     Implementierug von \ttt{map} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/map}{https://en.cppreference.com/w/cpp/container/map}}    
-    \item Umwandlung der gewünschten Obstsorten von Strings zu Integers: $O(w \log n)$\\
+     Implementierug von \ttt{map} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/map}{https://en.cppreference.com/w/cpp/container/map}}
+
+    \item Umwandlung der gewünschten Obstsorten von Strings zu Integers: $O(w (\log n + \log w))$\\%worst-case: $O(n \log n)$\\
     Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
     der Obstsorten: $O(\log n)$.
     Das Einfügen in eine \ttt{set} hat logarithmische Laufzeit bezüglich der Anzahl
-    der Wünsche: $O(\log w)$. Wir schätzen nach oben ab und im worst-case gilt: $w = n$,
-    deshalb gilt für die gesamte Laufzeit: $O(w (\log n + \log w)) \in O(w (\log n + \log n)) \in 
-    O(w \log n)$. \mb{czy to tak może być?}
+    der Wünsche: $O(\log w)$. Also gilt für die gesamte Laufzeit: $O(w (\log n + \log w))$. 
+
     \item Umwandlung der Obstsorten in allen Spießkombinationen von Strings zu Integers:
     $O(m \cdot n \log n)$\\
     In jeder Spießkombination können sich im worst-case alle $n$ Obstsorten befinden.
@@ -158,26 +172,173 @@ $w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$
     der Obstsorten: $O(\log n)$.
     Das Einfügen in eine \ttt{set} hat ebenfalls logarithmische Laufzeit bezüglich der Anzahl
     der Obstsorten: $O(\log n)$. 
-    Deshalb beträgt die Laufzeit für alle Obstsorten in einer Spießkombination höchstens: $O(n \log n)$.   
+    Deshalb beträgt die Laufzeit für alle Obstsorten in einer Spießkombination höchstens: $O(n \log n)$. 
+
+    \item Die gesamte Laufzeit für diesen Teil (worst-case): $O(n \cdot \frac{N}{\beta}) + O(n) + O(w \log w)
+    + O(m \cdot n \log n) + O(w (\log n + \log w)) + O(m \cdot n \log n) = 
+    O(n \cdot \frac{N}{\beta} + n + w \log w + m \cdot n \log n + w (\log n + \log w) + m \cdot n \log n) \in 
+    O(n \cdot \frac{N}{\beta} + m \cdot n \log n + w (\log n + \log w)) \in 
+    O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$ 
   \end{itemize}
-  \item Verarbeitung der Spießkombinationen
-    \TODO{dodać coś o bitsetach}
+
+
+  \item Verarbeitung der Spießkombinationen: $O(m \cdot n \cdot\frac{N}{\beta} + n^2 \log N)$ (worst-case)
   \begin{itemize}
-    \item Verarbeitung einer Spießkombination:\\
+    \item Verarbeitung einer Spießkombination $K = (F, Z)$: $O(n \cdot\frac{N}{\beta})$\\
     Man geht davon aus, dass eine Spießkombination im worst-case alle Obstsorten enthält.
     \begin{itemize}
-      \item Erstellung der Bitmaske $bf$: $O(n)$ (worst-case)
-      \item Erstellung der Bitmaske $bn$: $O(w)$ (worst-case)
+      \item Erstellung der Bitmaske $bf$: $O(n)$
+
+      \item Erstellung der Bitmaske $bn$: $O(|F|)$, worst-case: $O(n)$\\
+      Die Operation hat eine lineare Laufzeit bezüglich der Anzahl der Elementen in 
+      einer Spießkombination. Eine Spießkombination kann im worst-case alle $n$
+      Obstsorten beinhalten.
+
+      \item Erstellung der Bitmaske $br$: $O(\frac{N}{\beta})$
+
+      \item Entfernen der Kanten: $O(n \cdot \frac{N}{\beta})$\\
+      Für jede Liste $M_i$ wird geprüft, ob $i$ sich in $F$ befindet.
+      Diese Operation kann in $O(1)$ ausgeführt werden, indem wir durch
+      die Menge $F$ gleichzeitig iterieren, wie durch die Matrix $M$ (s. \nameref{sec:umsetzung}).
+      An jeder Liste $M_i$ wird genau eine bitweise Operation durchgeführt.
+
+      \item Die gesamte Laufzeit für eine Spießkombination beträgt (worst-case):\\
+      $O(n) + O(n) + O(\frac{N}{\beta}) + O(n \cdot\frac{N}{\beta}) 
+      = O(n + n + \frac{N}{\beta} + n \cdot\frac{N}{\beta}) \in O(n \cdot\frac{N}{\beta})$ \mb{zapis?}
     \end{itemize}
 
+    \item Verarbeitung der allen Spießkombination entsprechend: $O(m \cdot n \cdot\frac{N}{\beta})$
 
-    \item Kopieren der Adjazenzmatrix in \ttt{Graph G} (s. \nameref{sec:umsetzung}): 
+    \item Kopieren der Adjazenzmatrix in \ttt{Graph G} (s. \nameref{sec:umsetzung}): average-case: $O(n \cdot \delta \cdot \log N)$, worst-case: $O(n^2 \log N)$ \\
+    Für jede Liste $M_i$ werden alle 1--en in \ttt{G} als Kanten vom Knoten $i$ eingefügt.
+    Dazu bediene ich mich der eingebauten Funktion \ttt{\_Find\_next()},
+    die jeweils das nächste 1--Bit in einem \ttt{bitset} findet.
+    Jedoch ihre Laufzeit ist mir nicht bekannt.
+    Ich gehe davon aus, dass dieser Vorgang in logarithmischer Laufzeit abzuschließen ist, 
+    wie es \href{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}{hier}\footnote{\href{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}} beschrieben ist.\\
+    Deshalb erfolgt die Iteration über eine Liste $M_i$ in $O(\delta \log N)$, wobei
+    $\delta$ die Anzahl der 1--en ist. Im schlimmsten Fall, wenn alle Spießkombinationen aus
+    $n$ Obstsorten bestehen, gilt: $\delta = n$, also gilt es: $O(n\log N)$.
+    Dennoch im allgemeinen Fall gilt: $\delta \ll n$. Den Vorgang muss man für alle $n$ Obstsorten
+    ausführen.\\
+    Man könnte auch denken, dass das Kopieren unnötig ist. Falls man den Graphen nicht
+    in eine Adjazenzliste--Form kopiert,
+    muss man sowieso an einer Stelle die entsprechenden 1--en aus der Adjazenzmatrix ablesen.
+
+    \item Die gesamte Laufzeit für diesen Teil beträgt (worst-case):\\
+    $O(m \cdot n \cdot\frac{N}{\beta}) + O(n^2 \log N) = O(m \cdot n \cdot\frac{N}{\beta} + n^2 \log N)$ 
+
   \end{itemize}
-  \item Prüfung der Korrektheit der Eingabe
-  \item Prüfung der Existenz einer Lösung
+
+  \item Prüfung der Korrektheit der Eingabe: $O(n)$
+  \begin{itemize}
+    \item Für jeden Knoten im Graphen wird geprüft, ob 
+    er in \ttt{used} markiert ist: $O(1)$ und, bo die Kardinaliät
+    dieses Knotens nicht 0 beträgt: $O(1)$.\\
+    Deshalb für alle Knoten im bipartiten Graphen gilt: $O(n + n) \in O(n)$ \mb{zapis?}
+  \end{itemize}
+
+
+  \item Prüfung der Existenz einer Lösung: $O(n \log n)$ (worst-case)
+  \begin{itemize}
+    \item Erstellung von $\bar{W}$: $O(n)$
+
+    \item Erstellung von $\bar{R}$: $O(n)$
+
+    \item Prüfung der Wunschliste: $O(w \log w)$\\
+    Es wird geprüft, ob die Kardinalität des jeden Knotens 1 beträgt
+    \begin{itemize}
+    \item Prüfung auf Kardinalität $\Delta(x) = 1$: $O(1)$
+    \item Zugriff auf die Liste der Nachbarknoten in $G$: $O(1)$
+    \item ggf. Einfügen in $W'$: $O(\log w)$
+    \item ggf. Einfügen in \ttt{multip} (s. \nameref{sec:umsetzung}): $O(\log w)$ (worst-case)\\
+    Im schlimmsten Fall hat keiner der Knoten in der Wunschliste die Kardinalität von 1.
+    \item ggf. Markierung in $\bar{W}$: $O(1)$
+    \end{itemize}
+
+    \item Iteration durch \ttt{multip}: $O(n \log w)$ (worst-case)\\
+    Die folgenden Operation werden nur dann ausgeführt, wenn die Komponente,
+    zu der der iterierte Knoten gehört, noch nicht bearbeitet wurde, also 
+    ob dieser Knoten in $\bar{R}$ markiert wurde. Wir können feststellen, 
+    dass diese Bedingung im schlimmsten Fall nur $\frac{w}{2}$--mal erfüllt werden kann.
+    Alle Komponenten mit genau 1 Knoten aus $A$ wurden bereits behandelt und in diesem
+    Fall müssten alle Komponenten aus genau 2 Knoten aus $A$ bestehen.
+    $\frac{w}{2}$ ist somit die maximale Anzahl an Zusammenhangskomponenten in $G$,
+    die mehr als einen Knoten aus $A$ besitzen.
+    \begin{itemize}
+    \item Prüfung auf Markierung in $\bar{R}$: $O(1)$
+
+    \item ggf. Zugriff auf die Liste der Nachbarn eines iterierten Knotens $x$ ($n(x)$): $O(1)$
+
+    \item ggf. Zugriff auf die Liste der Nachbarn eines Nachbarn $y$ eines iterierten Knotens ($n(y)$): $O(1)$
+
+    \item ggf. Iteration durch $n(y)$: $O(n)$ (worst-case)\\
+    In dieser Schleife wird geprüft, ob der iterierte Index $i$ in $\bar{W}$ markiert ist: $O(1)$,
+    und dann wird $i$ in $\bar{R}$ markiert: $O(1)$. Wenn es einen Knoten gibt, der nicht gwünscht ist,
+    aber sich auf der Komponente befindet, wird dies mit einer boolschen Variable \ttt{prob} markiert: $O(1)$.\\
+    Im worst-case kann die Schleife $n$--mal iteriert werden, wenn es nur eine Zusammenhangskomponente
+    in $G$ gibt. Jedoch wird die äußere Schleife nur einmal iteriert, da alle gewünschten 
+    Obstsorten auf der Komponente als besucht in $\bar{R}$ markiert werden.
+    \item ggf. Kopieren der Knoten aus dieser Komponente zu \ttt{problems} (s. \nameref{sec:umsetzung}): $O(n)$ (worst-case)
+
+    \item ggf. Einfügen der Knoten aus dieser Komponente zu $W'$: $O(n \log w)$ (worst-case)\\
+    Das Einfügen in eine Menge hat eine logarithmische Laufzeit bezüglich $w$.
+
+    \item Um die gesamte Laufzeit für diesen Teil zu bestimmen, müssen wir bemerken, dass 
+    diese Laufzeit von der Anzahl der Knoten der Menge $A$ auf allen Zusammenhangskomponenten 
+    abhängt, auf deren sich mind. eine gewünschte Obstsorte befindet. Durch die Markierung
+    in $\bar{R}$ wird jeder Knoten auf jeder von diesen Zusammenhangskomponenten nur einmal behandelt. 
+    Damit ergibt sich im worst-case die Laufzeit von $O(n \log w)$, indem die gewünschten Obstsorten auf 
+    allen Zusammenhangskomponenten in $G$ verteilt sind.
+    \end{itemize}
+
+    \item Ausgabe für eine Eingabe, für die $W'$ nicht eindeutig bestimmt werden kann: $O(n \log n)$\\
+    Es wird durch alle Komponenten iteriert, die mind. eine ungewünschte Obstsorte enthalten,
+    und alle Knoten werden mit den Namen der Obstsorte aufgezählt.
+    Deshalb muss jedes Mal die Suchfunktion in der \ttt{map} mit den Zuweisungen 
+    der internen Indizes der Obstsorten und den Obstsorten aufgerufen werden: $O(\log n)$.
+    Im schlimmsten Fall muss in der Ausgabe durch alle Knoten in $A$ iteriert werden, falls
+    es nur eine Zusammenhangskomponente in $G$ gibt.
+
+    \item Die gesamte Laufzeit für diesen Teil beträgt (worst-case, nach oben geschätzt: $n > w$):
+    $O(n) + O(n) + O(w \log w) + O(n \log w) + O(n \log n) = O(n + n + w \log w + n \log w + n \log n)
+    \in O(n \log n)$ \mb{zapis? zgadza się?}
+  \end{itemize}
+
 \end{itemize}
 
-\subsection{Speicherplatz}\label{sec:Speicherplatz}
+Fassen wir die Laufzeit im worst-case zusammen. Also ein worst-case kann so ein Fall gelten,
+in dem alle $m$ Spießkombinationen und die Wunschliste aus allen $n$ Obstsorten bestehen. 
+\begin{itemize}
+  \item Einlesen: $O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$
+  \item Verarbeitung der Spießkombinationen: $O(m \cdot n \cdot\frac{N}{\beta} + n^2 \log N)$
+  \item Prüfung der Korrektheit der Eingabe: $O(n)$
+  \item Prüfung der Existenz einer Lösung: $O(n \log n)$
+\end{itemize}
+
+\TODO{sprawdzić}
+$O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w)) + 
+O(m \cdot n \cdot\frac{N}{\beta} + n^2 \log N)+
+O(n)+
+O(n \log n) =\\=
+O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w) + 
+m \cdot n \cdot\frac{N}{\beta} + n^2 \log N + n + n \log n)\\ \in
+O(n (\frac{N}{\beta} + m (\log n + \frac{N}{\beta}) + n \log N) + w (\log n + \log w))$\\
+
+\noindent Nach der Abschätzung $w = n$ ergibt sich:\\
+$O(n (\frac{N}{\beta} + m (\log n + \frac{N}{\beta}) + n \log N))$\\
+
+\noindent Für die maximale Anzahl an Obstsorten, die in den BWINF--Beispielen auftreten, 
+können wir bemerken, dass fast alle modernen Rechner auf einer
+mind. 32--Bit-Architektur basieren, das heißt, wir können $\beta = 32$ setzen. 
+In diesem Zusammenhang gilt: $\frac{N}{\beta} = \frac{26}{32} < 0$.
+In diesem Fall ist dieser Bruch ein vernachlässiger Faktor. Es ergibt sich im schlimmsten Fall:\\
+\[
+O(n (m \log n + n \log N))
+\]
+
+
+%\subsection{Speicherplatz}\label{sec:Speicherplatz}
 
 
 \printbibliography
