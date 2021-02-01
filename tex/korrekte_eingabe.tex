@@ -1,10 +1,9 @@
 \subsection{Prüfung auf Korrektheit der Eingabe}\label{sec:korrektheit-eingabe}
-Am Ende des Teils \ref{sec:formulierung} wurde bemerkt, dass die Korrektheit und Vollstädigkeit
+Am Ende des Teils \ref{sec:formulierung} wurde bemerkt, dass die Korrektheit und Vollständigkeit
 der Lösung davon abhängt, ob alle Obstsorten in einer Eingabe Axiom \ref{ax:obstsorte-index} folgen.
 
 Indentifiziern wir zuerst die Probleme, die auftreten können.
-In den folgenden Überlegungen nehmen wir an, dass jede Spießkombination nach
-ihrer Definition gebildet wird, insbesondere gilt: $|F_i| = |Z_i|$.
+In den folgenden Überlegungen nehmen wir an, dass jede Spießkombination so gebildet wird, dass gilt: $|F_i| = |Z_i|$.
 (Falls man dies nicht angenommen hätte, wäre eine Eingabe schon an dieser Stelle
 falsch, da eine Obstsorte zwei Indizes oder zwei Obstsorten einen Index haben müssten.
 Außerdem ist dieser Fehler leicht herauszufinden, indem man beim Einlesen prüft,
@@ -24,27 +23,32 @@ zwei Obstsorten existieren: $o(x, i)$ und $o(y, j)$.
 Nehmen wir an dieser Stelle an, dass $i=j$.
 Betrachten wir dazu zwei Spießkombinationen: $K_1 = (F_1, Z_1)$ und $K_2 = (F_2, Z_2)$.
 Es gelte: $x \in F_1$ und entsprechend $i \in Z_1$.
-\TODO{Bild vielleicht?}
+%\TODO{Bild vielleicht?}
 \begin{enumerate}[label={\upshape(F\arabic*)}]
   \item Falls $y \in F_1$ und $i = j$, dann ist $i$ bereits in $Z_1$. Sodass $|F_1| = |Z_1|$ gilt,
   muss gelten: $\exists o(z, k) : z \notin F_1 \land k \in Z_1$.
-  Dann muss zwar kein Widerpsurch erfolgen, aber wir haben den Obstsorte neue Indizes zugewiesen,
-  also kann an dieser Stelle die Bezieung zwischen $z$ und $k$ gar nicht festgestellt werden.
+  Dann muss zwar kein Widerpsurch erfolgen, aber wir haben der Obstsorte einen Index zugewiesen,
+  also kann an dieser Stelle die Beziehung zwischen $z$ und $k$ gar nicht festgestellt werden.
   Falls alle anderen Spießkombinationen widerspruchsfrei sind,
   wird $z$ ein Index $\ell \in B \setminus F_1$ zugewiesen.\label{fall1}
+
   \item Falls $y \notin F_1 \land y \in F_2 \land x \notin F_2 \land i =j$, dann ist $i$ bereits in $Z_1$.
   Dann muss für $i$ auch gelten: $i \in Z_2$. Am Anfang ist der bipartite Graph $G$ vollständig.
   Nach der Verarbeitung der Spießkombination $K_1$ werden alle Kanten zwischen allen
-  $p \in Z_1$ und allen $q \in A \setminus F_1$ entfernt, darunter auch die Kante zwischen
+  $p \in Z_1$ und allen $q \in A \setminus F_1$, sowie alle Kanten zwischen allen
+  $p \in F_1$ und allen $q \in B \setminus Z_1$ entfernt, darunter auch die Kante zwischen
   $y$ und $i$. Nach der Verarbeitung von $K_2$ wird auch die Kante zwischen $x$ und $i$
-  entfernt, da $x \notin F_2$. Der Knoten $x$ hat dann die Kardinalität $\Delta(x) = 0$.\label{fall2}
+  entfernt, da $x \notin F_2$. Der Knoten $x$ hat dann eine Kardinalität um 1 kleiner
+  als der Rest der Knoten auf dieser Komponente. Insbesondere: Wenn die Mengen
+  $F_1$ und $F_2$ jeweils eine Mächtigkeit von 2 haben, hat $x$ dann den Grad 0.\label{fall2}
 \end{enumerate}
 
 Bei der Untersuchung der Situation für \ref{probleme2} geht man durch eine analoge Fallunterscheidung wie
 in \ref{fall1} und \ref{fall2}.\\
 
 Deshalb, um zu prüfen, ob die Eingabe Axiom \ref{ax:obstsorte-index} widerspricht, muss man 
-nur untersuchen, ob keiner der Knoten in $G$ eine Kardinalität von 0 besitzt.\\
+nur untersuchen, ob die Kardinalität des jeden Knotens mit der Kardinalität eines der seinen 
+Nachbarn nicht übereinstimmt.\\
 Dazu muss man beachten, dass die Zahl $n$ in einigen Beispieldateien größer ist
 als die Anzahl der in Spießkombinationen und in der Wunschliste verwendeteten Obstsorten
 und Indizes. In diesem Fall muss man die nicht genutzten Obstsorten und Indizes beim Einesen

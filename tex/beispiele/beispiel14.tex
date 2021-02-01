@@ -1,0 +1,24 @@
+\subsection{Beispiel 14}\label{example:14}
+Textdatei: \texttt{spiesse14.txt}\\
+Besonderheit: Ein Beispiel für den Fall \ref{probleme1} $\rightarrow$ \ref{fall2}, s. Teil \ref{sec:korrektheit-eingabe}.
+\begin{verbatim}
+6
+Apfel Clementine Feige
+2
+1 4 5
+Apfel Banane Dattel
+4 5 6
+Dattel Erdbeere Feige
+\end{verbatim}
+
+\noindent
+Wünsche: \framebox{Apfel, Clementine, Feige}\\
+
+\noindent
+\framebox{Error: Es gibt Fehler in der Eingabedatei.}\\
+
+Die erste Spießkombination legt fest, dass die Obstsorten Apfel, Banane, Dattel
+jeweils einen der Indizes $\{1, 4, 5\}$ haben können. Dennoch die zweite Spießkombination 
+legt im Widerspruch zur ersten fest, dass die Indizes $\{4, 5, 6\}$ jeweils einer der
+Obstsorten Dattel, Erdbeere, Feige gehören können. In diesem Fall decken sich 4 und Dattel
+in beiden Spießkombinationen, aber 5 kann keiner Obstsorte zugeordnet werden.

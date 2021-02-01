@@ -1,25 +1,24 @@
 \begin{lemma}\label{lem:komponente-matching}
-Sei $C = (V_c, E_c)$ eine
+Sei $C = (L_c \cup R_c, E_c)$ eine beliebige
 Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $C$.
 \end{lemma}
 \begin{proof} 
-\TODO{check details, fomulate things differently}
-Nach Lemma \ref{lem:komponente-complete} ist jede Zusammenhangskomponente ein vollständiger,
+Nach Lemma \ref{lem:komponente-complete} ist jede Zusammenhangskomponente in $G$ ein vollständiger,
 bipartiter Graph. Nach Satz von Hall existiert ein perfektes Matching, wenn
-für alle Teilmengen $K \subseteq A \cap V_c$ gilt: $|K| \leqslant |N(K)|$.
-Die obere Behauptung kann für beliebig größe Mächtigkeiten $|K| = k \in \mathbb{N}$
+für alle Teilmengen $K \subseteq L_c$ gilt: $|K| \leqslant |N(K)|$.
+Die obere Behauptung kann für beliebig große Mächtigkeiten $|K| = k \in \mathbb{N}$
 durch die vollständige Induktion bewiesen werden.\\
 
 \noindent
-\tbf{Induktionsanfang:} Für $k = 1$ hat der einzelne Knoten $x \in K \subseteq A \cap V_c$
+\tbf{Induktionsanfang:} Für $k = 1$ hat der einzelne Knoten $x \in K \subseteq L_c$
 die Kardinalität $\Delta(x) = 1$.
 Deshalb gilt: $|K| = 1 \leqslant |N(x)| = 1$. Damit stimmt die Behauptung für $k = 1$ und der Induktionsanfang ist erledigt.\\
 
 \noindent
-\tbf{Induktionsschritt:} Es gelte die Aussage für ein $k \in \mathbb{N}$, also für eine Teilemenge
-$K \subseteq A \cap V_c$, die aus $k$ Knoten besteht und in der jeder Knoten $x \in K$ die Kardinalität
+\tbf{Induktionsschritt:} Es gelte die Aussage für ein beliebiges $k \in \mathbb{N}$, also für eine Teilemenge
+$K \subseteq L_c$, die aus $k$ Knoten besteht und in der jeder Knoten $x \in K$ die Kardinalität
 $\Delta(x) = k$ hat.\\ Es gelte also: $|K| \leqslant |N(K)|$.\\
-Zu zeigen ist die Aussage für $k + 1$, also für eine Teilmenge $K' \subseteq A \cap V_c$ der Mächtigkeit 
+Zu zeigen ist die Aussage für $k + 1$, also für eine Teilmenge $K' \subseteq L_c$ der Mächtigkeit 
 $|K'| = k+1$:
 \[
 |K'| \leqslant |N(K')|.

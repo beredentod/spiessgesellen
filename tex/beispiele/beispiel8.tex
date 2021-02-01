@@ -3,7 +3,7 @@ Textdatei: \texttt{spiesse8.txt}\\
 Besonderheit: Ein Beispiel für den Fall \ref{probleme1} $\rightarrow$ \ref{fall2}, s. Teil \ref{sec:korrektheit-eingabe}.
 \begin{verbatim}
 5
-Aprfel Erdbeere Banane
+Apfel Erdbeere Banane
 2
 2 3
 Banane Clementine
@@ -17,5 +17,7 @@ Wünsche: \framebox{Apfel, Erdbeere, Banane}\\
 \noindent
 \framebox{Error: Es gibt Fehler in der Eingabedatei.}\\
 
-Die erste Spießkombination legt fest, dass ...
-\TODO{dokończyć}
+Die erste Spießkombination legt fest, dass nur Banane und Clementine die Indizes 2 und 3 besitzen dürfen.
+Allerdings sollen die Indizes 2 und 4 nach der zweiten Spießkombination den Obstsorten Dattel und Erdbeere 
+gehören. Der Index 2 darf keinen zwei unterschiedlichen Obstsorten gehören.
+Deshalb kommt es zu einem Widerspruch --- das Axiom \ref{ax:obstsorte-index} ist verletzt.

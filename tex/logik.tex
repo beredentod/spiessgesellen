@@ -1,11 +1,15 @@
 \subsection{Logik}\label{sec:logik}
+Da Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwendet werden, kann
+die Laufzeit bei der Verarbeitung der jeweiligen Spießkombination optimiert werden
+(mehr dazu im Teil \nameref{sec:laufzeit}),
+weil man für die Operation des Entfernens Logikgatter verwenden kann.\\
 
 Betrachten wir eine Spießkombination $s = (F_s, Z_s)$.
 %die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
 Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$.
 Die Bitmaske $bf$ besteht aus $n$ 1--en.
 In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
-Die Bitmaske $br$ wird auf folgende Weise definiert:
+Die Bitmaske $br$ wird auf folgende Weise definiert (mehr dazu in der \nameref{sec:umsetzung}):
 \[
 br := \neg(bn) \land bf.
 \]

@@ -1,6 +1,5 @@
-\subsection{Beispiel 0 (Aufgabenstellung)}\label{example:0}
+\subsection{Beispiel 0 (Aufgabenstellung --- Teil a)}\label{example:0}
 Textdatei: \texttt{spiesse0.txt}\\
-\TODO{nheme Bezug auf die Aufgabenstellung}
 \noindent
 \framebox{Apfel, Brombeere, Weintraube}\\
 
@@ -8,7 +7,67 @@ Textdatei: \texttt{spiesse0.txt}\\
 \framebox{1, 3, 4}\\
 
 Auf Papier kann man das Beispiel auf folgende Weise lösen.
-Lassen wir alle 
+Am Anfang weiß man nichts über die Obstsorten in $A$ und die Indizes in $B$.
+Wir zeichnen deshalb einen vollständigen, bipartiten Graphen $G$ (Abb. \ref{fig:example0-1}).
+Jede Kante steht für eine mögliche Zuweisung eines Index einer Obstsorte.\\
+
+Wir analysieren die 1. Spießkombination:
+\minibox[frame]{$F_1 = \{\text{Apfel, Banane, Brombeere}\}, Z_1 = \{1, 4, 5\}$}.\\
+Wir stellen fest, dass Apfel, Banane und Brombeere jeweils keine Indizes 2, 3, 5 haben können,
+weil jeder dieser Obstsorten ein Index aus der Menge $Z_1$ zugewiesen wird.
+Gleichzeitig merken wir, dass Erdbeere, Pflaume und Weintraube jeweils keinen der Indizes
+1, 4, 5 besitzen können, weil diese ausschließlich den Obstsorten aus der Menge $F_1$ zugewiesen werden.
+Somit stellen wir fest, dass die Anzahl der möglichen Zuweisungen schrumpft.
+Deshalb dürfen wir alle Kanten in $G$ zwischen allen $x \in F_1$ und allen $y \in B \setminus Z_1$,
+sowie zwischen allen $p \in A \setminus F_1$ und allen $q \in Z_1$ entfernen (Abb. \ref{fig:example0-2}).\\
+
+Wir analysieren die 2. Spießkombination:
+\minibox[frame]{$F_2 = \{\text{Banane, Pflaume, Weintraube}\}, Z_2 = \{3, 5, 6\}$}.\\
+Wir stellen fest, dass Banane, Pflaume, Weintraube jeweils keinen der Indizes 1, 2, 4 haben können,
+weil jeder dieser Obstsorten ein Index aus der Menge $Z_2$ zugewiesen wird. 
+Entfernen wir alle Kanten in $G$ zwischen allen $x \in F_2$ und allen $y \in B \setminus Z_2$.
+Unter anderem wurden die Kanten (Banane, 1) und\\ (Banane, 4) entfernt.
+Wir stellen fest, dass die Kardinlität des Knotens „Banane“ 1 beträgt --- er ist nur mit dem Knoten 5 verbunden.
+Ebenfalls ist der Knoten 5 nur mit dem Knoten „Banane“ verbunden.
+Dies bedeutet, dass es nur eine einzige Möglichkeit gibt, diesen Knoten mit einem Index zu verbinden.
+Somit wurde der Index von Banane gefunden. Wir kennen schon eine Obstsorte: $o(\text{Banane}, 5)$.\\
+Wir stellen auch fest, dass Apfel, Banane und Erdbeere jeweils keinen der Indizes 3, 5, 6 haben können,
+da sie nur den Obstsorten aus $F_2$ zugewiesen werden dürfen.
+Insbesondere wissen wir schon, dass 5 mit Banane verbunden wird.
+Deshalb dürfen wir alle Kanten in $G$ zwischen allen $p \in A \setminus F_2$ und allen $q \in Z_2$ entfernen.
+Wir bemerken, dass die Kardinlität des Knotens „Erdbeere“ nun 1 beträgt, der nur mit dem Knoten 2 verbunden ist.
+Ebenfalls ist der Knoten 2 mit keinem anderen verbunden. So legen wir fest:\\ $o$(Erdbeere, 2).
+Auf der Abbildung \ref{fig:example0-3} wird der Graph $G$ nach der Verarbeitung der 2. Spießkombination
+dargestellt. Die fetten Kanten zeigen an, dass die zwei Endknoten bereits verbunden sind, also, dass 
+diesen Obstsorten ihre Indizes zugewiesen wurden.\\
+
+Wir analysieren die 3. Spießkombination:
+\minibox[frame]{$F_3 = \{\text{Apfel, Brombeere, Erdbeere}\}, Z_3 = \{1, 2, 4\}$}.\\
+An dieser Stelle wurde die Zuweisung für Erdbeere bereits gefunden.
+Die Knoten „Apfel“ und „Brombeere“ besitzen keine Kanten mehr als die Kanten, die sie jeweils mit 1 und 4 verbinden. 
+Ebenfalls wurde der Index 5 Banane zugewiesen.
+Die Knoten „Pflaume“ und „Weintraube“ sind jeweils nur mit 3 und 6 verbunden.
+So können wir keine der übrigen Kanten zwischen irgendwelchen zwei Knoten in $G$ entfernen.\\
+
+Wir analysieren die 4. Spießkombination:
+\minibox[frame]{$F_4 = \{\text{Erdbeere, Pflaume}\}, Z_4 = \{2, 6\}$}.\\
+In der Menge $F_4$ tritt Erdbeere auf, deren Index bereits gefunden wurde.
+Somit wissen wir, dass der Index von Pflaume 6 sein muss. 
+So entdecken wir eine neue Zuweisung: $o$(Pflaume, 6).
+Wir können deshalb alle übrigen Kanten zwischen Pflaume und allen anderen Knoten entfernen.
+So bleibt der Knoten „Weintraube“ mit nur einer Kante übrig.
+Der einzelne Nachbar von diesem Knoten ist 3. So entdecken wir wieder eine neue Zuweisung: $o$(Weintraube, 3).\\
+Wir stellen auch fest, dass keine Kanten mehr entfernt werden können.
+Es bleibt immer noch ein Paar von Indizes und ein Paar von Obstsorten ohne eindeutige Zuweisung.\\
+
+An dieser Stelle schauen wir die Wunschliste an: \framebox{Apfel, Brombeere, Weintraube}.\\
+Der Index von Weintraube ist erfolgreich gefunden, aber die Indizes der übrigen Obstsorten nicht.
+Allerdings soll die Lösung der Aufgabe eine Menge an Indizes der gewünschten Obstsorten sein ---
+es müssen keine konkreten Zuweisungen ausgegeben werden. 
+Dies wurde erfolgreich gefunden, da die Indizes 1 und 4 nur Apfel oder Brombeere gehören können, weil
+keine anderen Kanten aus den Knoten 1 und 4 führen.
+Auf der Abbildung \ref{fig:example0-4} wurden alle gefundenen Zuweisungen durch fette Kanten dargestellt
+und alle Wünsche mit ihren Indizes wurden entsprechend \colorbox{black!30!green}{\textcolor{white}{grün}} und \colorbox{black!5!blue}{\textcolor{white}{blau}} markiert.
 
 \begin{figure}[H]
 \centering
@@ -16,21 +75,30 @@ Lassen wir alle
 \begin{subfigure}[t]{.24\textwidth}
 \centering
 \input{./tex/tikz/full-graph.tex}
+\caption{}
+\label{fig:example0-1}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{.24\textwidth}
 \centering
 \input{./tex/tikz/1.spiess.tex}
+\caption{}
+\label{fig:example0-2}
 \end{subfigure}
 \begin{subfigure}[t]{.24\textwidth}
 \centering
 \input{./tex/tikz/2.spiess.tex}
+\caption{}
+\label{fig:example0-3}
 \end{subfigure}\hfill
 \begin{subfigure}[t]{.24\textwidth}
 \centering
 \input{./tex/tikz/4.spiess.tex}
+\caption{}
+\label{fig:example0-4}
 \end{subfigure}
 \end{adjustbox}
-
+\caption{}
+\label{fig:example0}
 \end{figure}
 
 

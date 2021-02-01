@@ -120,7 +120,7 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 	for (int i = 0; i < n; i++) mask_full ^= (1 << i);
 
 	//die Bitmaske für die Obstsorten aus der Menge
-	for (auto x: nums) mask_nums ^= (1 << x-1);
+	for (auto x: nums) mask_nums ^= (1 << (x-1));
 
 	//die Bitmaske für die Obstsorten außerhalb der Menge
 	mask_rev = ~(mask_nums) & mask_full;
@@ -133,7 +133,7 @@ void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
 	for (int i = 0; i < n; i++) {
 		//falls eine Obstsorte zur Menge der Obstsorten der 
 		//	Spießkombination gehört
-		if (*it == i && it != fruits.end()) {
+		if (it != fruits.end() && *it == i) {
 			matrix[i] &= mask_nums;
 			it++;
 		}
@@ -160,11 +160,21 @@ void Solver::analyzeAllInfos(){
 //diese Methode prüft, ob die eingegeben Informationen über den Graphen
 //	keinen Widerspruch ergeben
 bool Solver::checkCoherence(){ 
-	//falls ein im Programm verwendeter Knoten den Grad 0 hat,
-	//	ist die Eingabe falsch
+	//falls zwei im Programm verwendete Knoten auf einer Komponente
+	//	unterschiedliche Kardinalitäten haben, ist die Eingabe falsch
 	for (int i = 0; i < int(used.size()); i++)
-		if (used[i] && G.deg(i) == 0)
-			return false;
+		if (used[i]){
+			//falls ein Knoten die Kardinalität von 0 besitzt
+			if (G.deg(i) == 0)
+				return false;
+
+			//wir nehmen den ersten Nachbarn von i 
+			int neigh = G.getFirstNeighbor(i);
+
+			//wir vergleichen die Kardinalitäten
+			if (G.deg(neigh) != G.deg(i))
+				return false;
+		}
 
 	return true;
 }
@@ -186,10 +196,10 @@ bool Solver::checkResult(){
 		//falls der Grad des Knotens der gewünschten Obstsorte
 		// gleich 1 ist
 		if (G.deg(x) == 1) {
-			vector<int> neigh = G.getNeighbors(x);
+			int neigh = G.getFirstNeighbor(x);
 
 			//der einzige Nachabr wird in die Ergebnismenge hinzugefügt
-			result.insert(neigh[0] - n + 1);
+			result.insert(neigh - n + 1);
 		}
 		//falls der Grad des Knotens der gewünschten Obstsorte
 		// mehr als 1 beträgt
@@ -231,17 +241,17 @@ bool Solver::checkResult(){
 
 			//es wir durch die Knoten der Obstsorten dieser Komponente
 			//	iteriert
-			for (auto x: setA) {
+			for (auto y: setA) {
 				//falls die Obstsorte x nicht gewünscht ist,
 				//	gibt es keine eindeutige Lösung dür die Eingabe
-				if (!todo[x]) {
+				if (!todo[y]) {
 					solv = false;
 					prob = true;
 				}
 				//falls die Obstsorte x gewünscht ist,
 				//	wird sie als geprüft markiert
 				else
-					ready[x] = 1;
+					ready[y] = 1;
 			}
 
 			//falls mind. ein Knoten zur Komponente gehört, aber nicht 
@@ -250,16 +260,16 @@ bool Solver::checkResult(){
 				//die Menge der Obstsorten der Komponente enthält 
 				//	mind. einen Knoten einer Obstsorte, die nicht gewünscht ist
 				set<int> currSet;
-				for (auto x: setA)
-					currSet.insert(x);
+				for (auto y: setA)
+					currSet.insert(y);
 				problems.pb(currSet);
 			}
 			//falls alle Knoten, die zur Komponente gehören, gewünscht sind
 			else
 				//alle Indizes der Obstsorte der Komponente werden 
 				//	in die Menge der Indizes der gewünschten Obstsorten hinzugefügt
-				for (auto x: setB)
-					result.insert(x - n + 1);
+				for (auto y: setB)
+					result.insert(y - n + 1);
 		}
 	}
 	

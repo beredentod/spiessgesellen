@@ -1,5 +1,4 @@
 \subsection{Bipartiter Graph}
-%\TODO{use definitions[?]}
 Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (A \cup B = V, E)$ umwandeln.
 Die Menge der Kanten $E$ wird im Folgenden festgelegt.
 Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
@@ -17,9 +16,7 @@ E = A\times B = \{(x, y) \,|\,  x \in A \text{ und } y \in B\}.
 Am Anfang ist $M$ dementsprechend voll mit 1--en.
 Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die jeweilige 
 Liste von Nachbarn des jeden Knotens $x \in A$ nur aus 0--en und 1-en besteht, indem
- diese Liste als Bitmasken dargestellt werden kann (mehr dazu in der \nameref{sec:umsetzung}).
-
-\input{./tex/figures/fig_graph_sets_complete.tex}
+diese Liste als eine Bitmaske dargestellt werden kann (mehr dazu in der \nameref{sec:umsetzung}).\\
 
 Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
 %Als $a \leadsto b$ bezeichnet man, dass $a$ den Index $b$ haben kann. 
@@ -27,11 +24,10 @@ Man kann Folgendes festellen.
 
 \input{./tex/lemmata/lem_entfernen_kanten.tex}
 
+\input{./tex/figures/fig_graph_sets_complete.tex}
+
 \noindent Aus Lemma \ref{lem:spiess-numbers} ergibt sich direkt auch eine andere Beobachtung.
 
 \input{./tex/lemmata/kor_komponente_entfernen_kanten.tex}
 
-Da Bitmasken für die Darstellung jeder Liste $M_i$ ($i \in A$) verwendet werden, kann
-die Laufzeit bei der Analyse der jeweiligen Spießkombination optimiert werden
-(mehr dazu im Teil \ref{sec:laufzeit}),
-weil man für die Operation des Entfernens Logikgatter verwenden kann.
+

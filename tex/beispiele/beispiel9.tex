@@ -1,0 +1,24 @@
+\newpage
+\subsection{Beispiel 9}\label{example:9}
+Textdatei: \texttt{spiesse9.txt}\\
+Besonderheit: Ein Beispiel für den Fall \ref{probleme2} $\rightarrow$ \ref{fall2}, s. Teil \ref{sec:korrektheit-eingabe}.
+\begin{verbatim}
+5
+Apfel Erdbeere Banane
+2
+2 3
+Banane Clementine
+4 5
+Banane Dattel
+\end{verbatim}
+
+\noindent
+Wünsche: \framebox{Apfel, Erdbeere, Banane}\\
+
+\noindent
+\framebox{Error: Es gibt Fehler in der Eingabedatei.}\\
+
+Die erste Spießkombination legt fest, dass nur Banane und Clementine die Indizes 2 und 3 besitzen dürfen.
+Allerdings sollen die Indizes 4 und 5 nach der zweiten Spießkombination den Obstsorten Banane und Dattel 
+gehören. Die Obstsorte Banane darf keine zwei unterschiedliche Indizes besitzen.
+Deshalb kommt es zu einem Widerspruch --- das Axiom \ref{ax:obstsorte-index} ist verletzt.

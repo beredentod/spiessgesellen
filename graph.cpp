@@ -6,6 +6,11 @@ void Graph::addEdge(int a, int b){
 	gr[b+n1].pb(a);
 }
 
+//diese Methode gibt den ersten Nachbarn eines Knotens zurück
+int Graph::getFirstNeighbor(int v){
+	return gr[v][0];
+}
+
 //diese Methode gibt den Grad des Knotens zurück
 int Graph::deg(int v) {
 	return gr[v].size();

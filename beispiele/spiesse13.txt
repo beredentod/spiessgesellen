@@ -1,0 +1,19 @@
+8
+Apfel Himbeere Grapefruit Banane
+8
+5 1 3 2 4 8 6 7 
+Dattel Grapefruit Banane Feige Erdbeere Clementine Apfel Himbeere
+1 5 4 6 8 2 7
+Himbeere Dattel Feige Banane Apfel Grapefruit Clementine
+4 8 2 5 1 7 
+Apfel Dattel Clementine Himbeere Banane Grapefruit
+8 7 2 4 1
+Clementine Banane Apfel Grapefruit Dattel
+1 4 2 7
+Grapefruit Clementine Dattel Apfel
+7 2 1
+Dattel Grapefruit Clementine
+2 7
+Clementine Grapefruit
+2
+Clementine

@@ -5,27 +5,28 @@ selbt einen vollständigen, bipartiten Graphen.
 \end{lemma}
 
 \begin{proof}
-\TODO{check proof and lemma}
 Diese Aussage kann durch die vollständige Induktion für jedes $k \in \mathbb{N}$ bewiesen werden.\\
 
 \noindent
 \tbf{Induktionsanfang}: 
 Die beiden Mengen $A$ und $B$ sind gleichmächtig und ganz am Anfang ist $G$ vollständig.
 Sei die erste Spießkombination $K_1 = (F_1, Z_1)$, wobei $F_1 \neq A$. (Falls $F_1 = A$,
-dann gilt die Aussage sofort für $k = 1$.)
+dann gilt sofort die Aussage für $k = 1$.)
 Nach der Verarbeitung von $K_1$ 
-entstehen zwei Zusammenhangskomponenten: $C_1 \cup C_2 = G$, wobei o.B.d.A $C_1 = F \cup Z$.
-Dann sind $C_1 \cap A$ und $C_1 \cap B$ nach Definition \ref{def:spiesskomb} auch gleichmächtig. 
-Ebenfalls sind dann $C_2 \cap A$ und $C_2 \cap B$ gleichmächtig.
-Nach \ref{lem:spiess-numbers} gilt, dass alle Kanten zwischen $C_1$ und $C_2$
-aus $E$ entfernt wurden, aber alle innerhalb von $C_1$ und innerhalb von $C_2$
-beibehalten wurden.
+entstehen zwei Zusammenhangskomponenten: $C_1 = (L_1 \cup R_1, E_1)$ und $C_2 = (L_2 \cup R_2, E_2)$,
+$C_1 \cup C_2 = G$, wobei o.B.d.A $L_1 \cup R_1 = F \cup Z$.
+Dann sind $L_1$ und $R_1$
+nach Definition \ref{def:spiesskomb} auch gleichmächtig. 
+Ebenfalls sind dann $L_2$ und $R_2$ gleichmächtig.
+Nach Lemma \ref{lem:spiess-numbers} gilt, dass alle Kanten zwischen $C_1$ und $C_2$
+aus $E$ entfernt werden, aber alle Kanten innerhalb von $C_1$ und innerhalb von $C_2$
+beibehalten werden.
 Dies bedeutet, dass die Komponenten $C_1$ und $C_2$ selbst vollständige, bipartite Graphen sind.\\
 Damit ist die Aussage für $k = 1$ bewiesen und der Induktionsanfang erledigt.\\
 
 \noindent
 \tbf{Induktionsschritt}: Es gelte die Aussage, also die \tbf{Induktionsannahme},
-für $k \in \mathbb{N}$, d.h., es gelte,
+für ein beliebiges, aber festes $k \in \mathbb{N}$, d.h., es gelte,
 dass jede Zusammenhangskomponente in $G$ nach Verarbeitung von $k$ Spießkombinationen selbst
 einen vollständigen, bipartiten Graphen bildet.\\
 
@@ -37,25 +38,27 @@ Zu untersuchen ist die folgende Fallunterscheidung:
 \begin{enumerate}[label={\upshape(\roman*)}]
   \item Sei $D = (V_D, E_D)$ eine Zusammenhangskomponente in $G$. Sei $F_i \cup Z_i = V_D$.
   Da alle Knoten der Spießkombination sich mit allen Knoten von $D$ decken,
-  können, nach Korollar \ref{kor:komponente-mengen}, keine Kanten aus $E$ entfernt werden, deshalb
-  entstet keine neue Zusammenhangskomponente, also ist jede Zusammenhangskomponente
+  können keine Kanten nach Korollar \ref{kor:komponente-mengen} aus $E$ entfernt werden, deshalb
+  entsteht keine neue Zusammenhangskomponente, also ist jede Zusammenhangskomponente
   nach der Induktionsannahme ein vollständiger, bipartiter Graph.\label{lem:komponente-complete1} 
   %Damit ist der Induktionsschritt für diesen Fall vollzogen und die Behauptung gilt für jedes
   %$k \in \mathbb{N}$.
-  \item Sei $D = (V_D, E_D)$ eine Zusammenhangskomponente in $G$. Sei $F_i \cup Z_i \subsetneq V_D
-  \land (F_i \cup Z_i) \not\subset (A \cup B)$, also $F_i \cup Z_i$ gehört nur zu einer
-  Zusammenhangskomponente in $G$.
+  \item Sei $D = (L_D \cup R_D = V_D,\, E_D)$ eine Zusammenhangskomponente in $G$.
+  Sei $F_i \cup Z_i \subsetneq V_D$, also gehört $F_i \cup Z_i$ nur zu einer
+  Zusammenhangskomponente in $G$, aber deckt sich nicht mit allen Knoten.
   $D$ ist laut Induktionsannahme selbt ein vollständiger, bipartiter Graph.
   Nach Korollar \ref{kor:komponente-mengen} werden alle Kanten zwischen 
-  allen $x \in F_i$ und allen $y \in V_D \cap Z_i$ entfernt.
-  So entstehen zwei neue Zusammenhangskomponenten:
-  $C_1 = F_i \cup Z_i$ und $C_2 = V_D \setminus (F_i \cup Z_i)$, die ebenfalls selbt 
+  allen $x \in F_i$ und allen $y \in R_D \setminus Z_i$,
+  sowie zwischen allen $p \in Z_i$ und allen $q \in L_D \setminus F_i$ entfernt.
+  So entstehen zwei neue Zusammenhangskomponenten: $C_1 = (L_1 \cup R_1, E_1)$ und $C_2 = (L_2 \cup R_2, E_2)$,
+  o.B.d.A. $L_1 \cup R_1 = F_i \cup Z_i$ und $C_2 = V_D \setminus (F_i \cup Z_i)$, die ebenfalls selbt 
   vollständige, bipartite Grpahen sind.
   Jede andere Zusammenhangskomponente in $G$ ist
-  nach der Induktionsannahme ein vollständiger, bipartiter Graph.\label{lem:komponente-complete2} 
-  \item Sei $1 \leqslant p \leqslant n$ beliebig, aber fest.
-  Seien $C_1, C_2, ..., C_p$ untereinander unterschiedliche Zusammnhangskomponenten in $G$.
-  Gehöre $(F_i \cup Z_i)$ zu mehreren Komponenten $C_p, ..., C_q$.
+  nach der Induktionsannahme ein vollständiger, bipartiter Graph.\label{lem:komponente-complete2}
+
+  \item Sei $1 \leqslant t \leqslant n$ beliebig, aber fest.
+  Seien $C_1, C_2, ..., C_t$ untereinander unterschiedliche Zusammnhangskomponenten in $G$.
+  Gehöre $F_i \cup Z_i$ zu mehreren Komponenten $C_p, ..., C_q$.
   Dann gilt für jede Zusammenhangskomponente $C_i$ entweder \ref{lem:komponente-complete1} 
   oder \ref{lem:komponente-complete2}, abhängig davon, ob $C_i$ vollständig zu $F_i \cup Z_i$
   gehört oder nur zum Teil. Das bedeutet, entweder entsteht keine neue Zusammenhangskomponente 
@@ -63,6 +66,6 @@ Zu untersuchen ist die folgende Fallunterscheidung:
   \ref{lem:komponente-complete2}.
 \end{enumerate}
 
-Da alle mögliche untersucht wurden, ist der Induktionsschritt vollzogen und die Behauptung gilt für jedes
+Da alle möglichen Fälle untersucht wurden, ist der Induktionsschritt vollzogen und die Behauptung gilt für jedes
 $k \in \mathbb{N}$.
 \end{proof}

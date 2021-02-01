@@ -7,20 +7,20 @@ $B = \{1, 2, ..., n\}$, zu der die Indizes der Obstsorten aus $A$ gehören.
 \input{./tex/lemmata/def_spiesskombination.tex}
 
 Gegeben sind auch $m$ Spießkombinationen, wobei jede $i$--te Spießkombination
-aus einer Menge von Obstsorten $F_i \subseteq A$ und einer Menge der Zahlen $Z_i \subseteq B$ besteht. 
+aus einer Menge von Obstsorten $F_i \subseteq A$ und einer Menge der Indizes $Z_i \subseteq B$ besteht. 
 Nach der Definition \ref{def:spiesskomb} besteht die Menge $Z_i$ nur aus
 den in $B$ enthaltenen Indizes, die zu den Obstsorten in $F_i$ gehören, deshalb sind die beiden Mengen
 $F_i$ und $Z_i$ auch gleichmächtig.\\
-Außerdem gegeben ist auch eine \textit{\textbf{Wunschliste}} $W \subseteq A$.\\
+\indent Außerdem gegeben ist auch eine \textit{\textbf{Wunschliste}} $W \subseteq A$.\\
 
 Die Aufgabe ist ein Entscheidungsproblem. Es soll entschieden werden,
 ob die Menge der Indizes der in $W$ enthaltenen Obstsorten $W' \subseteq B$ anhand der $m$ 
-Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegebn werden.\\
+Spießkombinationen eindeutig bestimmt werden kann. Falls ja, soll sie auch ausgegeben werden.\\
 
 In den folgenden Überlegungen wird angenommen, dass das Axiom \ref{ax:obstsorte-index} für alle
 Obstsorten in der Eingabe gilt.
 Es ist aber möglich, dass die Spießkombination in einer Eingabe diesem Axiom nicht folgen, das heißt,
-es an einer Stelle einen Widersprcuh gibt.
+es an einer Stelle einen Widerspruch gibt.
 Laut der Aufgabenstellung ist ein solcher Fall nicht ausgeschlossen. 
 Um diesen Fall zu verhindern, muss man die Korrektheit der Eingabe überprüfen. 
 Mehr dazu folgt im Teil \ref{sec:korrektheit-eingabe}.

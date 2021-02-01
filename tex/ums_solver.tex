@@ -10,7 +10,7 @@ auf folgende Weise definiert wird:
 br := \neg(bn) \land bf.
 \]
 Im Fall, wenn man mit einer Bimaske einer festen Größe operiert, würde 
-eine einfache Negation der Bitmaske $bn$ nicht hinreichen.\\
+eine einfache Negation der Bitmaske $bn$ nicht hinreichend.\\
 
 Die Obstsorten werden als Strings eingelesen, aber in der Methode \ttt{readFile()}
 wird jeder Obstsorte ein interner Index\footnote{Nummerierung ab 0.} zugewiesen
@@ -19,14 +19,14 @@ werden die Obstsorten als einfache Integers behandelt.
 Es werden dazu zwei Maps festgelegt: \ttt{fruit2ID} und \ttt{ID2Fruit}, 
 in denen die Obstsorten und die entsprechenden internen Indizes gespeichert sind.\\
 
-Jede Spießkombination wird als \ttt{pair<set<int>, set<int>}, also ein Tupel entsprechend
-aus der Menge der internen Indizes der Obstsorten und der Menge der Indizes aus der Aufgabenstellung.
+Jede Spießkombination wird als \ttt{pair<set<int>, set<int>} dargestellt, also als ein Tupel entsprechend
+aus der Menge der internen Indizes der Obstsorten und der Menge der Indizes der Obstsorten (aus der Textdatei).
 Alle Spießkombinationen werden in einem \ttt{vector} gespiechert, der \ttt{infos} heißt.\\
 
-In \ttt{wishes} werden als ein \ttt{set} von Integers werden die internen Indizes der gewünschten 
+In \ttt{wishes} werden als eine \ttt{set} von Integers die internen Indizes der gewünschten 
 Obstsorten, also der Elemente der Menge $W$, gespeichert.
-Analog werden in \ttt{result}, also ebenfalls ein \ttt{set} von Integers, die Indizes der gewünschten 
-Obstsorten, also die Elemente der Menge $W'$ hinzugefügt.\\ 
+Analog werden in \ttt{result}, also ebenfalls in eine \ttt{set} von Integers, die Indizes der gewünschten 
+Obstsorten, also die Elemente der Menge $W'$, hinzugefügt.\\ 
 
 Der \ttt{vector}, der \ttt{used} heißt, wird verwendet, um die benutzten internen Indizes der Obstsorten,
 wie auch die Indizes der Obstsorten zu markieren, die im Graphen verwendet werden,
@@ -34,17 +34,17 @@ da es in einzigen Textdateien ein größeres $n$ gibt als die Anzahl der in den 
 un der Wunschliste verwendeten Obstsorten und Indizes. 
 Diese Markierung zeigt sich bei der Prüfung auf korrekte Eingabe hilfreich.\\
 
-Die Methode \ttt{analyzeInfo()} nimmt als Argument eine Spießkombination. 
+Die Methode \ttt{analyzeInfo()} nimmt als Parameter eine Spießkombination. 
 In der Methode werden die drei Bitmasken $bn, br, bf$ erstellt.
-Um die Laufzeit zu optimieren, wird durch die Menge der internen Indizes der Obstsorten \ttt{fruits}
-aus dieser Spießkombination gleichzeitig mit den Obstsorten aus der Matrix iteriert.
+Um die Laufzeit zu optimieren, wird durch die Menge der internen Indizes der Obstsorten 
+dieser Spießkombination \ttt{fruits} gleichzeitig mit den Bitmasken aus der Matrix iteriert.
 Da die Menge \ttt{fruits} vorsortiert ist, müssen wir nicht bei jeder Obstsorte in der Matrix
 prüfen, ob sie sich in \ttt{fruits} befindet, um die Entscheidung zu treffen, welche der beiden
 Bitmasken anzuwenden.\\
 Nachdem alle $m$ Spießkombinationen verarbeitet wurden, werden in der Methode \ttt{analyzeAllInfos()}
 alle übrigen 1--Beziehungen in der Adjazenzmatrix
 als Kanten in den Graphen \ttt{G} der Klasse \ttt{Graph} kopiert. 
-Die einzelnen 1--en in \ttt{matrix} werden mithilfe der eingebauten Funktion \ttt{\_Find\_next()}
+Die jeweiligen 1--en in \ttt{matrix} werden mithilfe der eingebauten Funktion \ttt{\_Find\_next()}
 gefunden.\\
 
 Die Methode \ttt{checkCoherence()} prüft, ob die Eingabe dem Axiom \ref{ax:obstsorte-index} folgt.
@@ -52,12 +52,13 @@ Dennoch es gibt Beispiele, in denen $n$ größer ist als die Anzahl der verwende
 Spießkombinationen und der Wunschliste.
 Bei der Zuweisung der internen Indizes jeder Obstsorte werden die verwendeten Obstsorten und Indizes
 in \ttt{used} markiert. Diesen Vorteil können wir nutzen, um die Prüfung der Kardinalität des
-jeden Knotens in \ttt{G} zu überprüfen: Es wird geprüft, ob die Kardinalität 0 beträgt. 
+jeden Knotens in \ttt{G} zu überprüfen: Es wird geprüft, ob zwei Nachbarn dieselbe Kardinalität besitzen.
+Wir nehmen dazu die Methode \ttt{getFirstNeighbor()} der Klass \ttt{Graph} und vergleichen die
+Kardinalitäten für jeden Knoten und seinen ersten (beliebigen) Nachbarn. 
 Alle Knoten, die in \ttt{used} nicht markiert wurden, werden übersprungen.
-Falls bei mindestens einem Knoten die Kardinalität 0 ist, wird \ttt{false} ausgegeben und
+Falls bei mindestens einem Knoten die Kardinalitäten nicht übereinstimmen, wird \ttt{false} ausgegeben und
 die Eingabe im gegebenen Beispiel ist fehlerhaft.\\
-Sonst, wenn alle verwendeten Knoten eine Kardinalität von mindestens 1 besitzen, wird \ttt{true}
-ausgegeben.\\ 
+Sonst wird \ttt{true} ausgegeben.\\ 
 
 Nachdem die Korrektheit der Eingabe geprüft wurde, kann festgestellt werden, ob $W'$ eindeutig
 bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.\\
@@ -74,14 +75,14 @@ Dann wird geprüft, ob die Menge \ttt{multip} überhaupt irgendwelche Elemente e
 Falls nicht, gibt die ganze Funktion an dieser Stelle \ttt{true} zurück.\\
 Sont wird eine boolsche Variable \ttt{solv} erstellt, die für die Existenz einer Lösung steht.
 Am Anfang nimmt sie \ttt{true} als Wert. 
-Dazu wird auch eine Liste von Mengen \ttt{problems} erstellt, die dazu da ist, um
-die Obstsorten einer Zusammenhangskomponente zu speichern, die eine nicht gewünschte Obstsorte enthält.\\
+Dazu wird auch eine Liste von Mengen \ttt{problems} erstellt, die dazu da ist,
+die Obstsorten einer Zusammenhangskomponente, die eine nicht gewünschte Obstsorte enthält, zu speichern.\\
 Danach wird über die Menge \ttt{multip} iteriert. 
 Für jedes Element \ttt{x} aus dieser Menge wird eine boolsche Variable \ttt{prob} erstellt, die 
 anzeigt, ob mindestens eine Obstsorte zu der Komponente gehört, die nicht gewünscht ist.
 Am Anfang hat sie den Wert \ttt{false}.\\
-Es wird zunächst geprüft, ob an der Stelle \ttt{x} in \ttt{ready} 0 steht, d.h.,
-der Knoten gehört zu einer Zusammenhangskomponente, die noch nicht bearbeitet wurde.
+Es wird zunächst geprüft, ob an der Stelle \ttt{x} in \ttt{ready} eine 0 steht, d.h.,
+ob der Knoten zu einer Zusammenhangskomponente gehört, die noch nicht bearbeitet wurde.
 Falls ja, dann werden zwei Listen \ttt{setB} und \ttt{setA} erstellt,
 die der Liste der Nachbarn von \ttt{x} und der Liste der Nachbarn von einem Nachbarn von \ttt{x}
 entsprechen.
@@ -92,10 +93,10 @@ Dies bedeutet, es gibt eine nicht gewünschte Obstsorte in der Komponente.\\
 Sonst wird die Stelle des internen Index dieser Obstsorte in \ttt{ready} mit 1 markiert.\\
 Danach wird geprüft, ob \ttt{prob == true}. Falls \ttt{prob == false} gilt, wird die Menge \ttt{setB}
 in \ttt{result} hinzugefügt. Sonst, wird die Menge \ttt{setA} in \ttt{problems} hinzugefügt, um sie 
-danach als Nachricht für den Nutzer vorzustellen, dass aufgrund von einzigen Obstsorten 
-die Menge $W'$ nicht eindeutig bestimmt werden kann.\\
+danach als Nachricht für den Nutzer vorzustellen, dass 
+die Menge $W'$ aufgrund von bestimmten Obstsorten nicht eindeutig festgelegt werden kann.\\
 Am Ende, nach der Schleife über \ttt{multip}, wird geprüft, ob es eine Lösung zur Aufgabe für eine
-Eingabe gibt: Es wird gepüft, ob \ttt{solv == true}. Falls ja, dann wir \ttt{true} zurückgegeben.
+Eingabe gibt: Es wird gepüft, ob \ttt{solv == true}. Falls ja, dann wird \ttt{true} zurückgegeben.
 Sonst wird eine Meldung ausgegeben, die alle Zusammenhangskomponenten beinhaltet, 
 die eine nicht gewünschte Obstsorte enthalten, und die nicht gewünschten Obstsorten werden
 ebenfalls angezeigt.
