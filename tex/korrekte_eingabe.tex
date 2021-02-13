@@ -2,8 +2,9 @@
 Am Ende des Teils \ref{sec:formulierung} wurde bemerkt, dass die Korrektheit und Vollständigkeit
 der Lösung davon abhängt, ob alle Obstsorten in einer Eingabe Axiom \ref{ax:obstsorte-index} folgen.
 
-Indentifiziern wir zuerst die Probleme, die auftreten können.
-In den folgenden Überlegungen nehmen wir an, dass jede Spießkombination so gebildet wird, dass gilt: $|F_i| = |Z_i|$.
+Indentifizieren wir zuerst die Probleme, die auftreten können.
+In den folgenden Überlegungen nehmen wir an, dass jede Spießkombination $K = (F_i, Z_i)$ so gebildet wird,
+dass gilt: $|F_i| = |Z_i|$.
 (Falls man dies nicht angenommen hätte, wäre eine Eingabe schon an dieser Stelle
 falsch, da eine Obstsorte zwei Indizes oder zwei Obstsorten einen Index haben müssten.
 Außerdem ist dieser Fehler leicht herauszufinden, indem man beim Einlesen prüft,
@@ -25,7 +26,7 @@ Betrachten wir dazu zwei Spießkombinationen: $K_1 = (F_1, Z_1)$ und $K_2 = (F_2
 Es gelte: $x \in F_1$ und entsprechend $i \in Z_1$.
 %\TODO{Bild vielleicht?}
 \begin{enumerate}[label={\upshape(F\arabic*)}]
-  \item Falls $y \in F_1$ und $i = j$, dann ist $i$ bereits in $Z_1$. Sodass $|F_1| = |Z_1|$ gilt,
+  \item Falls $y \in F_1$ und $i = j$, dann ist $i$ bereits in $Z_1$. Damit $|F_1| = |Z_1|$ gilt,
   muss gelten: $\exists o(z, k) : z \notin F_1 \land k \in Z_1$.
   Dann muss zwar kein Widerpsurch erfolgen, aber wir haben der Obstsorte einen Index zugewiesen,
   also kann an dieser Stelle die Beziehung zwischen $z$ und $k$ gar nicht festgestellt werden.
@@ -44,15 +45,18 @@ Es gelte: $x \in F_1$ und entsprechend $i \in Z_1$.
 \end{enumerate}
 
 Bei der Untersuchung der Situation für \ref{probleme2} geht man durch eine analoge Fallunterscheidung wie
-in \ref{fall1} und \ref{fall2}.\\
+in \ref{fall1} und \ref{fall2} vor.\\
 
-Deshalb, um zu prüfen, ob die Eingabe Axiom \ref{ax:obstsorte-index} widerspricht, muss man 
-nur untersuchen, ob die Kardinalität des jeden Knotens mit der Kardinalität eines der seinen 
+Um zu prüfen, ob die Eingabe Axiom \ref{ax:obstsorte-index} widerspricht, muss man deshalb
+nur untersuchen, ob die Kardinalität jedes Knotens mit der Kardinalität eines seiner 
 Nachbarn nicht übereinstimmt.\\
 Dazu muss man beachten, dass die Zahl $n$ in einigen Beispieldateien größer ist
 als die Anzahl der in Spießkombinationen und in der Wunschliste verwendeteten Obstsorten
 und Indizes. In diesem Fall muss man die nicht genutzten Obstsorten und Indizes beim Einesen
 entsprechend markieren und sie beim Prüfen auf Korrektheit der Eingabe überspringen. Mehr dazu
-in der \nameref{sec:umsetzung}.
+in der \nameref{sec:umsetzung}.\\
+
+Sehen Sie dazu die folgenden Beispiele: \nameref{example:8}, \nameref{example:9}, \nameref{example:14}.
+
 %Untersuchen wir noch die Situation, in der die Mengen $F$ und $Z$ einer Spießkombination $K$ nicht
 %gleichmächtig seien. Es gelte: $|F| = |Z| + h, h \in \mathbb{N}$.

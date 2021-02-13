@@ -279,7 +279,7 @@ bool Solver::checkResult(){
 	}
 	//falls es keine eindeutige Lösung für die Eingabe gibt
 	else {
-		cout << "Für die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
+		cout << "Für die folgenden Obstsorten konnte keine eindeutige Zuweisung gefunden werden.\n";
 		for (auto x: problems) {
 			cout << "Komponente: ";
 			//Aufzählen der Obstsorten, die zur Komponente gehören

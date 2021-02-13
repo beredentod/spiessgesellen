@@ -3,28 +3,30 @@ Man kann die beiden Mengen $A$ und $B$ zu Knoten eines bipartiten Graphen $G = (
 Die Menge der Kanten $E$ wird im Folgenden festgelegt.
 Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar. 
 Als $M_i$ bezeichnet wird die Liste der Länge $n$,
-die die Beziehungen eines Knotens
-$i \in A$ zu jedem Knoten $j \in B$ als 1 (Kante) oder 0 (keine Kante) darstellt.
+die die Beziehungen des Knotens
+$i \in A$ zu jedem Knoten $j \in B$ als 1 (Kante) oder 0 (keine Kante) enthält.
 Als $M_{i, j}$ bezeichnet wird die $j$--te Stelle in der $i$--ten Liste der Matrix.\\
-Nach Axiom \ref{ax:obstsorte-index} gehört jeder Obstsorte aus $A$ genau ein Index aus $B$.
-Dennoch man kann am Anfang keiner Obsorte einen Index zuweisen.
+Nach Axiom \ref{ax:obstsorte-index} gehört zu jeder Obstsorte aus $A$ genau ein Index aus $B$.
+Dennoch kann man am Anfang keiner Obsorte einen Index zuweisen.
 Deshalb wird zunächst jeder Knoten aus $A$ mit jedem Knoten aus $B$ durch eine Kante verbunden:
 \[
 E = A\times B = \{(x, y) \,|\,  x \in A \text{ und } y \in B\}.
 \]
 
-Am Anfang ist $M$ dementsprechend voll mit 1--en.
-Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die jeweilige 
-Liste von Nachbarn des jeden Knotens $x \in A$ nur aus 0--en und 1-en besteht, indem
-diese Liste als eine Bitmaske dargestellt werden kann (mehr dazu in der \nameref{sec:umsetzung}).\\
+Am Anfang ist $M$ dementsprechend voll mit Einsen.
+Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die 
+Liste der Nachbarn eines Knotens $x \in A$ nur aus Nullen und Einsen besteht, indem man
+diese Liste als eine Bitmaske darstellt (mehr dazu in der \nameref{sec:umsetzung}).\\
 
-Jede $i$--te Spießkombination bringt mit sich Informationen über die Obstsorten in $F_i$.
+Jede $i$--te Spießkombination $K_i = (F_i, Z_i)$ bringt Informationen über die Obstsorten in $F_i$.
 %Als $a \leadsto b$ bezeichnet man, dass $a$ den Index $b$ haben kann. 
 Man kann Folgendes festellen. 
 
 \input{./tex/lemmata/lem_entfernen_kanten.tex}
 
 \input{./tex/figures/fig_graph_sets_complete.tex}
+
+\input{./tex/lemmata/def_komponente.tex}
 
 \noindent Aus Lemma \ref{lem:spiess-numbers} ergibt sich direkt auch eine andere Beobachtung.
 

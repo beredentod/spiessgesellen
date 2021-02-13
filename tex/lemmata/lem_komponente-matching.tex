@@ -6,8 +6,17 @@ Zusammenhangskomponente in $G$. Dann existiert immer ein perfektes Matching zu $
 Nach Lemma \ref{lem:komponente-complete} ist jede Zusammenhangskomponente in $G$ ein vollständiger,
 bipartiter Graph. Nach Satz von Hall existiert ein perfektes Matching, wenn
 für alle Teilmengen $K \subseteq L_c$ gilt: $|K| \leqslant |N(K)|$.
+
+Sei $K$ eine beliebige Teilmenge von $L_c$ mit der Mächtigkeit $|K| \leqslant |L_c|$. 
+Da $C$ selbst ein vollständiger, bipartiter Graph ist,
+besitzt jeder Knoten in $C$ die Kardinalität von $|L_c| = |R_c|$.
+So gilt: $N(K) = |K| \cdot |L_c|$ und es gilt: $|K| \leqslant |N(K)|$.
+\end{proof}
+
+
+\begin{comment}
 Die obere Behauptung kann für beliebig große Mächtigkeiten $|K| = k \in \mathbb{N}$
-durch die vollständige Induktion bewiesen werden.\\
+durch vollständige Induktion bewiesen werden.\\
 
 \noindent
 \tbf{Induktionsanfang:} Für $k = 1$ hat der einzelne Knoten $x \in K \subseteq L_c$
@@ -32,4 +41,5 @@ Der Induktionsschritt ist damit vollzogen und es wurde bewiesen, dass die Behaup
 Mächtigkeit von $K$ gilt.
 Dadurch wurde auch bewiesen, dass es in einer Zusammenhangskomponente in $G$
  immer ein perfektes Matching gibt.
-\end{proof}
+\end{comment}
+

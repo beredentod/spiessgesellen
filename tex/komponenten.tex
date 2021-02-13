@@ -1,5 +1,5 @@
 \subsection{Zusammenhangskomponenten}
-Nach der Verarbeitung der allen $m$ Spießkombinationen verfügen wir über den Graphen $G$,
+Nach der Verarbeitung aller $m$ Spießkombinationen verfügen wir über den Graphen $G$,
 in dem viele Kanten in $E$ entfernt wurden.
 Auf diese Weise können wir schon anfangen, die Indizes der Obstsorten aus $W$ festzulegen.
 Definieren wir zunächst, was generell ein \tbf{Matching} ist.
@@ -30,16 +30,16 @@ Um sich dieses Satzes zu bedienen, muss man noch den Begriff der \tbf{Nachbarsch
 der Verarbeitung der allen $m$ Spießkombinationen.}
 \label{fig:graph-after-analysis}
 \centering
-\begin{subfigure}[c]{.49\textwidth}
+\begin{subfigure}[b]{.49\textwidth}
 \centering
 \input{./tex/tikz/after-infos.tex}
-\caption{Der Graph nach der Verarbeitung der allen Spießkombinationen}
+\caption{Der Graph nach der Verarbeitung aller Spießkombinationen}
 \label{fig:graph-after-infos}
 \end{subfigure}
-\begin{subfigure}[c]{.49\textwidth}
+\begin{subfigure}[b]{.49\textwidth}
 \centering
 \input{./tex/tikz/component.tex}
-\caption{Die ürbige Zusammenhangskomponente mit mehr als 2 Knoten}
+\caption{Die übrige Zusammenhangskomponente mit mehr als 2 Knoten}
 \label{fig:component-left}
 \end{subfigure}
 \end{figure}
@@ -70,7 +70,7 @@ Der Beweis erfolgt durch Widerspruch.
 
 \input{./tex/lemmata/lem_komponente-matching.tex}
 
-Nach der Verarbeitung der allen Spießkombinationen entsteht ein Graph mit vielen Zusammenhangskomponenten
+Nach der Verarbeitung aller Spießkombinationen entsteht ein Graph mit vielen Zusammenhangskomponenten
 (s. Abb. \ref{fig:graph-after-analysis}).
 An dieser Stelle muss man noch die Wunschliste $W$ untersuchen, um die entsprechende Menge $W'$ zu bestimmen.
 Dazu muss man die folgenden zwei Beobachtungen betrachten.
@@ -97,22 +97,22 @@ $C_x = (L_x \cup R_c, E_x)$, zu der $x$ gehört, untersucht werden, ob gilt: $\f
 (Lemmata \ref{lem:komponente-all-wunschliste} und \ref{lem:komponente-one-not-wunschliste}).\\
 
 Man erstellt eine Liste $\bar{W}$ der Länge $n$,
-in der die Zugehörigkeit einer Obstsorte zu $W$ durch 1 oder 0 gekennzeichnet wird
+in der die Zugehörigkeit einer Obstsorte zur Wunschliste $W$ durch 1 oder 0 gekennzeichnet wird
 (s. \nameref{sec:umsetzung}). Außerdem erstellt wird eine Liste $\bar{R}$ der Länge $n$,
 in der jede gewünschte Obstsorte $x$ als 1 gekennzeichnet wird, falls der Knoten $x$ in $G$ bereits
 besucht wurde (s. \nameref{sec:umsetzung}).\\
 
-Wenn man einen Knoten $x \in W$ untersucht, deren Kardinalität $\Delta(x) > 1$ ist,
+Wenn man einen Knoten $x \in W$ untersucht, dessen Kardinalität $\Delta(x) > 1$ ist,
 kann man die Liste der Nachbarknoten $n(x)$ von $x$ aufrufen.
 Da eine Zusammenhangskomponente selbst vollständig ist\\ (Lemma \ref{lem:komponente-complete}),
 kann man die Liste der Nachbarknoten $n(y)$ eines beliebigen Nachbarn $y$ von $x$ ($y \in n(x)$) aufrufen.
-So kann man jeden Knoten $z \in n(y)$ untersuchen, ob bei jedem $z$ eine 1 in $\bar{W}$ steht.
+So kann man jeden Knoten $z \in n(y)$ untersuchen, ob bei $z$ eine 1 in $\bar{W}$ steht.
 Falls ja, wird $z$ auch in $\bar{R}$ markiert,
 sodass man denselben Vorgang bei einem anderen Knoten in dieser Komponente nicht wiederholen muss.
-Falls alle $z$ zu $W$ geören, wird
+Falls alle $z$ zu $W$ gehören, wird
 die ganze Liste $n(x)$ in $W'$ hinzugefügt. Sonst werden alle Knoten dieser Komponente 
 gespeichert, insbesondere diese Obstsorten, die zu $W$ nicht gehören.\\
-Man widerholt diesen Vorgang, bis alle gewünschten Obstsorten mit 1 in $\bar{R}$ markiert werden.\\
+Man wiederholt diesen Vorgang, bis alle gewünschten Obstsorten mit 1 in $\bar{R}$ markiert werden.\\
 
 Ausgegeben wird entweder die vollständige Menge $W'$ oder eine Meldung über die jeweilige 
 Zusammenhangskomponente, zu der Obstsorten gehören, die nicht gewünscht waren.

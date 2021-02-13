@@ -13,7 +13,7 @@ Jede Kante steht für eine mögliche Zuweisung eines Index einer Obstsorte.\\
 
 Wir analysieren die 1. Spießkombination:
 \minibox[frame]{$F_1 = \{\text{Apfel, Banane, Brombeere}\}, Z_1 = \{1, 4, 5\}$}.\\
-Wir stellen fest, dass Apfel, Banane und Brombeere jeweils keine Indizes 2, 3, 5 haben können,
+Wir stellen fest, dass Apfel, Banane und Brombeere jeweils keine Indizes 2, 3, 6 haben können,
 weil jeder dieser Obstsorten ein Index aus der Menge $Z_1$ zugewiesen wird.
 Gleichzeitig merken wir, dass Erdbeere, Pflaume und Weintraube jeweils keinen der Indizes
 1, 4, 5 besitzen können, weil diese ausschließlich den Obstsorten aus der Menge $F_1$ zugewiesen werden.
@@ -25,18 +25,18 @@ Wir analysieren die 2. Spießkombination:
 \minibox[frame]{$F_2 = \{\text{Banane, Pflaume, Weintraube}\}, Z_2 = \{3, 5, 6\}$}.\\
 Wir stellen fest, dass Banane, Pflaume, Weintraube jeweils keinen der Indizes 1, 2, 4 haben können,
 weil jeder dieser Obstsorten ein Index aus der Menge $Z_2$ zugewiesen wird. 
-Entfernen wir alle Kanten in $G$ zwischen allen $x \in F_2$ und allen $y \in B \setminus Z_2$.
+Wir entfernen alle Kanten in $G$ zwischen allen $x \in F_2$ und allen $y \in B \setminus Z_2$.
 Unter anderem wurden die Kanten (Banane, 1) und\\ (Banane, 4) entfernt.
 Wir stellen fest, dass die Kardinlität des Knotens „Banane“ 1 beträgt --- er ist nur mit dem Knoten 5 verbunden.
 Ebenfalls ist der Knoten 5 nur mit dem Knoten „Banane“ verbunden.
 Dies bedeutet, dass es nur eine einzige Möglichkeit gibt, diesen Knoten mit einem Index zu verbinden.
 Somit wurde der Index von Banane gefunden. Wir kennen schon eine Obstsorte: $o(\text{Banane}, 5)$.\\
-Wir stellen auch fest, dass Apfel, Banane und Erdbeere jeweils keinen der Indizes 3, 5, 6 haben können,
+Wir stellen auch fest, dass Apfel, Brombeere und Erdbeere jeweils keinen der Indizes 3, 5, 6 haben können,
 da sie nur den Obstsorten aus $F_2$ zugewiesen werden dürfen.
 Insbesondere wissen wir schon, dass 5 mit Banane verbunden wird.
 Deshalb dürfen wir alle Kanten in $G$ zwischen allen $p \in A \setminus F_2$ und allen $q \in Z_2$ entfernen.
 Wir bemerken, dass die Kardinlität des Knotens „Erdbeere“ nun 1 beträgt, der nur mit dem Knoten 2 verbunden ist.
-Ebenfalls ist der Knoten 2 mit keinem anderen verbunden. So legen wir fest:\\ $o$(Erdbeere, 2).
+Ebenfalls ist der Knoten 2 mit keinem anderen verbunden. So steht fest:\\ $o$(Erdbeere, 2).
 Auf der Abbildung \ref{fig:example0-3} wird der Graph $G$ nach der Verarbeitung der 2. Spießkombination
 dargestellt. Die fetten Kanten zeigen an, dass die zwei Endknoten bereits verbunden sind, also, dass 
 diesen Obstsorten ihre Indizes zugewiesen wurden.\\
@@ -58,7 +58,8 @@ Wir können deshalb alle übrigen Kanten zwischen Pflaume und allen anderen Knot
 So bleibt der Knoten „Weintraube“ mit nur einer Kante übrig.
 Der einzelne Nachbar von diesem Knoten ist 3. So entdecken wir wieder eine neue Zuweisung: $o$(Weintraube, 3).\\
 Wir stellen auch fest, dass keine Kanten mehr entfernt werden können.
-Es bleibt immer noch ein Paar von Indizes und ein Paar von Obstsorten ohne eindeutige Zuweisung.\\
+Es bleibt immer noch ein Paar von Indizes und ein Paar von Obstsorten ohne eindeutige Zuweisung:
+\{Apfel, Brombeere\} und $\{1, 4\}$.\\
 
 An dieser Stelle schauen wir die Wunschliste an: \framebox{Apfel, Brombeere, Weintraube}.\\
 Der Index von Weintraube ist erfolgreich gefunden, aber die Indizes der übrigen Obstsorten nicht.

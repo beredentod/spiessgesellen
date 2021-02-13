@@ -22,7 +22,8 @@ void Solver::readFile(string path) {
 		istringstream iss(data);
 
 		//die gewuenschten Obstsorten werden erstmal als Strings gespeichert
-		vector<string> wishes_words{istream_iterator<string>{iss}, istream_iterator<string>{}};
+		vector<string> wishes_words{istream_iterator<string>{iss}, 
+			istream_iterator<string>{}};
 
 		//die Menge der allen Obstsorten als Strings
 		set<string> all_fruits(wishes_words.begin(), wishes_words.end());
@@ -56,7 +57,8 @@ void Solver::readFile(string path) {
 
 			//die Menge der Obstsorten der jeweiligen Spiesskombination wird
 			//	erstmal als Strings erstellt
-			vector<string> currFruits{istream_iterator<string>{issss}, istream_iterator<string>{}};
+			vector<string> currFruits{istream_iterator<string>{issss},
+				istream_iterator<string>{}};
 
 			//alle Obstsorten werden zu einer gemeinsamen Menge hizugefuegt
 			for (auto x: currFruits)
@@ -150,7 +152,8 @@ void Solver::analyzeAllInfos(){
 
 	//alle noch uebrigen Kanten werden in den Graphen hinzugefuegt
 	for (auto x: ID2Fruit) {
-		for (int i = matrix[x.first]._Find_next(-1); i < MAXN; i = matrix[x.first]._Find_next(i))
+		for (int i = matrix[x.first]._Find_next(-1); i < MAXN;
+		   i = matrix[x.first]._Find_next(i))
 			G.addEdge(x.first, i);
 	}
 }
@@ -277,7 +280,8 @@ bool Solver::checkResult(){
 	}
 	//falls es keine eindeutige Loesung fuer die Eingabe gibt
 	else {
-		cout << "Fuer die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
+		cout <<
+   "Fuer die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
 		for (auto x: problems) {
 			cout << "Komponente: ";
 			//Aufzaehlen der Obstsorten, die zur Komponente gehoeren

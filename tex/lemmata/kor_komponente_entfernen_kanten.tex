@@ -1,6 +1,8 @@
 \begin{korollar}\label{kor:komponente-mengen}
 Sei $C = (L_c \cup R_c, E_c)$ eine Zusammenhangskomponente in $G$.
-Sei $K = (F, Z)$ eine Spießkombiantion.
+%$L_c \subseteq A$ und $R_c \subseteq B$ seinen die zwei Partitionen von $C$ und $E_c$ sei die Menge
+%der Kanten in $C$.
+Sei $K = (F, Z)$ eine Spießkombination.
 %Falls $F \subsetneq L_c$ gilt, dann:
 Falls $F \subseteq L_c$ gilt, dann gilt für jede Obstsorte $o(x, i)$, wobei $x \in F$:
 \begin{enumerate}[label={\upshape(\roman*)}]
@@ -10,9 +12,9 @@ Falls $F \subseteq L_c$ gilt, dann gilt für jede Obstsorte $o(x, i)$, wobei $x 
   %\item Für jede Obstsorte $o(q, j)$, wobei $q \in L_c \setminus F$, gilt: 
   %$(j \in R_c \setminus Z) \land j \notin Z$.\label{lem:komponente-mengen2}
 \end{enumerate}
-Deshalb werden alle Kanten, die aus jedem Knoten $x \in F$ 
-zu jedem Knoten $y \in R_c \setminus Z$, sowie die aus jedem Knoten $p \in Z$ 
-zu jedem Knoten $q \in L_c \setminus F$ führen, aus $E$ entfernt.
+Deshalb werden alle Kanten, die aus einem Knoten $x \in F$ 
+zu einem Knoten $y \in R_c \setminus Z$, sowie die aus einem Knoten $p \in Z$ 
+zu einem Knoten $q \in L_c \setminus F$ führen, aus $E$ entfernt.
 \end{korollar}
 
 \begin{comment}
