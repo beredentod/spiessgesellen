@@ -6,12 +6,10 @@ Definieren wir zunächst, was generell ein \tbf{Matching} ist.
 
 \input{./tex/lemmata/def_matching.tex}
 
-\noindent
 Zwischen verschiedenen Typen des Matchings unterscheidet man auch das \tbf{perfekte Matching}.
 
 \input{./tex/lemmata/def_perfect-matching.tex}
 
-\noindent
 Um die Aufgabe in der Form zu lösen, eignet sich gut der \tbf{Satz von Hall},
 der als ein Ausgangspunkt der ganzen Matching--Theorie gilt. 
 Um sich dieses Satzes zu bedienen, muss man noch den Begriff der \tbf{Nachbarschaft} einführen.
@@ -20,53 +18,11 @@ Um sich dieses Satzes zu bedienen, muss man noch den Begriff der \tbf{Nachbarsch
 
 \input{./tex/lemmata/satz_von_hall.tex}
 
-\noindent An dieser Stelle stellen wir Folgendes fest.
+An dieser Stelle stellen wir Folgendes fest.
 
 \input{./tex/lemmata/lem_komponente-complete.tex}
-\vspace{-1cm}
 
-\begin{figure}[h]
-\caption{Abbgebildet ist das Beispiel aus der Aufgabenstellung nach
-der Verarbeitung der allen $m$ Spießkombinationen.}
-\label{fig:graph-after-analysis}
-\centering
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\input{./tex/tikz/after-infos.tex}
-\caption{Der Graph nach der Verarbeitung aller Spießkombinationen}
-\label{fig:graph-after-infos}
-\end{subfigure}
-\begin{subfigure}[b]{.49\textwidth}
-\centering
-\input{./tex/tikz/component.tex}
-\caption{Die übrige Zusammenhangskomponente mit mehr als 2 Knoten}
-\label{fig:component-left}
-\end{subfigure}
-\end{figure}
-
-%An dieser Stelle ist es leicht, Folgendes festzustellen.
-
-%\input{./tex/lemmata/lem_grad1.tex}
-
-%Dennoch es bleibt noch der allgemeine Fall --- für $\Delta(x) > 1$.
-%Dazu stellen wir das Folgende fest.
-
-\begin{comment}
-\begin{lemma}\label{lem:grad-groesser1}
-Seien $x \in A$ ein Knoten in $G$ und seine Kardinalität $\Delta(x) = k > 1$.
-Dann gehört $x$ zu einer Zusammenhangskomponente $C = (V_c, E_c)$, wobei
-die Menge $V_c$ aus insgesamt $2k$ Knoten $x_1, ..., x_k \in A$ 
-und $y_1, ..., y_k \in B$ besteht. Für die Menge $E_c$ gilt:
-$E_c = (A \setminus V_c) \times (B \setminus V_c) $.
-$C$ ist deshalb selbt ein vollständiger, bipartiter Graph.
-\end{lemma}
-\begin{proof}
-Der Beweis erfolgt durch Widerspruch.
-\TODO{Beweis} 
-\end{proof}
-\end{comment}
-
-%Nun kann man das folgende Lemma für den allgemeinen Fall formulieren. 
+\input{./tex/figures/fig_components.tex}
 
 \input{./tex/lemmata/lem_komponente-matching.tex}
 
@@ -82,25 +38,20 @@ Dazu muss man die folgenden zwei Beobachtungen betrachten.
 Direkt aus Lemma \ref{lem:komponente-all-wunschliste} ergibt sich das folgende Korollar.
 Man bedient sich dessen und des Lemmas \ref{lem:komponente-one-not-wunschliste}, um das ganze Problem zu lösen, also: Ob die Menge $W'$ eindeutig bestimmt werden kann.
 
-\begin{korollar}
-Seien $C_1 = (L_1 \cup R_1, E_1), ..., C_k = (L_k \cup R_k, E_k)$ alle Zusammenhangskomponenten in $G$,
-für jede $i$--te von denen gilt: $\exists x \in L_i : x \in W$.
-Falls für jede $i$--te von diesen Komponenten gilt: $L_i \subseteq W$, dann
-kann $W'$ eindeutig und vollständig bestimmt werden.
-\end{korollar}
+\input{./tex/lemmata/kor_all-components.tex}
 
 Man stellt fest, dass man die Menge $W$ untersuchen kann und wenn ein $x \in W$ in $G$ die
 Kardinalität $\Delta(x) = 1$ besitzt, kann der einzelne Nachbar von $x$ in $W'$ hinzugefügt werden
 (Lemma \ref{lem:komponente-all-wunschliste}).
 Im sonstigen Fall, also wenn $\Delta(x) > 1$, muss die ganze Zusammenhangskomponente
 $C_x = (L_x \cup R_c, E_x)$, zu der $x$ gehört, untersucht werden, ob gilt: $\forall p \in L_x: p \in W$
-(Lemmata \ref{lem:komponente-all-wunschliste} und \ref{lem:komponente-one-not-wunschliste}).\\
+(Lemmata \ref{lem:komponente-all-wunschliste} und \ref{lem:komponente-one-not-wunschliste}).
 
 Man erstellt eine Liste $\bar{W}$ der Länge $n$,
 in der die Zugehörigkeit einer Obstsorte zur Wunschliste $W$ durch 1 oder 0 gekennzeichnet wird
 (s. \nameref{sec:umsetzung}). Außerdem erstellt wird eine Liste $\bar{R}$ der Länge $n$,
 in der jede gewünschte Obstsorte $x$ als 1 gekennzeichnet wird, falls der Knoten $x$ in $G$ bereits
-besucht wurde (s. \nameref{sec:umsetzung}).\\
+besucht wurde (s. \nameref{sec:umsetzung}).
 
 Wenn man einen Knoten $x \in W$ untersucht, dessen Kardinalität $\Delta(x) > 1$ ist,
 kann man die Liste der Nachbarknoten $n(x)$ von $x$ aufrufen.
@@ -112,7 +63,7 @@ sodass man denselben Vorgang bei einem anderen Knoten in dieser Komponente nicht
 Falls alle $z$ zu $W$ gehören, wird
 die ganze Liste $n(x)$ in $W'$ hinzugefügt. Sonst werden alle Knoten dieser Komponente 
 gespeichert, insbesondere diese Obstsorten, die zu $W$ nicht gehören.\\
-Man wiederholt diesen Vorgang, bis alle gewünschten Obstsorten mit 1 in $\bar{R}$ markiert werden.\\
+Man wiederholt diesen Vorgang, bis alle gewünschten Obstsorten mit 1 in $\bar{R}$ markiert werden.
 
 Ausgegeben wird entweder die vollständige Menge $W'$ oder eine Meldung über die jeweilige 
 Zusammenhangskomponente, zu der Obstsorten gehören, die nicht gewünscht waren.

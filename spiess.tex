@@ -23,6 +23,8 @@
 \usepackage{seqsplit}
 \usepackage{verbatim}
 
+%\usepackage{parskip}
+
 % Für mathematische Befehle und Symbole
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -92,7 +94,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{axiom}{Axiom}
 
-\theoremstyle{theorem}
+\theoremstyle{plain}
 \newtheorem{lemma}{Lemma}
 \newtheorem{satz}{Satz}
 \newtheorem{korollar}{Korollar}
@@ -138,6 +140,8 @@
 
 \newpage
 \section{Umsetzung}\label{sec:umsetzung}
+\input{./tex/ums_hashing.tex}
+
 \input{./tex/ums_solver.tex}
 
 \input{./tex/ums_graph.tex}

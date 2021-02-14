@@ -5,18 +5,19 @@ Man stellt den Graphen als eine Adjazenzmatrix $M$ der Größe $n \times n$ dar.
 Als $M_i$ bezeichnet wird die Liste der Länge $n$,
 die die Beziehungen des Knotens
 $i \in A$ zu jedem Knoten $j \in B$ als 1 (Kante) oder 0 (keine Kante) enthält.
-Als $M_{i, j}$ bezeichnet wird die $j$--te Stelle in der $i$--ten Liste der Matrix.\\
+Als $M_{i, j}$ bezeichnet wird die $j$--te Stelle in der $i$--ten Liste der Matrix.
+
 Nach Axiom \ref{ax:obstsorte-index} gehört zu jeder Obstsorte aus $A$ genau ein Index aus $B$.
 Dennoch kann man am Anfang keiner Obsorte einen Index zuweisen.
 Deshalb wird zunächst jeder Knoten aus $A$ mit jedem Knoten aus $B$ durch eine Kante verbunden:
 \[
-E = A\times B = \{(x, y) \,|\,  x \in A \text{ und } y \in B\}.
+E = A\times B = \{(x, y) \mid  x \in A \text{ und } y \in B\}.
 \]
 
 Am Anfang ist $M$ dementsprechend voll mit Einsen.
 Bei der Erstellung der Adjazenzmatrix kann man den Vorteil nutzen, dass die 
 Liste der Nachbarn eines Knotens $x \in A$ nur aus Nullen und Einsen besteht, indem man
-diese Liste als eine Bitmaske darstellt (mehr dazu in der \nameref{sec:umsetzung}).\\
+diese Liste als eine Bitmaske darstellt (mehr dazu in der \nameref{sec:umsetzung}).
 
 Jede $i$--te Spießkombination $K_i = (F_i, Z_i)$ bringt Informationen über die Obstsorten in $F_i$.
 %Als $a \leadsto b$ bezeichnet man, dass $a$ den Index $b$ haben kann. 

@@ -1,5 +1,76 @@
+//diese Methode ist eine Hashfunktion, die einem String
+//	eine Stelle in der Hashtabelle zuordnet
+int Hashing::hash(string s) {
+	//die Stelle in der hashtable wird anhand des
+	//	ersten Buchstabne ermittelt
+	char letter = s[0];
+	letter -= 65;
+
+	//falls der erste Buchstabe klein ist
+	if (letter > 25)
+		letter -= 32;
+
+	//die Stelle wird ermittelt
+	return letter % hashtable.size();
+}
+
+//diese Methode speichert einen String an der
+//	durch die Hashfunktion ermittelte Stelle
+void Hashing::saveHash(string s) {
+	int pos = hash(s);
+
+	//falls die zugeordnete Stelle nicht besetzt ist
+	if (hashtable[pos].first == "") {
+		hashtable[pos].first = s;
+		return;
+	}
+
+	//falls die zugeordnete Stelle bereits besetzt ist,
+	//	wird nach der ersten freien Stellen gesucht
+	int it = (pos + 1) % hashtable.size();
+	while (hashtable[it].first != "") {
+		it++;
+		if (it == pos)
+			return;
+	}
+
+	//der String wird an der gefundenen Stelle gespeichert
+	hashtable[it].first = s;
+}
+
+//diese Methode gibt die Stelle in der hashtable zurueck,
+//	falls ein String sich in der hashtable bereits befindet.
+//	Sonst wird -1 ausgegeben
+int Hashing::getHash(string s) {
+	int pos = hash(s);
+
+	//falls der gesuchte String sich an der zugeordneten
+	//	Stelle befindet
+	if (hashtable[pos].first == s)
+		return pos;
+
+	//es wird weiteriteriert, um die Stelle mit dem gegebenen String zu finden
+	int i = (pos + 1) % hashtable.size();
+	for (; i != pos; i = (i + 1) % hashtable.size()) {
+		if (hashtable[i].first == "")
+			return -1;
+		if (hashtable[i].first == s)
+			return i;
+	}
+
+	return -1;
+}
+
+//diese Methode gibt den internen Index einer Obstsorte zurueck
+int Hashing::getIndex(string s) {
+	int pos = getHash(s);
+	if (pos > -1)
+		return hashtable[pos].second;
+	return -1;
+}
+
 //diese Methode liest Informationen aus der Datei ein 
-void Solver::readFile(string path) {
+void Hashing::readFile(string path) {
 	fstream file;
 	file.open(path, ios::in);
 	if (file.is_open()) {
@@ -7,14 +78,11 @@ void Solver::readFile(string path) {
 		//Anzahl der Obstsorten
 		file >> n;
 
-		//Erstellung der Adjazenzmatrix
-		for (int i = 0; i < n + 1; i++) {
-			bitset<MAXN> b = bitset<MAXN>().set();
-			matrix.pb(b);
-		}
-
 		//Erstellung der Liste der im Programm verwendeten internen Indizes
 		used = vector<int>(n + n);
+
+		//Erstellung der hashtable
+		hashtable = vector<pair<string, int>> (MAXN, {"", -1});
 
 		string data;
 		getline(file, data);
@@ -22,11 +90,12 @@ void Solver::readFile(string path) {
 		istringstream iss(data);
 
 		//die gewuenschten Obstsorten werden erstmal als Strings gespeichert
-		vector<string> wishes_words{istream_iterator<string>{iss}, 
+		vector<string> wishes_words{istream_iterator<string>{iss},
 			istream_iterator<string>{}};
 
-		//die Menge der allen Obstsorten als Strings
-		set<string> all_fruits(wishes_words.begin(), wishes_words.end());
+		//in dieser Liste werden alle Obstnamen gespeichert, die in der
+		//	Datei auftreten
+		vector<string> all_fruits(wishes_words.begin(), wishes_words.end());
 
 		//Anzahl der Spiesskombinationen
 		file >> m;
@@ -47,7 +116,7 @@ void Solver::readFile(string path) {
 			for (auto x: words) {
 				currNum.insert(stoi(x));
 
-				//der interne Index eines Index einer Obstsorte wird
+				//ein Index (aus der Aufgabenstellung) wird
 				//	als verwendet merkiert
 				used[stoi(x)+n-1] = true;
 			}
@@ -58,11 +127,10 @@ void Solver::readFile(string path) {
 			//die Menge der Obstsorten der jeweiligen Spiesskombination wird
 			//	erstmal als Strings erstellt
 			vector<string> currFruits{istream_iterator<string>{issss},
-				istream_iterator<string>{}};
+				 istream_iterator<string>{}};
 
-			//alle Obstsorten werden zu einer gemeinsamen Menge hizugefuegt
-			for (auto x: currFruits)
-				all_fruits.insert(x);
+			//alle Obstsorten werden zu einer gemeinsamen Liste hizugefuegt
+			all_fruits.insert(all_fruits.end(), currFruits.begin(), currFruits.end());
 
 			//falls die beiden Menge einer Spiesskombination nicht gleichmaechtig sind
 			if (currNum.size() != currFruits.size()) {
@@ -75,29 +143,44 @@ void Solver::readFile(string path) {
 			tempInfos.pb({currNum, currFruits});
 		}
 
-		//Zuweisung der internen Indizes 0..(n-1) jeder Obstsorte
-		int it = 0;
-		for (auto x: all_fruits) {
-			ID2Fruit[it] = x;
-			fruit2ID[x] = it;
+		file.close();
 
-			//der interne Index einer Obstsorte wird als verwendet merkiert
-			used[it] = true;
-			it++;
+		//alle Obstsorten werden durch die Hashfunktion verarbeitet
+		for (auto x: all_fruits) {
+			int id = getHash(x);
+			//falls der Obstname x noch nicht aufgetreten ist
+			if (id == -1)
+				saveHash(x);
 		}
 
-		file.close();
+		//Zuweisung der internen Indizes 0..(n-1) jeder Obstsorte
+		//	mithilfe einer Hasfunktion
+		int it = 0;
+		for (int i = 0; i < hashtable.size(); i++) {
+			if (hashtable[i].first != "") {
+				//ein interner Index wird einer Obstsorte zugeordnet
+				hashtable[i].second = it;
+
+				//der Obstname wird in die Liste ID2Fruit hinzugefuegt,
+				//	dessen Stelle in der Liste dem internen Index
+				//	der Obstsorte entspricht
+				ID2Fruit.pb(hashtable[i].first);
+
+				//der interne Index einer Obstsorte wird als verwendet merkiert
+				used[it++];
+			}
+		}
 
 		//die gewuenschten Obstsorten werden als Indizes gespeichert
 		for (auto x: wishes_words)
-			wishes.insert(fruit2ID.find(x)->second);
+			wishes.insert(getIndex(x));
 
 		//die Spiesskombinationen als Mengen der Indizes der Obstsorten
 		//	einer Spiesskombination und Mengen der internen Indizes der Obstsorten
 		for (auto x: tempInfos) {
 			set<int> currFruits;
 			for (auto y: x.second)
-				currFruits.insert(fruit2ID.find(y)->second);
+				currFruits.insert(getIndex(y));
 			infos.pb({x.first, currFruits});
 		}
 	} 
@@ -107,6 +190,7 @@ void Solver::readFile(string path) {
 		exit(0);
 	}
 }
+
 
 //diese Methode bearbeitet die Informationen aus einer Spiesskombination
 void Solver::analyzeInfo(pair<set<int>, set<int>> info) {
@@ -151,10 +235,9 @@ void Solver::analyzeAllInfos(){
 		analyzeInfo(x);
 
 	//alle noch uebrigen Kanten werden in den Graphen hinzugefuegt
-	for (auto x: ID2Fruit) {
-		for (int i = matrix[x.first]._Find_next(-1); i < MAXN;
-		   i = matrix[x.first]._Find_next(i))
-			G.addEdge(x.first, i);
+	for (int i = 0; i < ID2Fruit.size(); i++) {
+		for (int j = matrix[i]._Find_next(-1); j < MAXN; j = matrix[i]._Find_next(j))
+			G.addEdge(i, j);
 	}
 }
 
@@ -280,20 +363,20 @@ bool Solver::checkResult(){
 	}
 	//falls es keine eindeutige Loesung fuer die Eingabe gibt
 	else {
-		cout <<
-   "Fuer die folgenden Obstsorten konnte keine eideutige Zuweisung gefunden werden.\n";
+		cout << "Fuer die folgenden Obstsorten konnte keine eindeutige "
+			<< "Zuweisung gefunden werden.\n";
 		for (auto x: problems) {
 			cout << "Komponente: ";
 			//Aufzaehlen der Obstsorten, die zur Komponente gehoeren
 			for (auto y: x)
-				cout << ID2Fruit.find(y)->second << " ";
+				cout << ID2Fruit[y] << " ";
 
 			//Aufzaehlen der Obstsorten, die zur Komponente gehoeren,
 			//	 aber nicht gewuenscht sind
 			cout << "\n\t--> Nicht auf der Wunschliste: ";
 			for (auto y: x) 
 				if (!todo[y])
-					cout << ID2Fruit.find(y)->second << " ";
+					cout << ID2Fruit[y] << " ";
 			cout << "\n";
 		}
 		return false;

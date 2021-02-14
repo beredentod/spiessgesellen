@@ -1,7 +1,9 @@
 \subsection{Laufzeit}\label{sec:laufzeit}
-$n$ --- die Anzahl der Obstsorten\\
-$m$ --- die Anzahl der Spießkombinationen\\
-$w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$, weil $w \leqslant n$\\
+\begin{itemize}
+  \item $n$ --- die Anzahl der Obstsorten
+  \item $m$ --- die Anzahl der Spießkombinationen
+  \item $w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$, weil $w \leqslant n$
+\end{itemize}
 
 Da wir Bitmasken in unserem Programm verwenden, ist noch eine Konstante einzuführen: $\beta$,
 die für die $\beta$--Bit--Architektur eines Rechners\footnote{\href{https://en.wikipedia.org/wiki/Word_(computer_architecture)}{https://en.wikipedia.org/wiki/Word\_(computer\_architecture)}}
@@ -16,6 +18,7 @@ auf der BWINF--Webseite umfasst.
 
 \begin{itemize}
   \item Einlesen: $O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$ (worst-case)
+  \TODO{dodać haszowanie}
   \begin{itemize}
     \item Erstellung der Adjazenzmatrix $M$: $O(n \cdot \frac{N}{\beta})$
 
@@ -195,24 +198,29 @@ in dem alle $m$ Spießkombinationen und die Wunschliste aus allen $n$ Obstsorten
   \item Prüfung der Existenz einer Lösung: $O(n \log n)$
 \end{itemize}
 
+\TODO{coś z tym zrobić}
+\begin{equation*}
+\begin{gathered}
+O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w)) +
+ O(n\cdot \frac{N}{\beta}(m + n)) + \\
++ O(n) + O(n \log n) =\\
+= O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w) + n\cdot \frac{N}{\beta}(m + n)+ n + n \log n)\\
+= O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + w (\log n + \log w) + n \log n)
+\end{gathered}
+\end{equation*}
 
-$O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w)) + 
-O(n\cdot \frac{N}{\beta}(m + n))+
-O(n)+
-O(n \log n) =\\=
-O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w) + n\cdot \frac{N}{\beta}(m + n)+ n + n \log n) =\\=
-O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + w (\log n + \log w) + n \log n)$\\
-
-\noindent Nach der Abschätzung $w \leqslant n$ ergibt sich:\\
-$O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + n \log n)) =
-O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta}))$\\
+Nach der Abschätzung $w \leqslant n$ ergibt sich:
+\[
+O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + n \log n)) =
+O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta}))
+\]
 
 \noindent 
 Wir können bemerken, dass fast alle modernen Rechner auf einer
 mind. 32--Bit-Architektur basieren, das heißt, wir können $\beta = 32$ setzen.
 Für die maximale Anzahl an Obstsorten, die in den BWINF--Beispielen auftreten, gilt
 dann: $\frac{N}{\beta} = \frac{26}{32} < 1$.
-In diesem Fall ist dieser Bruch ein vernachlässiger Faktor. Es ergibt sich im schlimmsten Fall:\\
+In diesem Fall ist dieser Bruch ein vernachlässiger Faktor. Es ergibt sich im schlimmsten Fall:
 \[
 O(n (m \log n + m + n))
 \]
