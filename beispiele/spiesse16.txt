@@ -1,0 +1,15 @@
+11
+Moosbeere Maulbeere Marone Mandarine Mango
+6
+11 9 6 4 8
+Mandarine Mirabelle Moosbeere Moltebeere Mispel
+1 7 5 3 2
+Mango Maracuja Marille Maulbeere Melone
+7 6 3 9 11 1 4
+Mango Marille Maulbeere Mirabelle Mispel Moosbeere Moltebeere
+2 6 9 8 5 3
+Mango Moosbeere Moltebeere Maracuja Mandarine Melone
+9 11 2 5 8
+Mispel Maracuja Mandarine Moltebeere Melone
+1 11 3 5 2 8 9
+Marille Moltebeere Mango Mandarine Maracuja Melone Mispel
