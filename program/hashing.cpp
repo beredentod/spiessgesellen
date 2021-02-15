@@ -66,9 +66,7 @@ int Hashing::getHash(string s) {
 //diese Methode gibt den internen Index einer Obstsorte zurück
 int Hashing::getIndex(string s) {
 	int pos = getHash(s);
-	if (pos > -1)
-		return hashtable[pos].second;
-	return -1;
+	return hashtable[pos].second;
 }
 
 //diese Methode liest Informationen aus der Datei ein 

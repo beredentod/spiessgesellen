@@ -1,2 +1,95 @@
 \subsection{Klasse \ttt{Hashing}}
-\TODO{opisać}
+Alle auf der BWINF--Webseite verfügbaren Beispiele beinhalten Obstsorten, die mit paarweise verschiedenen 
+Buchstaben anfangen.
+(Die Ausnahme ist das Beispiel aus der Aufgabenstellung, in dem zwei Obstsorten mit demselben Buchstaben beginnen.)
+Man kann diese Tatsache bei der Wahl einer Datenstruktur für die Namen der Obstsorten nutzen. 
+Im Programm operiert man zwar nicht auf Strings, sondern auf internen Indizes, die Integers sind. 
+Allerdings muss man die Verbindungen zwischen dem Namen der Obstsrte und ihrer internen Index speichern. 
+
+Dazu verwenden wir \textit{open address hashing}.
+Diese Art von Hashing löst eine Kollision auf, indem eine neue Stelle für ein Element durch Probieren 
+gefunden wird.\\
+Am Anfang erstellen wir eine Hashtabelle der Größe 26
+(im Programm ist dies eine Konstante \ttt{MAXN}, s. auch \ttt{bitset} unten),
+weil diese Zahl der Größe des lateinischen Alphabets entpricht und gleichzeitg
+die maximale Größe von $n$ darstellt. 
+Diese Tabelle besteht aus Tupeln von \ttt{string} und \ttt{int}.
+Am Anfang wird diese Tabelle mit Tupeln aus einem leeren String und dem Wert $-1$ gefüllt.
+
+Wir kontruieren dazu eine Hashfunktion, die als Parameter einen String nimmt. 
+Diese Funktion ermittelt die Stelle in der Hashtabelle für den gegebenen String.
+Sei $\ell$ eine Zahl zwischen 0--25, die dem ersten Buchstaben im String
+entspricht (0 -- A, 25 -- Z).
+So wird mithilfe der Methode \ttt{hash()} die Stelle $p$ für einen gegebenen String 
+auf folgende Weise ermittelt:
+\[
+p \equiv \ell\; (\textrm{mod}\; \ttt{MAXN}).
+\]
+Wenn an dieser Stelle in der Hashtabelle ein leerer String steht,
+wird der gegebene String mithilfe der Methode \ttt{saveHash()} dort gespeichert.
+Falls es zu einer Kollision kommt, wird die Stelle $p$ auf folgende Weise inkrementiert:
+\[
+p :\equiv (p + 1)\; (\textrm{mod}\; \ttt{MAXN}). 
+\]
+$p$ wird solange inkrementiert, bis eine Stelle gefunden wird, an der sich ein leerer String befindet.
+Es ist gesichert, dass jeder String in der Eingabe in der Hashtabelle gespeichert wird, da
+die Größe der Tabelle dem größten $n$ entspricht.
+Falls man ein größeres Beispiel lösen möchte, soll man die Konstante \ttt{MAXN} im Programm ändern.
+
+Mithilfe der Methode \ttt{getHash()} wird die Stelle eines Strings in der Hashtabelle zurückgegeben, 
+falls dieser in der Tabelle enthalten ist. Sonst wird der Wert $-1$ zurückgegeben.
+Diese Funktion geht analog vor, wie die Funktion \ttt{saveHash()}.
+Man ermittelt zunächst die Stelle in der Hashtabelle mithilfe der Hashfunktion,
+iteriert von dort und prüft, ob das iterierte Element dem gegebenen String entspricht.
+Wenn der Iterator auf eine Stelle stoßt, die einen leeren String enthält,
+wird sofort $-1$ zurückgegeben, da der String sich in der Hashtabelle nicht befinden kann,
+weil dieser String nach dem oben beschriebenen Prinzip an der ersten leeren Stelle 
+gespeichert werden sollte.
+
+Die Methode \ttt{readFile()} lest die Daten aus der Textdatei ein. 
+Nach dem Einlesen von $n$ und $m$, also der Anzahl der Obstsorten und der Anzahl der Spießkombinationen,
+werden die Wünsche eingelesen.
+Die Menge $W$ wird zunächst als ein \ttt{vector} von Strings mit dem Namen \ttt{wishes\_words} gespeichert.
+Außerdem werden die Strings zu einem anderen \ttt{vector} von Strings \ttt{all\_fruits} kopiert.
+In dieser Liste werden alle Obstsorten gespeichert, die in der Eingabe auftreten. 
+Danach folgt das Einlesen der Spießkombinationen.
+Jede Menge $Z_i$ wird als \ttt{set} von Integers gespeichert.
+Gleichzeitig werden auch die Indizes, die in $Z_i$ auftreten, in der Liste \ttt{used} markiert.
+
+Der \ttt{vector}, der \ttt{used} heißt, wird verwendet, um die benutzten internen Indizes der Obstsorten,
+wie auch die Indizes der Obstsorten zu markieren, die im Graphen verwendet werden,
+da es in einigen Textdateien ein größeres $n$ gibt als die Anzahl der in den Spießkombinationen 
+und der Wunschliste verwendeten Obstsorten und Indizes. 
+Diese Markierung erweist sich bei der Prüfung auf korrekte Eingabe als hilfreich.
+
+Danach wird die Menge $F_i$ als ein \ttt{vector} von Strings gespeichert und 
+alle Obstsorten, die in der Eingabe auftreten, werden ebenfalls zu \ttt{all\_fruits} kopiert.
+Die Menge $Z_i$ und der \ttt{vector} $F_i$ werden temporär als Tupel in den \ttt{vector}
+\ttt{tempInfos} hinzugefügt.
+
+Danach erfolgt das Hashing. Die Liste \ttt{all\_fruits} wird iteriert und jedes Mal wird
+die Funktion \ttt{getHash} aufgerufen, um zu prüfen, ob der iterierte String sich bereits
+in der Hashtabelle befindet. Wenn nicht, wird er mithilfe der Funktion \ttt{saveHash()} 
+in dieser Tabelle gespeichert.\\
+Im Weiteren werden die Obstsorten nicht als String behandelt, sondern wird jeder Obstsorte
+ein interner Index zugewiesen. Theoretish könnte man einfach die Stellen der Obstsorten in der Hashtabelle 
+nehmen.
+Da in vielen Fällen gilt: $n < 26$, können wir, anstatt diese Stellen zu nehmen, die unabhängig von $n$
+zwischen 0 und 26 liegen, die internen Indizes der Obstsorten zu Zahlen zwischen 0 und $n-1$
+komprimieren. Wir erstellen eine neue Variable \ttt{it} und setzen sie zu 0. Wir iterieren durch die Hashtabelle. 
+Wenn an einer Stelle sich ein nichtleerer String befindet, wird dort der Wert des Integers
+\ttt{it}
+im Tupel gemeinsam mit diesem String gespeichert (die Hashtabelle besteht aus Tupeln von Strings und Integers). 
+Folglich wird \ttt{it} inkrementiert.
+Gleichzeitig wird der an dieser Stelle stehende String in einen \ttt{vector} \ttt{ID2Fruit} hinzugefügt und
+der interne Index dieser Obstsorte wird in \ttt{used} markiert.
+Man beachte, dass die $i$--te Stelle in \ttt{ID2Fruit} dem $i$--ten internen Index einer Obstsorte entspricht. 
+
+Am Ende wird die Liste \ttt{wishes\_words} iteriert und an jedem iterierten String wird
+die Methode \ttt{getIndex} aufgerufen, die den internen Index dieses Strings in der Hashtabelle zurückgibt.
+Auf eine analoge Weise werden dann die Strings in \ttt{tempInfos} zu ihren entsprechenden
+internen Indizes umgewandelt.
+
+
+
+

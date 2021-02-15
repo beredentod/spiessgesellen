@@ -1,10 +1,9 @@
 \subsection{Klasse \ttt{Solver}}
-\TODO{zaktualizować}
+Diese Klasse vererbt die Klasse \ttt{Hashing}.
+
 Die Matrix $M$ wird als ein \ttt{vector} von \ttt{bitset} dargestellt.
 Dazu muss man erwähnen, dass ein \ttt{bitset} in C++ eine feste Länge besitzen muss.
-Dazu wurde die maximale Größe von $n$ eingegeben, also 26.
-Das müsste ggf. im Program selbst umgestellt werden,
-falls man eine größere Datei einlesen möchte.\\
+Dazu wurde die maximale Größe von $n$ eingegeben, also 26 (s. oben die Größe der Hashtabelle).\\
 Die feste Länge ist auch der Grund dafür, dass die Bitmaske $br$ im Teil \ref{sec:logik}
 auf folgende Weise definiert wird:
 \[
@@ -13,29 +12,24 @@ br := \neg(bn) \land bf.
 Im Fall, wenn man mit einer Bitmaske einer festen Größe operiert, würde 
 eine einfache Negation der Bitmaske $bn$ nicht ausreichen. Wenn $n < 26$, dann enthält 
 eine Bitmaske bei einer Negation $26 - n$ zusätzliche Einsen. Aus Gründen der Übersichtlichkeit 
-und der möglichen Weiterentwicklung des Programms möchte man sie weglassen.
+und der möglichen Weiterentwicklung des Programms möchte man sie zu Nullen umwandeln.
 
-Die Obstsorten werden als Strings eingelesen, aber in der Methode \ttt{readFile()}
-wird jeder Obstsorte ein interner Index\footnote{Nummerierung ab 0.} zugewiesen
-und in weiteren Operationen im Programm
-werden die Obstsorten als einfache Integers behandelt. 
-Es werden dazu zwei Maps festgelegt: \ttt{fruit2ID} und \ttt{ID2Fruit}, 
-in denen die Obstsorten und die entsprechenden internen Indizes gespeichert sind.
 
-Jede Spießkombination wird als \ttt{pair<set<int>, set<int>} dargestellt, also als ein Tupel entsprechend
-aus der Menge der internen Indizes der Obstsorten und der Menge der Indizes der Obstsorten (aus der Textdatei).
-Alle Spießkombinationen werden in einem \ttt{vector} gespiechert, der \ttt{infos} heißt.
+%Die Obstsorten werden als Strings eingelesen, aber in der Methode \ttt{readFile()}
+%wird jeder Obstsorte ein interner Index\footnote{Nummerierung ab 0.} zugewiesen
+%und in weiteren Operationen im Programm
+%werden die Obstsorten als einfache Integers behandelt. 
+%Es werden dazu zwei Maps festgelegt: \ttt{fruit2ID} und \ttt{ID2Fruit}, 
+%in denen die Obstsorten und die entsprechenden internen Indizes gespeichert sind.
 
-In \ttt{wishes} werden als ein \ttt{set} von Integers die internen Indizes der gewünschten 
-Obstsorten, also der Elemente der Menge $W$, gespeichert.
-Analog werden in \ttt{result}, ebenfalls in ein \ttt{set} von Integers, die Indizes der gewünschten 
-Obstsorten, also die Elemente der Menge $W'$, hinzugefügt.
+%Jede Spießkombination wird als \ttt{pair<set<int>, set<int>} dargestellt, also als ein Tupel entsprechend
+%aus der Menge der internen Indizes der Obstsorten und der Menge der Indizes der Obstsorten (aus der Textdatei).
+%Alle Spießkombinationen werden in einem \ttt{vector} gespiechert, der \ttt{infos} heißt.
 
-Der \ttt{vector}, der \ttt{used} heißt, wird verwendet, um die benutzten internen Indizes der Obstsorten,
-wie auch die Indizes der Obstsorten zu markieren, die im Graphen verwendet werden,
-da es in einigen Textdateien ein größeres $n$ gibt als die Anzahl der in den Spießkombinationen 
-und der Wunschliste verwendeten Obstsorten und Indizes. 
-Diese Markierung erweist sich bei der Prüfung auf korrekte Eingabe als hilfreich.
+%In \ttt{wishes} werden als ein \ttt{set} von Integers die internen Indizes der gewünschten 
+%Obstsorten, also der Elemente der Menge $W$, gespeichert.
+%Analog werden in \ttt{result}, ebenfalls in ein \ttt{set} von Integers, die Indizes der gewünschten 
+%Obstsorten, also die Elemente der Menge $W'$, hinzugefügt.
 
 Die Methode \ttt{analyzeInfo()} nimmt als Parameter eine Spießkombination. 
 In der Methode werden die drei Bitmasken $bn, br, bf$ erstellt.
@@ -51,7 +45,7 @@ Die jeweiligen Einsen in \ttt{matrix} werden mithilfe der eingebauten Funktion \
 gefunden.
 
 Die Methode \ttt{checkCoherence()} prüft, ob die Eingabe dem Axiom \ref{ax:obstsorte-index} folgt.
-Dennoch es gibt Beispiele, in denen $n$ größer ist als die Anzahl der verwendeten Elementen in den
+Dennoch gibt es Beispiele, in denen $n$ größer ist als die Anzahl der verwendeten Elementen in den
 Spießkombinationen und der Wunschliste.
 Bei der Zuweisung der internen Indizes jeder Obstsorte werden die verwendeten Obstsorten und Indizes
 in \ttt{used} markiert. Diesen Vorteil können wir nutzen, um die Kardinalität
@@ -60,8 +54,8 @@ Wir nehmen dazu die Methode \ttt{getFirstNeighbor()} der Klasse \ttt{Graph} und 
 Kardinalitäten für jeden Knoten und seinen ersten (beliebigen) Nachbarn. 
 Alle Knoten, die in \ttt{used} nicht markiert wurden, werden übersprungen.
 Falls bei mindestens einem Knoten die Kardinalitäten nicht übereinstimmen, wird \ttt{false} ausgegeben und
-die Eingabe im gegebenen Beispiel ist fehlerhaft.\\
-Sonst wird \ttt{true} ausgegeben.
+die Eingabe im gegebenen Beispiel ist fehlerhaft.
+Ansonsten wird \ttt{true} ausgegeben.
 
 Nachdem die Korrektheit der Eingabe geprüft wurde, kann festgestellt werden, ob $W'$ eindeutig
 bestimmt werden kann. Dazu dient die Methode \ttt{checkResult()}.\\
@@ -71,7 +65,7 @@ ein \ttt{set multip} erstellt.
 Es wird zunächst über die Menge der Wünsche \ttt{wishes} iteriert. 
 Falls ein Knoten \ttt{x} (der interne Index einer Obstsorte) in \ttt{G}
 die Kardinalität 1 besitzt, wird sein einzelner
-Nachbar in \ttt{result} hinzugefügt.
+Nachbar in \ttt{result}, also die Menge $W'$, hinzugefügt.
 Im sonstigen Fall wird \ttt{x} in \ttt{multip} hinzugefügt und die Stelle \ttt{x} in \ttt{todo}
 wird mit 1 markiert.\\
 Dann wird geprüft, ob die Menge \ttt{multip} überhaupt irgendwelche Elemente enthält.
