@@ -94,7 +94,7 @@ void Hashing::readFile(string path) {
 
 		//in dieser Liste werden alle Obstnamen gespeichert, die in der
 		//	Datei auftreten
-		vector<string> all_fruits(wishes_words.begin(), wishes_words.end());
+		set<string> all_fruits(wishes_words.begin(), wishes_words.end());
 
 		//Anzahl der Spießkombinationen
 		file >> m;
@@ -127,8 +127,9 @@ void Hashing::readFile(string path) {
 			//	erstmal als Strings erstellt
 			vector<string> currFruits{istream_iterator<string>{issss}, istream_iterator<string>{}};
 
-			//alle Obstsorten werden zu einer gemeinsamen Liste hizugefügt
-			all_fruits.insert(all_fruits.end(), currFruits.begin(), currFruits.end());
+			//alle Obstsorten werden zu einer gemeinsamen Menge hizugefügt
+			for (auto x: currFruits)
+				all_fruits.insert(x);
 
 			//falls die beiden Menge einer Spießkombination nicht gleichmächtig sind
 			if (currNum.size() != currFruits.size()) {

@@ -93,9 +93,9 @@ void Hashing::readFile(string path) {
 		vector<string> wishes_words{istream_iterator<string>{iss},
 			istream_iterator<string>{}};
 
-		//in dieser Liste werden alle Obstnamen gespeichert, die in der
+		//in dieser Menge werden alle Obstnamen gespeichert, die in der
 		//	Datei auftreten
-		vector<string> all_fruits(wishes_words.begin(), wishes_words.end());
+		set<string> all_fruits(wishes_words.begin(), wishes_words.end());
 
 		//Anzahl der Spiesskombinationen
 		file >> m;
@@ -129,8 +129,9 @@ void Hashing::readFile(string path) {
 			vector<string> currFruits{istream_iterator<string>{issss},
 				 istream_iterator<string>{}};
 
-			//alle Obstsorten werden zu einer gemeinsamen Liste hizugefuegt
-			all_fruits.insert(all_fruits.end(), currFruits.begin(), currFruits.end());
+			//alle Obstsorten werden zu einer gemeinsamen Menge hizugefuegt
+			for (auto x: currFruits)
+				all_fruits.insert(x);
 
 			//falls die beiden Menge einer Spiesskombination nicht gleichmaechtig sind
 			if (currNum.size() != currFruits.size()) {

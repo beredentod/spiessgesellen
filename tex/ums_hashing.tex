@@ -4,9 +4,12 @@ Buchstaben anfangen.
 (Die Ausnahme ist das Beispiel aus der Aufgabenstellung, in dem zwei Obstsorten mit demselben Buchstaben beginnen.)
 Man kann diese Tatsache bei der Wahl einer Datenstruktur für die Namen der Obstsorten nutzen. 
 Im Programm operiert man zwar nicht auf Strings, sondern auf internen Indizes, die Integers sind. 
-Allerdings muss man die Verbindungen zwischen dem Namen der Obstsrte und ihrer internen Index speichern. 
+Allerdings muss man die Verbindungen zwischen dem Namen der Obstsorte und ihrer internen Index speichern. 
+Die Anwendung vom Hashing in der Lösung zu dieser Aufgabe für die gegebenen Beispiele
+erweist sich besonders vorteilhaft im Vergleich zur Verwendung von einfachen Maps, indem
+man auf die Elemente in der Hashtabelle in $O(1)$ zugreifen kann (bis auf \nameref{example:16}).
 
-Dazu verwenden wir \textit{open address hashing}.
+Dazu verwenden wir \textit{open address hashing} mit \textit{linear probing}.
 Diese Art von Hashing löst eine Kollision auf, indem eine neue Stelle für ein Element durch Probieren 
 gefunden wird.\\
 Am Anfang erstellen wir eine Hashtabelle der Größe 26
@@ -50,7 +53,7 @@ Die Methode \ttt{readFile()} lest die Daten aus der Textdatei ein.
 Nach dem Einlesen von $n$ und $m$, also der Anzahl der Obstsorten und der Anzahl der Spießkombinationen,
 werden die Wünsche eingelesen.
 Die Menge $W$ wird zunächst als ein \ttt{vector} von Strings mit dem Namen \ttt{wishes\_words} gespeichert.
-Außerdem werden die Strings zu einem anderen \ttt{vector} von Strings \ttt{all\_fruits} kopiert.
+Außerdem werden die Strings zu einem anderen \ttt{set} von Strings \ttt{all\_fruits} kopiert.
 In dieser Liste werden alle Obstsorten gespeichert, die in der Eingabe auftreten. 
 Danach folgt das Einlesen der Spießkombinationen.
 Jede Menge $Z_i$ wird als \ttt{set} von Integers gespeichert.
@@ -67,7 +70,7 @@ alle Obstsorten, die in der Eingabe auftreten, werden ebenfalls zu \ttt{all\_fru
 Die Menge $Z_i$ und der \ttt{vector} $F_i$ werden temporär als Tupel in den \ttt{vector}
 \ttt{tempInfos} hinzugefügt.
 
-Danach erfolgt das Hashing. Die Liste \ttt{all\_fruits} wird iteriert und jedes Mal wird
+Danach erfolgt das Hashing. \ttt{all\_fruits} wird iteriert und jedes Mal wird
 die Funktion \ttt{getHash} aufgerufen, um zu prüfen, ob der iterierte String sich bereits
 in der Hashtabelle befindet. Wenn nicht, wird er mithilfe der Funktion \ttt{saveHash()} 
 in dieser Tabelle gespeichert.\\

@@ -2,10 +2,9 @@
 \begin{itemize}
   \item $n$ --- die Anzahl der Obstsorten
   \item $m$ --- die Anzahl der Spießkombinationen
-  \item $w$ --- die Anzahl der Wünsche (also $|W|$), im worst-case $w = n$, weil $w \leqslant n$
+  \item $w$ --- die Anzahl der Wünsche (also $|W|$), im worst--case $w = n$, weil $w \leqslant n$
 \end{itemize}
 
-\TODO{dodać average-case}
 Da wir Bitmasken in unserem Programm verwenden, ist noch eine Konstante einzuführen: $\beta$,
 die für die $\beta$--Bit--Architektur eines Rechners\footnote{\href{https://en.wikipedia.org/wiki/Word_(computer_architecture)}{https://en.wikipedia.org/wiki/Word\_(computer\_architecture)}}
 steht, auf dem das Programm ausgeführt wird. D.h., bei der 64--Bit--Architektur beträgt $\beta = 64$.
@@ -15,63 +14,92 @@ stellt $\beta$ die Größe des Datenwortes des Rechners dar.
 Außerdem muss die Länge eines \ttt{bitset}
 konstant sein, d.h., man muss schon im Programm eine feste Länge für alle Eingabegrößen eingeben.
 Diese feste Länge nennen wir $N$ und setzen $N =26$, da so viele Obstsorten das größte Beispiel
-auf der BWINF--Webseite umfasst.
+auf der BWINF--Webseite umfasst. Diese Konstante wird ebenfalls beim Hashing verwendet (s. \nameref{sec:umsetzung}).
 
 \begin{itemize}
-  \item Einlesen: $O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$ (worst-case)
-  \TODO{dodać haszowanie}
-  \begin{itemize}
-    \item Erstellung der Adjazenzmatrix $M$: $O(n \cdot \frac{N}{\beta})$
+  \item Einlesen: average--case: $O(w \log w + n (m \log n + \frac{N}{\beta}))$;
+  worst--case: $O(n(\log n(m + n) + w + \frac{N}{\beta}))$\\
+  Wie es in der \nameref{sec:umsetzung} vermerkt wird, ist die Struktur der Beispiel aus der BWINF--Webseite
+  sehr spezifisch.
+  In allen Beispielen (bis auf das Beispiel aus der Aufgabenstellung) beginnen alle Obstsorten
+  mit paarweise verschiedenen Buchstaben. In der folgenden Betrachtung bezeichnen wir so einen 
+  Fall als den average--case.
 
+  \begin{itemize}
     \item Erstellung der Liste \ttt{used} (s. \nameref{sec:umsetzung}): $O(n)$
 
-    \item Einlesen der Menge $W$: $O(w \log w)$\footnote{Praktisch sollte man zu dieser Laufzeit noch den Aufwand vom Vergleichen von zwei Wörtern in der Menge hinzurechnen, aber die Längen der Wörter sind so klein, dass
-     ich dies als eine zu vernachlässigende Konstante betrachte.\label{foot:vergleich-aufwand}}\\
-     Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}.
+    \item Erstellung der Hashtabelle (s. \nameref{sec:umsetzung}): $O(N)$
 
-    \item Einlesen der Spießkombinationen: $O(m \cdot n \log n)$\footref{foot:vergleich-aufwand} (worst-case)\\
-    Im schlimmsten Fall enthält jede Spießkombination alle Obstsorten.
-    Die logarithmische Laufzeit ist durch Einfügen in eine Menge verursacht.
+    \item Einlesen der Menge $W$ als Strings: $O(w)$\footnote{Praktisch sollte man zu dieser Laufzeit noch den Aufwand vom Vergleichen von zwei Wörtern in der Menge hinzurechnen, aber die Längen der Wörter sind so klein, dass ich dies als eine zu vernachlässigende Konstante betrachte.\label{foot:vergleich-aufwand}}
 
-    \item Zuweisung der internen Indizes zu den Obstsorten (s. \nameref{sec:umsetzung}): $O(n \log n)$\footref{foot:vergleich-aufwand}\\
-     Implementierug von \ttt{map} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/map}{https://en.cppreference.com/w/cpp/container/map}}
+    \item Kopieren von $W$ zu \ttt{all\_fruits} (s. \nameref{sec:umsetzung}): $O(w \log w)$\footref{foot:vergleich-aufwand}\\
+    Die logarithmische Laufzeit ist durch das Einfügen in eine Menge verursacht.
+    Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}. 
 
-    \item Umwandlung der gewünschten Obstsorten von Strings zu Integers: $O(w (\log n + \log w))$\\%worst-case: $O(n \log n)$\\
-    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
-    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}.
-    Das Einfügen in ein \ttt{set} hat logarithmische Laufzeit bezüglich der Anzahl
-    der Wünsche: $O(\log w)$\footref{foot:vergleich-aufwand}. Also gilt für die gesamte Laufzeit: $O(w (\log n + \log w))$. 
+    \item Einlesen jeder Spießkombination $K = (F_i, Z_i)$: $O(m \cdot n \log n)$\\
+    Im schlimmsten Fall gilt: $|F_i| = |Z_i| = n$.
+    \begin{itemize}
+      \item Die Menge $Z_i$ wird eingelesen, indem man die Indizes in ein \ttt{set} einfügt: $O(n \log n)$.
 
-    \item Umwandlung der Obstsorten in allen Spießkombinationen von Strings zu Integers:
-    $O(m \cdot n \log n)$\\
-    In jeder Spießkombination können sich im worst-case alle $n$ Obstsorten befinden.
-    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
-    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}.
-    Das Einfügen in ein \ttt{set} hat ebenfalls logarithmische Laufzeit bezüglich der Anzahl
-    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}. 
-    Deshalb beträgt die Laufzeit für alle Obstsorten in einer Spießkombination höchstens: $O(n \log n)$. 
+      \item Jeder Index $i \in Z_i$ wird in \ttt{used} markiert: $O(1)$
 
-    \item Die gesamte Laufzeit für diesen Teil (worst-case): $O(n \cdot \frac{N}{\beta}) + O(n) + O(w \log w)
-    + O(n \log n) + O(m \cdot n \log n) + O(w (\log n + \log w)) + O(m \cdot n \log n) = 
-    O(n \cdot \frac{N}{\beta} + n + w \log w + n \log n + m \cdot n \log n + w (\log n + \log w) +
-    m \cdot n \log n) = 
-    O(n \cdot \frac{N}{\beta} + m \cdot n \log n + w (\log n + \log w)) = 
-    O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$\\
-    Man darf nicht vergessen, dass die Laufzeit optimiert werden könnte, wenn die Eingabe nicht
-    aus Wörtern bestünde, sondern aus Zahlen. Man könnte beispielsweise die Wörter früher in Zahlen umwandeln lassen.  
+      \item Die Elemente der Menge $F_i$ werden als Strings eingelesen und in einer Liste gespeichert: $O(n)$
+
+      \item Die vorgegangene Liste wird zu \ttt{all\_fruits} kopiert: $O(n \log n)$\footref{foot:vergleich-aufwand}
+    \end{itemize}
+
+    \item Die Liste \ttt{all\_fruits} wird iteriert und die iterierten Strings werden gehasht (s. \nameref{sec:umsetzung}): $O(n)$ (average--case), $O(n^2)$ (worst--case)\\
+    Wir verwenden \textit{open address hashing} mit \textit{linear probing}.
+    Im schlimmsten Fall müssen wir $n - 1$--mal zusätzlich iterieren, um an einer freien Stelle für einen
+    String zu gelangen (s. auch \nameref{example:16}).
+    So ergibt sich im schlimmsten Fall für das Suchen und Einfügen in einer Hashtabelle: $O(n)$.
+    In der Mehrheit der Fällen müssen wir jedoch gar nicht iterieren, da ein gesuchtes Element
+    an der Stelle steht, die durch die Hashfunktion ermittelt wurde (s. \nameref{sec:umsetzung}).
+    So ergibt sich im average--case: $O(1)$.
+    Nur im \nameref{example:16} ist mit der Laufzeit von $O(n)$ zu rechnen.\\
+    In der Menge \ttt{all\_fruits} befinden sich maximal alle $n$ Obstsorten.
+
+    \item Es wird durch die Hashtabelle iteriert, um die internen Indizes den Obstsorten zuzuordnen
+    und die Liste \ttt{ID2Fruit} zu erstellen (s. \nameref{sec:umsetzung}): $O(N)$\\
+    Während dessen werden auch die internen Indizes in \ttt{used} in $O(1)$ markiert.
+
+    \item Die Strings in $W$ werden zu den zugehörigen internen Indizes umgewandelt und in eine Menge eingefügt:
+    $O(w \log w)$ (average--case), $O(w \cdot n + w \log w) = O(w \cdot n)$ (worst--case)\\
+    Dazu wird die beschriebene Hashfunktion verwendet.
+
+    \item Die Strings in der Liste $F_i$ der jeweiligen Spießkombination werden
+    zu den zugehörigen internen Indizes umgewandelt und $F_i$ wird zu einer Menge umgewandelt:
+    $O(n \log n)$ (average--case), $O(n^2 \log n)$ (worst--case)\\
+    Im schlimmsten Fall gehören zu $F_i$ alle $n$ Obstsorten. 
+    Im average--case beginnen alle Obstsorten mit unterschiedlichen Buchstaben und
+    so läuft die Hashfunktion in $O(1)$.
+
+    \item Erstellung der Adjazenzmatrix $M$: $O(n \cdot \frac{N}{\beta})$
+
+    \item Die gesamte Laufzeit für diesen Teil beträgt für den worst--case: 
+    $O(n) + O(N) + O(w) + O(w \log w) + O(m \cdot n \log n) + O(n^2) + O(N) + O(w \cdot n) + O(n^2 \log n) + 
+    O(n \cdot \frac{N}{\beta})
+    = O(n + N + w + w \log w + m \cdot n \log n + n^2 + N + w \cdot n + n^2 \log n + n \cdot \frac{N}{\beta})
+    = O(n(\log n(m + n) + w + \frac{N}{\beta}))$
+
+    \item Die gesamte Laufzeit für diesen Teil beträgt für den average--case:
+    $O(n) + O(N) + O(w) + O(w \log w) + O(m \cdot n \log n) + O(n) + O(N) + O(w \log w) + O(n \log n) 
+    + O(n \cdot \frac{N}{\beta})
+    = O(n + N + w + w \log w + m \cdot n \log n + n + N + w \log w + n \log n + n \cdot \frac{N}{\beta})
+    = O(w \log w + n (m \log n + \frac{N}{\beta}))$
+
   \end{itemize}
 
-
-  \item Verarbeitung der Spießkombinationen: $O(n\cdot \frac{N}{\beta}(m + n))$ (worst-case)
+  \item Verarbeitung der Spießkombinationen: $O(n\cdot \frac{N}{\beta}(m + n))$ (worst--case)
   \begin{itemize}
     \item Verarbeitung einer Spießkombination $K = (F, Z)$: $O(n \cdot\frac{N}{\beta})$\\
-    Man geht davon aus, dass eine Spießkombination im worst-case alle Obstsorten enthält.
+    Man geht davon aus, dass eine Spießkombination im worst--case alle Obstsorten enthält.
     \begin{itemize}
       \item Erstellung der Bitmaske $bf$: $O(n)$
 
-      \item Erstellung der Bitmaske $bn$: $O(|F|)$, worst-case: $O(n)$\\
+      \item Erstellung der Bitmaske $bn$: $O(|F|)$, worst--case: $O(n)$\\
       Die Operation hat eine lineare Laufzeit bezüglich der Anzahl der Elementen in 
-      einer Spießkombination. Eine Spießkombination kann im worst-case alle $n$
+      einer Spießkombination. Eine Spießkombination kann im worst--case alle $n$
       Obstsorten beinhalten.
 
       \item Erstellung der Bitmaske $br$: $O(\frac{N}{\beta})$
@@ -82,14 +110,14 @@ auf der BWINF--Webseite umfasst.
       die Menge $F$ gleichzeitig iterieren, wie durch die Matrix $M$ (s. \nameref{sec:umsetzung}).
       An jeder Liste $M_i$ wird genau eine bitweise Operation durchgeführt.
 
-      \item Die gesamte Laufzeit für eine Spießkombination beträgt (worst-case):\\
+      \item Die gesamte Laufzeit für eine Spießkombination beträgt (worst--case):\\
       $O(n) + O(n) + O(\frac{N}{\beta}) + O(n \cdot\frac{N}{\beta}) 
       = O(n + n + \frac{N}{\beta} + n \cdot\frac{N}{\beta}) = O(n \cdot\frac{N}{\beta})$
     \end{itemize}
 
     \item Verarbeitung aller Spießkombinationen entsprechend: $O(m \cdot n \cdot\frac{N}{\beta})$
 
-    \item Kopieren der Adjazenzmatrix in \ttt{Graph G} (s. \nameref{sec:umsetzung}): average-case: $O(n \cdot \delta \cdot \frac{N}{\beta})$, worst-case: $O(n^2 \cdot \frac{N}{\beta})$ \\
+    \item Kopieren der Adjazenzmatrix in \ttt{Graph G} (s. \nameref{sec:umsetzung}): average--case: $O(n \cdot \delta(i) \cdot \frac{N}{\beta})$, worst--case: $O(n^2 \cdot \frac{N}{\beta})$ \\
     Für jede Liste $M_i$ werden alle Einsen in \ttt{G} als Kanten vom Knoten $i$ eingefügt.
     Dazu bediene ich mich der eingebauten Funktion \ttt{\_Find\_next()},
     die jeweils das nächste 1--Bit in einem \ttt{bitset} findet.
@@ -97,19 +125,19 @@ auf der BWINF--Webseite umfasst.
     Ich gehe davon aus, dass dieser Vorgang ebenfalls in der Zeit von $O(\frac{N}{\beta})$ abzuschließen ist. 
     (Falls die Laufzeit viel schlechter wäre, könnte man die \href{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}{hier}\footnote{\href{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}{https://stackoverflow.com/questions/58795338/find-next-array-index-with-true-value-c}} beschriebene Idee anwenden,
     die mit einem logarithmischen Aufwand bezüglich der Länge der Bitmaske läuft.)\\
-    Deshalb erfolgt die Iteration über eine Liste $M_i$ in $O(\delta \cdot \frac{N}{\beta})$, wobei
-    $\delta$ die Anzahl der Einsen ist. Im schlimmsten Fall, wenn alle Spießkombinationen aus
-    $n$ Obstsorten bestehen, gilt: $\delta = n$, also gilt: $O(n \cdot \frac{N}{\beta})$.
-    Im allgemeinen Fall gilt: $\delta \ll n$. Den Vorgang muss man für alle $n$ Obstsorten
+    Deshalb erfolgt die Iteration über eine Liste $M_i$ in $O(\delta(i) \cdot \frac{N}{\beta})$, wobei
+    $\delta(i)$ die Anzahl der Einsen in $M_i$ ist. Im schlimmsten Fall, wenn alle Spießkombinationen aus
+    $n$ Obstsorten bestehen oder es keine Spießkombination gibt,
+    gilt: $\delta(i) = n$, also gilt: $O(n \cdot \frac{N}{\beta})$.
+    Im allgemeinen Fall gilt: $\delta(i) \ll n$. Den Vorgang muss man für alle $n$ Obstsorten
     ausführen.\\
     Man könnte auch denken, dass das Kopieren unnötig ist. Falls man den Graphen nicht
     in eine Adjazenzliste--Form kopiert,
     muss man sowieso an einer Stelle die entsprechenden Einsen aus der Adjazenzmatrix ablesen.
 
-    \item Die gesamte Laufzeit für diesen Teil beträgt (worst-case):\\
+    \item Die gesamte Laufzeit für diesen Teil beträgt (worst--case):\\
     $O(m \cdot n \cdot\frac{N}{\beta}) + O(n^2 \cdot\frac{N}{\beta})) = 
     O(m \cdot n \cdot\frac{N}{\beta} + n^2 \cdot\frac{N}{\beta})) = O(n\cdot \frac{N}{\beta}(m + n))$ 
-    \vspace{9pt}
   \end{itemize}
 
   \item Prüfung der Korrektheit der Eingabe: $O(n)$
@@ -120,7 +148,7 @@ auf der BWINF--Webseite umfasst.
     Deshalb gilt für alle Knoten im bipartiten Graphen: $O(n + n) = O(n)$
   \end{itemize}
 
-  \item Prüfung der Existenz einer Lösung: $O(n \log n)$ (worst-case)
+  \item Prüfung der Existenz einer Lösung: $O((n + w)\log w)$ (worst--case)
   \begin{itemize}
     \item Erstellung von $\bar{W}$: $O(n)$
 
@@ -132,12 +160,12 @@ auf der BWINF--Webseite umfasst.
     \item Prüfung auf Kardinalität $\Delta(x) = 1$: $O(1)$
     \item Zugriff auf die Liste der Nachbarknoten in $G$: $O(1)$
     \item ggf. Einfügen in $W'$: $O(\log w)$
-    \item ggf. Einfügen in \ttt{multip} (s. \nameref{sec:umsetzung}): $O(\log w)$ (worst-case)\\
+    \item ggf. Einfügen in \ttt{multip} (s. \nameref{sec:umsetzung}): $O(\log w)$ (worst--case)\\
     Im schlimmsten Fall hat keiner der Knoten in der Wunschliste die Kardinalität von 1.
     \item ggf. Markierung in $\bar{W}$: $O(1)$
     \end{itemize}
 
-    \item Iteration durch \ttt{multip}: $O(n \log w)$ (worst-case)\\
+    \item Iteration durch \ttt{multip}: $O(n \log w)$ (worst--case)\\
     Die folgenden Operationen werden nur dann ausgeführt, wenn die Komponente,
     zu der der iterierte Knoten gehört, noch nicht bearbeitet wurde, also 
     wenn dieser Knoten in $\bar{R}$ nicht markiert wurde. Wir können feststellen, 
@@ -155,73 +183,136 @@ auf der BWINF--Webseite umfasst.
     \item ggf. Zugriff auf die Liste der Nachbarn $n(y)$ eines Nachbarn $y$ eines iterierten Knotens: $O(n)$\\
     Im schlimmsten Fall muss man auf alle Knoten aus $A$ zugreifen.
 
-    \item ggf. Iteration durch $n(y)$: $O(n)$ (worst-case)\\
+    \item ggf. Iteration durch $n(y)$: $O(n)$ (worst--case)\\
     In dieser Schleife wird geprüft, ob der iterierte Index $i$ in $\bar{W}$ markiert ist: $O(1)$,
     und dann wird $i$ in $\bar{R}$ markiert: $O(1)$. Wenn es einen Knoten gibt, der nicht gewünscht ist,
     aber sich auf der Komponente befindet, wird dies mit einer boolschen Variable \ttt{prob} markiert: $O(1)$.\\
-    Im worst-case kann die Schleife $n$--mal iteriert werden, wenn es nur eine Zusammenhangskomponente
+    Im worst--case kann die Schleife $n$--mal iteriert werden, wenn es nur eine Zusammenhangskomponente
     in $G$ gibt. Jedoch wird die äußere Schleife nur einmal iteriert, da alle gewünschten 
     Obstsorten auf der Komponente als besucht in $\bar{R}$ markiert werden.
-    \item ggf. Kopieren der Knoten aus dieser Komponente zu \ttt{problems} (s. \nameref{sec:umsetzung}): $O(n)$ (worst-case)
+    \item ggf. Kopieren der Knoten aus dieser Komponente zu \ttt{problems} (s. \nameref{sec:umsetzung}): $O(n)$ (worst--case)
 
-    \item ggf. Einfügen der Knoten aus dieser Komponente zu $W'$: $O(n \log w)$ (worst-case)\\
+    \item ggf. Einfügen der Knoten aus dieser Komponente zu $W'$: $O(n \log w)$ (worst--case)\\
     Das Einfügen in eine Menge von $w$ Elementen hat eine logarithmische Laufzeit bezüglich $w$.
 
     \item Um die gesamte Laufzeit für diesen Teil zu bestimmen, müssen wir bemerken, dass 
     diese Laufzeit von der Anzahl der Knoten der Menge $A$ auf allen Zusammenhangskomponenten 
     abhängt, auf denen sich mind. eine gewünschte Obstsorte befindet. Durch die Markierung
     in $\bar{R}$ wird jeder Knoten von diesen Zusammenhangskomponenten nur einmal behandelt. 
-    Damit ergibt sich im worst-case die Laufzeit von $O(n \log w)$, falls die gewünschten Obstsorten auf 
+    Damit ergibt sich im worst--case die Laufzeit von $O(n \log w)$, falls die gewünschten Obstsorten auf 
     allen Zusammenhangskomponenten in $G$ verteilt sind.
     \end{itemize}
 
-    \item Ausgabe für eine Eingabe, für die $W'$ nicht eindeutig bestimmt werden kann: $O(n \log n)$\\
+    \item Ausgabe für eine Eingabe, für die $W'$ nicht eindeutig bestimmt werden kann: $O(n)$\\
     Es wird durch alle Komponenten iteriert, die mind. eine ungewünschte Obstsorte enthalten,
     und alle Knoten werden mit den Namen der Obstsorten aufgezählt.
-    Deshalb muss jedes Mal die Suchfunktion in der \ttt{map} mit den Zuweisungen 
-    der internen Indizes der Obstsorten und den Obstsorten aufgerufen werden: $O(\log n)$\footref{foot:vergleich-aufwand}.
     Im schlimmsten Fall muss in der Ausgabe durch alle Knoten in $A$ iteriert werden, falls
-    es nur eine Zusammenhangskomponente in $G$ gibt.
+    es nur eine Zusammenhangskomponente in $G$ gibt.    
 
-    \item Die gesamte Laufzeit für diesen Teil beträgt (worst-case, nach oben abgeschätzt: $n > w$):
-    $O(n) + O(n) + O(w \log w) + O(n \log w) + O(n \log n) = O(n + n + w \log w + n \log w + n \log n)
-    \subset O(n \log n)$
+    %Deshalb muss jedes Mal die  mit den Zuweisungen 
+    %der internen Indizes der Obstsorten und den Obstsorten aufgerufen werden: $O(\log n)$\footref{foot:vergleich-aufwand}.
+
+    \item Die gesamte Laufzeit für diesen Teil beträgt (worst--case):
+    $O(n) + O(n) + O(w \log w) + O(n \log w) + O(n)
+    = O(n + n + w \log w + n \log w + n)
+    = O((n + w)\log w)$
   \end{itemize}
 
 \end{itemize}
 
-Fassen wir die Laufzeit im worst-case zusammen. Als ein worst-case kann so ein Fall gelten,
+Fassen wir die Laufzeit im worst--case zusammen. Als ein worst--case kann so ein Fall gelten,
 in dem alle $m$ Spießkombinationen und die Wunschliste aus allen $n$ Obstsorten bestehen. 
 \begin{itemize}
-  \item Einlesen: $O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$
+  \item Einlesen: $O(n(\log n(m + n) + w + \frac{N}{\beta}))$
   \item Verarbeitung der Spießkombinationen: $O(n\cdot \frac{N}{\beta}(m + n))$
   \item Prüfung der Korrektheit der Eingabe: $O(n)$
-  \item Prüfung der Existenz einer Lösung: $O(n \log n)$
+  \item Prüfung der Existenz einer Lösung: $O((n + w)\log w)$
 \end{itemize}
 
-\TODO{coś z tym zrobić}
 \begin{equation*}
 \begin{gathered}
-O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w)) +
- O(n\cdot \frac{N}{\beta}(m + n)) + \\
-+ O(n) + O(n \log n) =\\
-= O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w) + n\cdot \frac{N}{\beta}(m + n)+ n + n \log n)\\
-= O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + w (\log n + \log w) + n \log n)
+O(n(\log n(m + n) + w + \frac{N}{\beta})) +O(n\cdot \frac{N}{\beta}(m + n)) + O(n) + O((n + w)\log w) =\\ 
+= O(n(\log n(m + n) + w + \frac{N}{\beta})) + n\cdot \frac{N}{\beta}(m + n)+ n + (n + w)\log w) = \\
+= O(n((m + n)(\log n + \frac{N}{\beta}) + w \log w)
 \end{gathered}
 \end{equation*}
 
-Nach der Abschätzung $w \leqslant n$ ergibt sich:
+Nach der Abschätzung $n = w$ ergibt sich im worst--case:
 \[
-O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta})  + n \log n)) =
-O(n (m \log n + m \frac{N}{\beta} + n \frac{N}{\beta}))
+O(n((m + n)(\log n + \frac{N}{\beta}))
 \]
 
-\noindent 
+Fassen wir nun die Laufzeit im average--case zusammen. Als ein average--case gilt in diesem
+Fall so ein Fall, in dem alle Obstsorten mit paarweise möglichst verschiedenen Buchstaben anfangen. 
+\begin{itemize}
+  \item Einlesen: $O(w \log w + n (m \log n + \frac{N}{\beta}))$
+  \item Verarbeitung der Spießkombinationen: $O(n\cdot \frac{N}{\beta}(m + n))$
+  \item Prüfung der Korrektheit der Eingabe: $O(n)$
+  \item Prüfung der Existenz einer Lösung: $O((n + w)\log w)$
+\end{itemize}
+
+\begin{equation*}
+\begin{gathered}
+O(w \log w + n (m \log n + \frac{N}{\beta})) + O(n\cdot \frac{N}{\beta}(m + n)) + O(n) + O((n + w)\log w) =\\
+= O(w \log w + n (m \log n + \frac{N}{\beta})) + n\cdot \frac{N}{\beta}(m + n) + n + (n + w)\log w) =\\
+= O(n(m \log n + m \frac{N}{\beta} + \frac{N}{\beta}) + \log w(n+w))
+\end{gathered}
+\end{equation*}
+
+Nach der Abschätzung $n = w$ ergibt sich im average--case:
+\[
+O(n(m \log n + m \frac{N}{\beta} + n \frac{N}{\beta}))
+\]
+
 Wir können bemerken, dass fast alle modernen Rechner auf einer
 mind. 32--Bit-Architektur basieren, das heißt, wir können $\beta = 32$ setzen.
 Für die maximale Anzahl an Obstsorten, die in den BWINF--Beispielen auftreten, gilt
 dann: $\frac{N}{\beta} = \frac{26}{32} < 1$.
-In diesem Fall ist dieser Bruch ein vernachlässiger Faktor. Es ergibt sich im schlimmsten Fall:
+In diesem Fall ist dieser Bruch ein vernachlässiger Faktor. Es ergibt sich im average--case:
 \[
-O(n (m \log n + m + n))
+O(n(m \log n + n))
 \]
+
+
+\begin{comment}
+%$O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$ (worst--case)
+
+    \item Erstellung der Adjazenzmatrix $M$: $O(n \cdot \frac{N}{\beta})$
+
+    \item Erstellung der Liste \ttt{used} (s. \nameref{sec:umsetzung}): $O(n)$
+
+    \item Einlesen der Menge $W$: $O(w \log w)$\footnote{Praktisch sollte man zu dieser Laufzeit noch den Aufwand vom Vergleichen von zwei Wörtern in der Menge hinzurechnen, aber die Längen der Wörter sind so klein, dass
+     ich dies als eine zu vernachlässigende Konstante betrachte.\label{foot:vergleich-aufwand}}\\
+     Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}.
+
+    \item Einlesen der Spießkombinationen: $O(m \cdot n \log n)$\footref{foot:vergleich-aufwand} (worst--case)\\
+    Im schlimmsten Fall enthält jede Spießkombination alle Obstsorten.
+    Die logarithmische Laufzeit ist durch Einfügen in eine Menge verursacht.
+
+    \item Zuweisung der internen Indizes zu den Obstsorten (s. \nameref{sec:umsetzung}): $O(n \log n)$\footref{foot:vergleich-aufwand}\\
+     Implementierug von \ttt{map} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/map}{https://en.cppreference.com/w/cpp/container/map}}
+
+    \item Umwandlung der gewünschten Obstsorten von Strings zu Integers: $O(w (\log n + \log w))$\\%worst--case: $O(n \log n)$\\
+    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}.
+    Das Einfügen in ein \ttt{set} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Wünsche: $O(\log w)$\footref{foot:vergleich-aufwand}. Also gilt für die gesamte Laufzeit: $O(w (\log n + \log w))$. 
+
+    \item Umwandlung der Obstsorten in allen Spießkombinationen von Strings zu Integers:
+    $O(m \cdot n \log n)$\\
+    In jeder Spießkombination können sich im worst--case alle $n$ Obstsorten befinden.
+    Das Suchen in einer \ttt{map} hat logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}.
+    Das Einfügen in ein \ttt{set} hat ebenfalls logarithmische Laufzeit bezüglich der Anzahl
+    der Obstsorten: $O(\log n)$\footref{foot:vergleich-aufwand}. 
+    Deshalb beträgt die Laufzeit für alle Obstsorten in einer Spießkombination höchstens: $O(n \log n)$. 
+
+    \item Die gesamte Laufzeit für diesen Teil (worst--case): $O(n \cdot \frac{N}{\beta}) + O(n) + O(w \log w)
+    + O(n \log n) + O(m \cdot n \log n) + O(w (\log n + \log w)) + O(m \cdot n \log n) = 
+    O(n \cdot \frac{N}{\beta} + n + w \log w + n \log n + m \cdot n \log n + w (\log n + \log w) +
+    m \cdot n \log n) = 
+    O(n \cdot \frac{N}{\beta} + m \cdot n \log n + w (\log n + \log w)) = 
+    O(n (\frac{N}{\beta} + m \log n) + w (\log n + \log w))$\\
+    Man darf nicht vergessen, dass die Laufzeit optimiert werden könnte, wenn die Eingabe nicht
+    aus Wörtern bestünde, sondern aus Zahlen. Man könnte beispielsweise die Wörter früher in Zahlen umwandeln lassen.  
+\end{comment}
