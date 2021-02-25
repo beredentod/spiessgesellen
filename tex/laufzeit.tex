@@ -19,7 +19,7 @@ auf der BWINF--Webseite umfasst. Diese Konstante wird ebenfalls beim Hashing ver
 \begin{itemize}
   \item Einlesen: average--case: $O(w \log w + n (m \log n + \frac{N}{\beta}))$;
   worst--case: $O(n(\log n(m + n) + w + \frac{N}{\beta}))$\\
-  Wie es in der \nameref{sec:umsetzung} vermerkt wird, ist die Struktur der Beispiel aus der BWINF--Webseite
+  Wie es in der \nameref{sec:umsetzung} vermerkt wird, ist die Struktur der Beispiele aus der BWINF--Webseite
   sehr spezifisch.
   In allen Beispielen (bis auf das Beispiel aus der Aufgabenstellung) beginnen alle Obstsorten
   mit paarweise verschiedenen Buchstaben. In der folgenden Betrachtung bezeichnen wir so einen 
@@ -33,7 +33,7 @@ auf der BWINF--Webseite umfasst. Diese Konstante wird ebenfalls beim Hashing ver
     \item Einlesen der Menge $W$ als Strings: $O(w)$\footnote{Praktisch sollte man zu dieser Laufzeit noch den Aufwand vom Vergleichen von zwei Wörtern in der Menge hinzurechnen, aber die Längen der Wörter sind so klein, dass ich dies als eine zu vernachlässigende Konstante betrachte.\label{foot:vergleich-aufwand}}
 
     \item Kopieren von $W$ zu \ttt{all\_fruits} (s. \nameref{sec:umsetzung}): $O(w \log w)$\footref{foot:vergleich-aufwand}\\
-    Die logarithmische Laufzeit ist durch das Einfügen in eine Menge verursacht.
+    Die linear--logarithmische Laufzeit ist durch das Einfügen in eine Menge verursacht.
     Implementierug von \ttt{set} in C++ als Rot-schwarz-Bäume\footnote{\href{https://en.cppreference.com/w/cpp/container/set}{https://en.cppreference.com/w/cpp/container/set}}. 
 
     \item Einlesen jeder Spießkombination $K = (F_i, Z_i)$: $O(m \cdot n \log n)$\\
@@ -45,12 +45,12 @@ auf der BWINF--Webseite umfasst. Diese Konstante wird ebenfalls beim Hashing ver
 
       \item Die Elemente der Menge $F_i$ werden als Strings eingelesen und in einer Liste gespeichert: $O(n)$
 
-      \item Die vorgegangene Liste wird zu \ttt{all\_fruits} kopiert: $O(n \log n)$\footref{foot:vergleich-aufwand}
+      \item Die vorangegangene Liste wird zu \ttt{all\_fruits} kopiert: $O(n \log n)$\footref{foot:vergleich-aufwand}
     \end{itemize}
 
     \item Die Liste \ttt{all\_fruits} wird iteriert und die iterierten Strings werden gehasht (s. \nameref{sec:umsetzung}): $O(n)$ (average--case), $O(n^2)$ (worst--case)\\
     Wir verwenden \textit{open address hashing} mit \textit{linear probing}.
-    Im schlimmsten Fall müssen wir $n - 1$--mal zusätzlich iterieren, um an einer freien Stelle für einen
+    Im schlimmsten Fall müssen wir $(n - 1)$--mal zusätzlich iterieren, um an eine freie Stelle für einen
     String zu gelangen (s. auch \nameref{example:16}).
     So ergibt sich im schlimmsten Fall für das Suchen und Einfügen in einer Hashtabelle: $O(n)$.
     In der Mehrheit der Fällen müssen wir jedoch gar nicht iterieren, da ein gesuchtes Element
@@ -193,7 +193,7 @@ auf der BWINF--Webseite umfasst. Diese Konstante wird ebenfalls beim Hashing ver
     \item ggf. Kopieren der Knoten aus dieser Komponente zu \ttt{problems} (s. \nameref{sec:umsetzung}): $O(n)$ (worst--case)
 
     \item ggf. Einfügen der Knoten aus dieser Komponente zu $W'$: $O(n \log w)$ (worst--case)\\
-    Das Einfügen in eine Menge von $w$ Elementen hat eine logarithmische Laufzeit bezüglich $w$.
+    Das Einfügen in eine Menge von $w$ Elementen hat eine linear--logarithmische Laufzeit bezüglich $w$.
 
     \item Um die gesamte Laufzeit für diesen Teil zu bestimmen, müssen wir bemerken, dass 
     diese Laufzeit von der Anzahl der Knoten der Menge $A$ auf allen Zusammenhangskomponenten 

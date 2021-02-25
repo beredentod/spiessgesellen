@@ -44,12 +44,12 @@ falls dieser in der Tabelle enthalten ist. Sonst wird der Wert $-1$ zurückgegeb
 Diese Funktion geht analog vor, wie die Funktion \ttt{saveHash()}.
 Man ermittelt zunächst die Stelle in der Hashtabelle mithilfe der Hashfunktion,
 iteriert von dort und prüft, ob das iterierte Element dem gegebenen String entspricht.
-Wenn der Iterator auf eine Stelle stoßt, die einen leeren String enthält,
+Wenn der Iterator auf eine Stelle stößt, die einen leeren String enthält,
 wird sofort $-1$ zurückgegeben, da der String sich in der Hashtabelle nicht befinden kann,
 weil dieser String nach dem oben beschriebenen Prinzip an der ersten leeren Stelle 
 gespeichert werden sollte.
 
-Die Methode \ttt{readFile()} lest die Daten aus der Textdatei ein. 
+Die Methode \ttt{readFile()} liest die Daten aus der Textdatei ein. 
 Nach dem Einlesen von $n$ und $m$, also der Anzahl der Obstsorten und der Anzahl der Spießkombinationen,
 werden die Wünsche eingelesen.
 Die Menge $W$ wird zunächst als ein \ttt{vector} von Strings mit dem Namen \ttt{wishes\_words} gespeichert.
@@ -75,7 +75,7 @@ die Funktion \ttt{getHash} aufgerufen, um zu prüfen, ob der iterierte String si
 in der Hashtabelle befindet. Wenn nicht, wird er mithilfe der Funktion \ttt{saveHash()} 
 in dieser Tabelle gespeichert.\\
 Im Weiteren werden die Obstsorten nicht als String behandelt, sondern wird jeder Obstsorte
-ein interner Index zugewiesen. Theoretish könnte man einfach die Stellen der Obstsorten in der Hashtabelle 
+ein interner Index zugewiesen. Theoretisch könnte man einfach die Stellen der Obstsorten in der Hashtabelle 
 nehmen.
 Da in vielen Fällen gilt: $n < 26$, können wir, anstatt diese Stellen zu nehmen, die unabhängig von $n$
 zwischen 0 und 26 liegen, die internen Indizes der Obstsorten zu Zahlen zwischen 0 und $n-1$
