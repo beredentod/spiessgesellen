@@ -27,7 +27,7 @@ An dieser Stelle stellen wir Folgendes fest.
 \input{./tex/lemmata/lem_komponente-matching.tex}
 
 Nach der Verarbeitung aller Spießkombinationen entsteht ein Graph mit vielen Zusammenhangskomponenten
-(s. Abb. \ref{fig:graph-after-analysis}).
+(s. \cref{fig:graph-after-analysis}).
 An dieser Stelle muss man noch die Wunschliste $W$ untersuchen, um die entsprechende Menge $W'$ zu bestimmen.
 Dazu muss man die folgenden zwei Beobachtungen betrachten.
 
@@ -35,7 +35,7 @@ Dazu muss man die folgenden zwei Beobachtungen betrachten.
 
 \input{./tex/lemmata/lem_komponente-one-not-wunschliste.tex}
 
-Direkt aus Lemma \ref{lem:komponente-all-wunschliste} ergibt sich das folgende Korollar.
+Direkt aus \cref{lem:komponente-all-wunschliste} ergibt sich das folgende Korollar.
 Man bedient sich dessen und des Lemmas \ref{lem:komponente-one-not-wunschliste}, um das ganze Problem zu lösen, also: Ob die Menge $W'$ eindeutig bestimmt werden kann.
 
 \input{./tex/lemmata/kor_all-components.tex}
@@ -55,7 +55,7 @@ besucht wurde (s. \nameref{sec:umsetzung}).
 
 Wenn man einen Knoten $x \in W$ untersucht, dessen Kardinalität $\Delta(x) > 1$ ist,
 kann man die Liste der Nachbarknoten $n(x)$ von $x$ aufrufen.
-Da eine Zusammenhangskomponente selbst vollständig ist\\ (Lemma \ref{lem:komponente-complete}),
+Da eine Zusammenhangskomponente selbst vollständig ist\\ (\cref{lem:komponente-complete}),
 kann man die Liste der Nachbarknoten $n(y)$ eines beliebigen Nachbarn $y$ von $x$ ($y \in n(x)$) aufrufen.
 So kann man jeden Knoten $z \in n(y)$ untersuchen, ob bei $z$ eine 1 in $\bar{W}$ steht.
 Falls ja, wird $z$ auch in $\bar{R}$ markiert,
