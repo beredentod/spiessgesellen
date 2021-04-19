@@ -6,12 +6,12 @@ weil man für die Operation des Entfernens Logikgatter verwenden kann.
 
 Betrachten wir eine Spießkombination $s = (F_s, Z_s)$.
 %die aus den Mengen $F_s \subseteq A$ und $Z_s \subseteq B$ besteht. 
-Wir erstellen 3 Bitmasken $bf, bn$ und $br$ jeweils der Länge $n$.
-Die Bitmaske $bf$ besteht aus $n$ Einsen.
+Wir erstellen 3 Bitmasken \textit{bf}, $bn$ und $br$ jeweils der Länge $n$.
+Die Bitmaske $\textit{bf}$ besteht aus $n$ Einsen.
 In der Maske $bn$ stehen die 1--Bits an allen Stellen, die den Indizes in $Z_s$ entsprechen.
 Die Bitmaske $br$ wird auf folgende Weise definiert (mehr dazu in der \nameref{sec:umsetzung}):
 \[
-br := \neg(bn) \land bf.
+br := \neg(bn) \land \textit{bf}.
 \]
 \noindent So können wir auf allen Listen $M_i$, wobei $i \in F_s$, die AND--Operation mit der Maske $bn$ 
 durchführen:
@@ -27,8 +27,8 @@ M_j := M_j \land br.
 \input{./tex/figures/fig_matrix_bitmasks.tex}
 
 Auf der obigen Abbildung werden \colorbox{lightblue}{blau} und \colorbox{lightred}{rot} diejenigen
-Listen gekennzeichnet, auf denen die AND--Operation mit der entsprechenden Bitmaske durchgefüht wurde.
-{\color{red} Rot} werden die Bits gekennzeichnet, die sich nach der Verarbeitung der Spießkombination veränderten.
+Listen gekennzeichnet, auf denen die AND--Operation mit der entsprechenden Bitmaske durchgeführt wurde.
+{\color{red} Rot} werden die Bits gekennzeichnet, die sich nach der Verarbeitung der Spießkombination verändern.
 
 Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunterscheidung erläutert.
 \begin{enumerate}
@@ -50,9 +50,9 @@ Was die beschriebenen Operationen verursachen, wird anhand der folgenden Fallunt
     %Allerdings ergibt sich laut Lemma \ref {lem:spiess-numbers} ein Widerspruch.
     %Später wird dieser Widerspruch bei der Prüfung der Korrektheit der Eingabe entdeckt.
     \item Falls der Knoten $y$ nicht zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 1 steht, bleibt es auch 1.
+    \item Falls der Knoten $y$ zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
     \item Falls der Knoten $y$ zu $Z_s$ gehört, aber an der Stelle $M_{x,y}$ 1, 
       wird die Stelle $M_{x,y}$ zu 0.
-    \item Falls der Knoten $y$ zu $Z_s$ gehört und an der Stelle $M_{x,y}$ 0 steht, bleibt es auch 0.
   \end{enumerate}
 \end{enumerate}
 

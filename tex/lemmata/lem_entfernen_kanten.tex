@@ -6,19 +6,10 @@ Sei $K = (F, Z)$ eine Spießkombination. Für jede Obstsorte $o(x, i)$, wobei $x
   \item $i \in Z$, \label{lem:spiess-numbers1}
   \item $i \notin B \setminus Z$. \label{lem:spiess-numbers2}
 \end{enumerate}   
-Deshalb darf man alle Kanten, die aus einem Knoten $x \in F$ 
-zu einem Knoten $y \in B \setminus Z$, sowie die aus einem Knoten $p \in Z$ zu
-einem Knoten $q \in A \setminus F$ führen, aus $E$ entfernen.
 \end{lemma}
 
 \begin{proof}
 Nach Definition \ref{def:spiesskomb} gilt \ref{lem:spiess-numbers1}. 
 Nach Axiom \ref{ax:obstsorte-index} besitzt jede Obstsorte einen einzigartigen Index $i$,
 deshalb kann $i$ nicht gleichzeitig zu $Z$ und $B \setminus Z$ gehören \ref{lem:spiess-numbers2}.
-
-Die Folgerung gilt, da %der Graph $G$ am Anfang vollständig ist und
-jede Kante zwischen zwei beliebigen Knoten $x \in A$ und $y \in B$ die Möglichkeit darstellt,
-dass $x$ einen Index $y$ besitzen kann.
-Wenn eine Teilmenge von $A$ und $B$ in Form einer Spießkombination ausgegliedert wird,
-schrumpft die Anzahl an möglichen Zuweisungen zwischen jedem $x$ und jedem $y$. 
 \end{proof}
